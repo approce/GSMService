@@ -2,10 +2,16 @@
 <xmlListWrapper>
     <element>
         <list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="verticalAggregator">
-            <id>12</id>
+            <id>1</id>
+            <description>this is very first aggregator</description>
             <modem>
-                <IMEI>aadsadasd</IMEI>
-                <id>123</id>
+                <IMEI>Whatever</IMEI>
+                <id>1</id>
+                <port>COM-10</port>
+                <brand>HUAWEI</brand>
+                <model>E1550</model>
+                <gatewaySpeed>54300</gatewaySpeed>
+                <initCommand>AT+CFUN=1\r</initCommand>
             </modem>
             <simCell/>
         </list>

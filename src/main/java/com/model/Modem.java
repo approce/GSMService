@@ -31,6 +31,14 @@ public class Modem {
         serialModemGateway.setCustomInitString(initCommand);
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getIMEI() {
         return IMEI;
     }
@@ -39,11 +47,59 @@ public class Modem {
         this.IMEI = IMEI;
     }
 
-    public Integer getId() {
-        return id;
+    public String getPort() {
+        return port;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public Integer getGatewaySpeed() {
+        return gatewaySpeed;
+    }
+
+    public void setGatewaySpeed(Integer gatewaySpeed) {
+        this.gatewaySpeed = gatewaySpeed;
+    }
+
+    public String getInitCommand() {
+        return initCommand;
+    }
+
+    public void setInitCommand(String initCommand) {
+        this.initCommand = initCommand;
+    }
+
+    public SerialModemGateway getSerialModemGateway() {
+        return serialModemGateway;
+    }
+
+    public void setSerialModemGateway(SerialModemGateway serialModemGateway) {
+        this.serialModemGateway = serialModemGateway;
+    }
+
+    public SIM getSim() {
+        return sim;
+    }
+
+    public void setSim(SIM sim) {
+        this.sim = sim;
     }
 }
