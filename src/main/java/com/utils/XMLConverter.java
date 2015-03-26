@@ -1,6 +1,10 @@
 package com.utils;
 
-import com.model.*;
+import com.model.Aggregator;
+import com.model.HorizontalAggregator;
+import com.model.Modem;
+import com.model.SIMCell;
+import com.model.VerticalAggregator;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;
@@ -14,27 +18,39 @@ import java.util.List;
 /**
  * Created by Roman Zayats on 24.03.2015.
  */
-@Component
 public class XMLConverter<T> {
     private Marshaller marshaller;
     private Unmarshaller unmarshaller;
 
-    public XMLConverter(Class... classesToBeBound) throws JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(classesToBeBound);
-        marshaller = jaxbContext.createMarshaller();
-        marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        unmarshaller = jaxbContext.createUnmarshaller();
+    public XMLConverter(Class... classesToBeBound) {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(classesToBeBound);
+            marshaller = jaxbContext.createMarshaller();
+            marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            unmarshaller = jaxbContext.createUnmarshaller();
+        } catch (JAXBException e) {
+            //TODO log it
+        }
     }
 
-    public void doMarshall(List<T> values, String path) throws JAXBException {
-        XMLListWrapper<T> xmlListWrapper = new XMLListWrapper<T>();
-        xmlListWrapper.setList(values);
-        marshaller.marshal(xmlListWrapper, new File(path));
+    public void doMarshall(List<T> values, String path) {
+        try {
+            XMLListWrapper<T> xmlListWrapper = new XMLListWrapper<T>();
+            xmlListWrapper.setList(values);
+            marshaller.marshal(xmlListWrapper, new File(path));
+        } catch (JAXBException e) {
+            //TODO log it
+        }
     }
 
-    public List<T> doUnmarshall(String path) throws JAXBException {
-        XMLListWrapper<T> xmlListWrapper = (XMLListWrapper<T>) unmarshaller.unmarshal(new File(path));
-        return xmlListWrapper.getList();
+    public List<T> doUnmarshall(String path) {
+        try {
+            XMLListWrapper<T> xmlListWrapper = (XMLListWrapper<T>) unmarshaller.unmarshal(new File(path));
+            return xmlListWrapper.getList();
+        } catch (JAXBException e) {
+            //TODO log it
+        }
+        return null;
     }
 
     public static void main(String[] args) throws Exception {

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<aggregator>
-    <aggreg xsi:type="com.model.VerticalAggregator"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            >
-    </aggreg>
-	<description>"asd"</description>
-</aggregator>
+<xmlListWrapper>
+    <element>
+        <list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="verticalAggregator">
+            <id>12</id>
+            <modem>
+                <IMEI>aadsadasd</IMEI>
+                <id>123</id>
+            </modem>
+            <simCell/>
+        </list>
+        <list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="horizontalAggregator"/>
+    </element>
+</xmlListWrapper>

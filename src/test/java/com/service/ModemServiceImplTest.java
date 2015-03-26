@@ -19,12 +19,12 @@ import static org.junit.Assert.assertTrue;
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
 public class ModemServiceImplTest {
-    @Autowired
+  /*  @Autowired
     private ModemService modemService;
 
     @Test
     @DatabaseSetup(value = "/dataset.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void testGetModems() throws Exception {
         assertTrue(modemService.getModems().size() != 0);
-    }
+    }*/
 }
