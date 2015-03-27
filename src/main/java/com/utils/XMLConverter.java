@@ -1,18 +1,12 @@
 package com.utils;
 
-import com.model.Aggregator;
-import com.model.HorizontalAggregator;
-import com.model.Modem;
-import com.model.SIMCell;
-import com.model.VerticalAggregator;
-import org.springframework.stereotype.Component;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -21,6 +15,7 @@ import java.util.List;
 public class XMLConverter<T> {
     private Marshaller marshaller;
     private Unmarshaller unmarshaller;
+    private static final Logger LOG = LoggerFactory.getLogger(XMLConverter.class);
 
     public XMLConverter(Class... classesToBeBound) {
         try {
@@ -29,7 +24,7 @@ public class XMLConverter<T> {
             marshaller.setProperty(javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             unmarshaller = jaxbContext.createUnmarshaller();
         } catch (JAXBException e) {
-            //TODO log it
+            LOG.error("Exception during XMLConverter initialization {}\n{}", classesToBeBound, e);
         }
     }
 
@@ -39,7 +34,7 @@ public class XMLConverter<T> {
             xmlListWrapper.setList(values);
             marshaller.marshal(xmlListWrapper, new File(path));
         } catch (JAXBException e) {
-            //TODO log it
+            LOG.error("Exception during XMLConverter marshalling\n{}", e);
         }
     }
 
@@ -48,34 +43,8 @@ public class XMLConverter<T> {
             XMLListWrapper<T> xmlListWrapper = (XMLListWrapper<T>) unmarshaller.unmarshal(new File(path));
             return xmlListWrapper.getList();
         } catch (JAXBException e) {
-            //TODO log it
+            LOG.error("Exception during XMLConverter unmarshalling\n{}", e);
         }
         return null;
-    }
-
-    public static void main(String[] args) throws Exception {
-        XMLConverter<Aggregator> xmlConverter = new XMLConverter<>(VerticalAggregator.class, HorizontalAggregator.class, XMLListWrapper.class);
-        List<Aggregator> values = new LinkedList<>();
-        VerticalAggregator verticalAggregator = new VerticalAggregator();
-        verticalAggregator.setSimCell(new SIMCell());
-        verticalAggregator.setId(12);
-        Modem modem = new Modem();
-        modem.setId(123);
-        modem.setIMEI("aadsadasd");
-        verticalAggregator.setModem(modem);
-        values.add(verticalAggregator);
-        values.add(new HorizontalAggregator());
-        xmlConverter.doMarshall(values, "5.xml");
-
-        List<Aggregator> values_input = new LinkedList<>();
-        values_input = xmlConverter.doUnmarshall("5.xml");
-        for (Aggregator ag : values_input) {
-            if (ag instanceof VerticalAggregator) {
-                System.out.println("vertical");
-            }
-            if (ag instanceof HorizontalAggregator) {
-                System.out.println("horizontal");
-            }
-        }
     }
 }
