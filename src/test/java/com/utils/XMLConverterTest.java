@@ -1,6 +1,6 @@
 package com.utils;
 
-import com.model.Modem;
+import com.model.MyModem;
 import com.model.aggregator.Aggregator;
 import com.model.aggregator.HorizontalAggregator;
 import com.model.aggregator.VerticalAggregator;
@@ -34,12 +34,12 @@ public class XMLConverterTest {
 
     @Test
     public void testConverter() throws Exception {
-        converter = new XMLConverter<>(VerticalAggregator.class, HorizontalAggregator.class, XMLListWrapper.class);
-        List<Aggregator> values = new LinkedList<>();
+        converter = new XMLConverter<Aggregator>(VerticalAggregator.class, HorizontalAggregator.class, XMLListWrapper.class);
+        List<Aggregator> values = new LinkedList<Aggregator>();
         VerticalAggregator verticalAggregator = new VerticalAggregator();
-        Modem modem = new Modem(MODEM_IMEI, MODEM_INIT_COMMAND,
+        MyModem myModem = new MyModem(MODEM_IMEI, MODEM_INIT_COMMAND,
                 MODEM_ID, MODEM_PORT, MODEM_BAUD_RATE, MODEM_MANUFACTURER, MODEM_MODEL);
-        verticalAggregator.setModem(modem);
+        verticalAggregator.setMyModem(myModem);
         SIMCell simCell = new SIMCell();
         simCell.setName(SIM_CELL);
         verticalAggregator.setSimCell(simCell);
@@ -59,14 +59,14 @@ public class XMLConverterTest {
         assertEquals(((VerticalAggregator) read_values.get(0)).getSimCell().getName(), SIM_CELL);
         assertEquals(read_values.get(0).getDescription(), DESCRIPTION);
 
-        Modem verticalAggregatorModem = read_values.get(0).getModem();
-        assertEquals(verticalAggregatorModem.getId(), MODEM_ID);
-        assertEquals(verticalAggregatorModem.getIMEI(), MODEM_IMEI);
-        assertEquals(verticalAggregatorModem.getPort(), MODEM_PORT);
-        assertEquals(verticalAggregatorModem.getInitCommand(), MODEM_INIT_COMMAND);
-        assertEquals(verticalAggregatorModem.getManufacturer(), MODEM_MANUFACTURER);
-        assertEquals(verticalAggregatorModem.getModel(), MODEM_MODEL);
-        assertEquals(verticalAggregatorModem.getBaudRate(), MODEM_BAUD_RATE);
+        MyModem verticalAggregatorMyModem = read_values.get(0).getMyModem();
+        assertEquals(verticalAggregatorMyModem.getId(), MODEM_ID);
+        assertEquals(verticalAggregatorMyModem.getIMEI(), MODEM_IMEI);
+        assertEquals(verticalAggregatorMyModem.getPort(), MODEM_PORT);
+        assertEquals(verticalAggregatorMyModem.getInitCommand(), MODEM_INIT_COMMAND);
+        assertEquals(verticalAggregatorMyModem.getManufacturer(), MODEM_MANUFACTURER);
+        assertEquals(verticalAggregatorMyModem.getModel(), MODEM_MODEL);
+        assertEquals(verticalAggregatorMyModem.getBaudRate(), MODEM_BAUD_RATE);
 
         assertThat(read_values.get(1), instanceOf(HorizontalAggregator.class));
         assertEquals(read_values.get(1).getId(), new Integer(2));

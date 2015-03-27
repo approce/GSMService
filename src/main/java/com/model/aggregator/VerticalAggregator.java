@@ -3,6 +3,7 @@ package com.model.aggregator;
 import com.model.sim.SIMCell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.smslib.Service;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -29,6 +30,12 @@ public class VerticalAggregator extends Aggregator {
     @Override
     public void initialize() {
         LOG.debug("Start initialization vertical aggregator id:{} ", getId());
+        Service.getInstance().start();
+        try {
+            getMyModem()._start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //0. check if modem requires additional activities like AT command
         //1. check if sim card require additional activities like PIN code
         //2. try to start modem

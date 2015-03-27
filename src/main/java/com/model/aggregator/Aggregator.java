@@ -1,12 +1,12 @@
 package com.model.aggregator;
 
-import com.model.Modem;
+import com.model.MyModem;
 
 public abstract class Aggregator {
 
     private Integer id;
 
-    private Modem modem;
+    private MyModem myModem;
 
     private String description;
 
@@ -24,12 +24,12 @@ public abstract class Aggregator {
         this.id = id;
     }
 
-    public Modem getModem() {
-        return modem;
+    public MyModem getMyModem() {
+        return myModem;
     }
 
-    public void setModem(Modem modem) {
-        this.modem = modem;
+    public void setMyModem(MyModem myModem) {
+        this.myModem = myModem;
     }
 
     public String getDescription() {

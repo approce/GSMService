@@ -2,12 +2,12 @@ package com.model;
 
 import com.model.sim.SIM;
 import com.utils.xml.ModemAdapterConverter;
-import org.smslib.modem.SerialModemGateway;
+import org.smslib.message.MsIsdn;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlJavaTypeAdapter(ModemAdapterConverter.class)
-public class Modem extends SerialModemGateway {
+public class MyModem extends org.smslib.gateway.modem.Modem {
 
     private final String IMEI;
 
@@ -23,8 +23,8 @@ public class Modem extends SerialModemGateway {
 
     transient private SIM sim;
 
-    public Modem(String IMEI, String initCommand, String id, String comPort, int baudRate, String manufacturer, String model) {
-        super(id, comPort, baudRate, manufacturer, model);
+    public MyModem(String IMEI, String initCommand, String id, String comPort, int baudRate, String manufacturer, String model) {
+        super(id, comPort, baudRate, "", "", new MsIsdn(""), "");
         this.IMEI = IMEI;
         this.port = comPort;
         this.baudRate = baudRate;
@@ -53,13 +53,11 @@ public class Modem extends SerialModemGateway {
         return initCommand;
     }
 
-    @Override
     public String getManufacturer() {
 //        return super.getManufacturer();
         return manufacturer;
     }
 
-    @Override
     public String getModel() {
 //        return super.getModel();
         return model;

@@ -1,33 +1,33 @@
 package com.utils.xml;
 
-import com.model.Modem;
+import com.model.MyModem;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * Created by Roman Zayats on 27.03.2015.
  */
-public class ModemAdapterConverter extends XmlAdapter<ModemAdapter, Modem> {
+public class ModemAdapterConverter extends XmlAdapter<ModemAdapter, MyModem> {
 
 
     @Override
-    public Modem unmarshal(ModemAdapter proxy) throws Exception {
-        return new Modem(proxy.getIMEI(), proxy.getInitCommand(),
+    public MyModem unmarshal(ModemAdapter proxy) throws Exception {
+        return new MyModem(proxy.getIMEI(), proxy.getInitCommand(),
                 proxy.getId(), proxy.getPort(), proxy.getBaudRate(),
                 proxy.getManufacturer(), proxy.getModel());
     }
 
     @Override
-    public ModemAdapter marshal(Modem modem) throws Exception {
-        if (modem != null) {
+    public ModemAdapter marshal(MyModem myModem) throws Exception {
+        if (myModem != null) {
             ModemAdapter modemAdapter = new ModemAdapter();
-            modemAdapter.setId(modem.getId());
-            modemAdapter.setIMEI(modem.getIMEI());
-            modemAdapter.setPort(modem.getPort());
-            modemAdapter.setBaudRate(modem.getBaudRate());
-            modemAdapter.setInitCommand(modem.getInitCommand());
-            modemAdapter.setManufacturer(modem.getManufacturer());
-            modemAdapter.setModel(modem.getModel());
+            modemAdapter.setId(myModem.getId());
+            modemAdapter.setIMEI(myModem.getIMEI());
+            modemAdapter.setPort(myModem.getPort());
+            modemAdapter.setBaudRate(myModem.getBaudRate());
+            modemAdapter.setInitCommand(myModem.getInitCommand());
+            modemAdapter.setManufacturer(myModem.getManufacturer());
+            modemAdapter.setModel(myModem.getModel());
             return modemAdapter;
         } else {
             return null;

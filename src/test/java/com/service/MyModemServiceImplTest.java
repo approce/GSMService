@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 @SpringApplicationConfiguration(classes = Context.class)
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
-public class ModemServiceImplTest {
+public class MyModemServiceImplTest {
   /*  @Autowired
     private ModemService modemService;
 

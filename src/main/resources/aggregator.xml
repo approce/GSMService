@@ -4,17 +4,8 @@
         <list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="verticalAggregator">
             <id>1</id>
             <description>this is very first aggregator</description>
-            <modem>
-                <IMEI>Whatever</IMEI>
-                <id>1</id>
-                <port>COM-10</port>
-                <brand>HUAWEI</brand>
-                <model>E1550</model>
-                <gatewaySpeed>54300</gatewaySpeed>
-                <initCommand>AT+CFUN=1\r</initCommand>
-            </modem>
+            <myModem baudRate="57600" imei="1365372637" id="1430a" initCommand="AT+CFUN" manufacturer="HUAWEI" model="E1550" port="COM11"/>
             <simCell/>
         </list>
-        <list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="horizontalAggregator"/>
     </element>
 </xmlListWrapper>
