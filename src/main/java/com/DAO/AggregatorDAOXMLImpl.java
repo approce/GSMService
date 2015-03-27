@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Repository("AggregatorDAO")
 @Transactional
-public class AggregatorDAOImpl extends HibernateDaoSupport implements AggregatorDAO {
+public class AggregatorDAOXMLImpl extends HibernateDaoSupport implements AggregatorDAO {
 
     private XMLConverter<Aggregator> converter =
             new XMLConverter<>(VerticalAggregator.class, HorizontalAggregator.class, XMLListWrapper.class);

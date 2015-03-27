@@ -8,6 +8,12 @@ public abstract class Aggregator {
 
     private String description;
 
+    abstract void initialize();
+
+
+
+
+
     public Integer getId() {
         return id;
     }
@@ -31,4 +37,6 @@ public abstract class Aggregator {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
 }
