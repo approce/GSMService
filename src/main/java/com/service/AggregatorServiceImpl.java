@@ -10,19 +10,16 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
-/**
- * Created by Roman Zayats on 26.03.2015.
- */
 @Service(value = "AggregatorService")
 public class AggregatorServiceImpl implements AggregatorService {
 
     @Autowired
     private AggregatorDAO aggregatorDAO;
-
     private static final Logger LOG = LoggerFactory.getLogger(AggregatorServiceImpl.class);
 
     private static List<Aggregator> AGGREGATOR_LIST;
 
+    @Override
     @PostConstruct
     public void initialization() {
         LOG.debug("Start aggregators initialization");
@@ -33,5 +30,10 @@ public class AggregatorServiceImpl implements AggregatorService {
         for (Aggregator aggregator : AGGREGATOR_LIST) {
             aggregator.initialize();
         }
+    }
+
+    @Override
+    public void setAggregatorDAO(AggregatorDAO aggregatorDAO) {
+        this.aggregatorDAO = aggregatorDAO;
     }
 }
