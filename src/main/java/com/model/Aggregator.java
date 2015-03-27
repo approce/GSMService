@@ -8,7 +8,7 @@ public abstract class Aggregator {
 
     private String description;
 
-    abstract void initialize();
+    public  abstract void initialize();
 
 
 
