@@ -2,12 +2,9 @@ package com.model;
 
 import com.model.sim.SIM;
 import com.utils.xml.ModemAdapterConverter;
-import org.smslib.GatewayException;
-import org.smslib.TimeoutException;
 import org.smslib.modem.SerialModemGateway;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.io.IOException;
 
 @XmlJavaTypeAdapter(ModemAdapterConverter.class)
 public class Modem extends SerialModemGateway {
@@ -57,13 +54,13 @@ public class Modem extends SerialModemGateway {
     }
 
     @Override
-    public String getManufacturer() throws TimeoutException, GatewayException, IOException, InterruptedException {
+    public String getManufacturer() {
 //        return super.getManufacturer();
         return manufacturer;
     }
 
     @Override
-    public String getModel() throws TimeoutException, GatewayException, IOException, InterruptedException {
+    public String getModel() {
 //        return super.getModel();
         return model;
     }
