@@ -1,4 +1,4 @@
-package com.utils;
+package com.utils.xml;
 
 import javax.xml.bind.annotation.XmlAttribute;
 

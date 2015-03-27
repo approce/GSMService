@@ -1,7 +1,7 @@
 package com.model;
 
 import com.model.sim.SIM;
-import com.utils.ModemAdapterConverter;
+import com.utils.xml.ModemAdapterConverter;
 import org.smslib.GatewayException;
 import org.smslib.TimeoutException;
 import org.smslib.modem.SerialModemGateway;

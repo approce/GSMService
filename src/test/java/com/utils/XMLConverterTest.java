@@ -5,6 +5,8 @@ import com.model.aggregator.Aggregator;
 import com.model.aggregator.HorizontalAggregator;
 import com.model.aggregator.VerticalAggregator;
 import com.model.sim.SIMCell;
+import com.utils.xml.XMLConverter;
+import com.utils.xml.XMLListWrapper;
 import org.junit.Test;
 
 import java.io.File;
