@@ -1,8 +1,8 @@
 package com.DAO;
 
-import com.model.Aggregator;
-import com.model.HorizontalAggregator;
-import com.model.VerticalAggregator;
+import com.model.aggregator.Aggregator;
+import com.model.aggregator.HorizontalAggregator;
+import com.model.aggregator.VerticalAggregator;
 import com.utils.XMLConverter;
 import com.utils.XMLListWrapper;
 import org.hibernate.SessionFactory;

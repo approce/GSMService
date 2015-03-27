@@ -1,4 +1,4 @@
-package com.model;
+package com.model.sim;
 
 /**
  * Created by Roman Zayats on 24.03.2015.

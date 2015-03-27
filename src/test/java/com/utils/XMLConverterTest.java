@@ -1,10 +1,10 @@
 package com.utils;
 
-import com.model.Aggregator;
-import com.model.HorizontalAggregator;
+import com.model.aggregator.Aggregator;
+import com.model.aggregator.HorizontalAggregator;
 import com.model.Modem;
-import com.model.SIMCell;
-import com.model.VerticalAggregator;
+import com.model.sim.SIMCell;
+import com.model.aggregator.VerticalAggregator;
 import org.junit.Test;
 
 import java.io.File;

@@ -1,6 +1,6 @@
 package com.DAO;
 
-import com.model.Aggregator;
+import com.model.aggregator.Aggregator;
 
 import java.util.List;
 

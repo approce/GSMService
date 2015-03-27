@@ -1,4 +1,6 @@
-package com.model;
+package com.model.aggregator;
+
+import com.model.Modem;
 
 public abstract class Aggregator {
 

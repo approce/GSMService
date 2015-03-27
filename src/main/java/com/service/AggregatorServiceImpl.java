@@ -1,7 +1,7 @@
 package com.service;
 
 import com.DAO.AggregatorDAO;
-import com.model.Aggregator;
+import com.model.aggregator.Aggregator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.model;
+package com.model.aggregator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

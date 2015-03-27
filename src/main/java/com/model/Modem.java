@@ -1,8 +1,8 @@
 package com.model;
 
+import com.model.sim.SIM;
 import org.smslib.AGateway;
 import org.smslib.modem.SerialModemGateway;
-import javax.persistence.*;
 
 public class Modem {
 
