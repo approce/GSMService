@@ -16,6 +16,5 @@ public class HorizontalAggregator extends Aggregator {
     @Override
     public void initialize() {
         LOG.debug("Start initialization vertical aggregator id:{} ", getId());
-        System.out.println("do initialization");
     }
 }

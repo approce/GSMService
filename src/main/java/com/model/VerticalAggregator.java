@@ -31,7 +31,5 @@ public class VerticalAggregator extends Aggregator {
         //0. check if modem requires additional activities like AT command
         //1. check if sim card require additional activities like PIN code
         //2. try to start modem
-
-        System.out.println("123123l");
     }
 }
