@@ -27,6 +27,11 @@ public class SMSLibServiceImpl implements SMSLibService {
     }
 
     @Override
+    public Service getInstance() {
+        return SERVICE;
+    }
+
+    @Override
     public void startService() {
         try {
             SERVICE.startService();
