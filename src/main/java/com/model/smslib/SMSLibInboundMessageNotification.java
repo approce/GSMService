@@ -1,5 +1,6 @@
 package com.model.smslib;
 
+import com.DAO.interfaces.MessageDAO;
 import com.model.Message;
 import com.model.aggregator.Aggregator;
 import com.service.interfaces.AggregatorService;
@@ -20,6 +21,9 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
     @Autowired
     private AggregatorService aggregatorService;
 
+    @Autowired
+    private MessageDAO messageDAO;
+
     @Override
     public void process(AGateway aGateway, org.smslib.Message.MessageTypes messageTypes, InboundMessage inboundMessage) {
         if (!messageTypes.equals(org.smslib.Message.MessageTypes.INBOUND)) {
@@ -39,5 +43,7 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
                 message.setAggregator_id(aggregator.getId());
             }
         }
+        messageDAO.saveMessage(message);
+        //TODO delete message
     }
 }
