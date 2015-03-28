@@ -44,14 +44,4 @@ public class AggregatorServiceImpl implements AggregatorService {
         return AGGREGATOR_LIST;
     }
 
-    @Override
-    public void startAggregator(Aggregator aggregator) {
-        smsLibService.addGateway(aggregator.getModem());
-    }
-
-
-    @Override
-    public void setAggregatorDAO(AggregatorDAO aggregatorDAO) {
-        this.aggregatorDAO = aggregatorDAO;
-    }
 }
