@@ -1,6 +1,6 @@
 package com.service;
 
-import com.DAO.AggregatorDAO;
+import com.DAO.interfaces.AggregatorDAO;
 import com.model.aggregator.Aggregator;
 import com.service.interfaces.AggregatorService;
 import com.service.interfaces.SMSLibService;

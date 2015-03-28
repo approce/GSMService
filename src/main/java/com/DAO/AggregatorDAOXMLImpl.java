@@ -1,5 +1,6 @@
 package com.DAO;
 
+import com.DAO.interfaces.AggregatorDAO;
 import com.model.aggregator.Aggregator;
 import com.model.aggregator.HorizontalAggregator;
 import com.model.aggregator.VerticalAggregator;

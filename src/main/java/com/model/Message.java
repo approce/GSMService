@@ -1,20 +1,36 @@
 package com.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Calendar;
 
+@Entity
+@Table(name = "message")
 public class Message {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "aggregator_id")
     private Integer aggregator_id;
 
+    @Column(name = "originator")
     private String originator;
 
     //TODO validate this to avoid SQL injection
+    @Column(name = "text")
     private String text;
 
+    @Column(name = "code")
     private String code;
 
+    @Column(name = "date")
     private Calendar date;
 
     //TODO join service.
