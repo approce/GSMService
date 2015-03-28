@@ -10,7 +10,6 @@ public abstract class Aggregator {
 
     private String description;
 
-    public  abstract void initialize();
 
 
 

@@ -2,6 +2,8 @@ package com.service;
 
 import com.DAO.AggregatorDAO;
 import com.model.aggregator.Aggregator;
+import com.service.interfaces.AggregatorService;
+import com.service.interfaces.SMSLibService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,22 +17,30 @@ public class AggregatorServiceImpl implements AggregatorService {
 
     @Autowired
     private AggregatorDAO aggregatorDAO;
-    private static final Logger LOG = LoggerFactory.getLogger(AggregatorServiceImpl.class);
+    @Autowired
+    private SMSLibService smsLibService;
 
+    private static final Logger LOG = LoggerFactory.getLogger(AggregatorServiceImpl.class);
     private static List<Aggregator> AGGREGATOR_LIST;
 
     @Override
     @PostConstruct
-    public void initialization() {
+    public void initialize() {
         LOG.debug("Start aggregators initialization");
-
         AGGREGATOR_LIST = aggregatorDAO.getAggregators();
         LOG.debug("Aggregator available count: {}", AGGREGATOR_LIST.size());
 
         for (Aggregator aggregator : AGGREGATOR_LIST) {
-            aggregator.initialize();
+            smsLibService.addGateway(aggregator.getModem());
         }
     }
+
+
+
+
+
+
+
 
     @Override
     public void setAggregatorDAO(AggregatorDAO aggregatorDAO) {

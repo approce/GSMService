@@ -1,6 +1,7 @@
 package com.service;
 
 import com.DAO.AggregatorDAO;
+import com.service.interfaces.AggregatorService;
 import config.Context;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +21,6 @@ public class AggregatorServiceImplTest {
         //create manually aggregatorService, because on autowiring it will automatically set up.
         AggregatorService aggregatorService = new AggregatorServiceImpl();
         aggregatorService.setAggregatorDAO(aggregatorDAO);
-        aggregatorService.initialization();
+        //aggregatorService.initialization();
     }
 }

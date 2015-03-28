@@ -22,7 +22,7 @@ import java.util.List;
 public class AggregatorDAOXMLImpl extends HibernateDaoSupport implements AggregatorDAO {
 
     private XMLConverter<Aggregator> converter =
-            new XMLConverter<>(VerticalAggregator.class, HorizontalAggregator.class, XMLListWrapper.class);
+            new XMLConverter<Aggregator>(VerticalAggregator.class, HorizontalAggregator.class, XMLListWrapper.class);
 
     @Value("${aggregator.config.path}")
     private String CONFIG_PATH;

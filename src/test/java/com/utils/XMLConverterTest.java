@@ -34,8 +34,8 @@ public class XMLConverterTest {
 
     @Test
     public void testConverter() throws Exception {
-        converter = new XMLConverter<>(VerticalAggregator.class, HorizontalAggregator.class, XMLListWrapper.class);
-        List<Aggregator> values = new LinkedList<>();
+        converter = new XMLConverter<Aggregator>(VerticalAggregator.class, HorizontalAggregator.class, XMLListWrapper.class);
+        List<Aggregator> values = new LinkedList<Aggregator>();
         VerticalAggregator verticalAggregator = new VerticalAggregator();
         Modem modem = new Modem(MODEM_IMEI, MODEM_INIT_COMMAND,
                 MODEM_ID, MODEM_PORT, MODEM_BAUD_RATE, MODEM_MANUFACTURER, MODEM_MODEL);
