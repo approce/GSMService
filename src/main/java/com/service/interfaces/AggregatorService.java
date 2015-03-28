@@ -10,5 +10,7 @@ public interface AggregatorService {
 
     List<Aggregator> getAggregatorList();
 
+    void startAggregator(Aggregator aggregator);
+
     void setAggregatorDAO(AggregatorDAO aggregatorDAO);
 }

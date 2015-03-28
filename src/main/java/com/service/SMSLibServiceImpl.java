@@ -5,9 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smslib.AGateway;
 import org.smslib.GatewayException;
+import org.smslib.SMSLibException;
 import org.smslib.Service;
-
+import org.smslib.TimeoutException;
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 
 @org.springframework.stereotype.Service(value = "SIMLibService")
 public class SMSLibServiceImpl implements SMSLibService {
@@ -29,7 +31,16 @@ public class SMSLibServiceImpl implements SMSLibService {
         LOG.debug("Add gateway {}", gateway.getGatewayId());
         try {
             SERVICE.addGateway(gateway);
+            SERVICE.startService();
         } catch (GatewayException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        } catch (SMSLibException e) {
             e.printStackTrace();
         }
     }

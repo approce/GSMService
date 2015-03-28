@@ -31,6 +31,7 @@ public class AggregatorServiceImpl implements AggregatorService {
         LOG.debug("Aggregator available count: {}", AGGREGATOR_LIST.size());
 
         for (Aggregator aggregator : AGGREGATOR_LIST) {
+            //TODO should we start all aggregators on start?
             //smsLibService.addGateway(aggregator.getModem());
         }
     }
@@ -38,6 +39,11 @@ public class AggregatorServiceImpl implements AggregatorService {
     @Override
     public List<Aggregator> getAggregatorList() {
         return AGGREGATOR_LIST;
+    }
+
+    @Override
+    public void startAggregator(Aggregator aggregator) {
+        smsLibService.addGateway(aggregator.getModem());
     }
 
 
