@@ -31,9 +31,12 @@ public class AggregatorServiceImpl implements AggregatorService {
         LOG.debug("Aggregator available count: {}", AGGREGATOR_LIST.size());
 
         for (Aggregator aggregator : AGGREGATOR_LIST) {
-            //TODO should we start all aggregators on start?
-            //smsLibService.addGateway(aggregator.getModem());
+            if (aggregator.isStartOnSetup()) {
+                smsLibService.addGateway(aggregator.getModem());
+            }
         }
+        smsLibService.startService();
+        System.out.println(AGGREGATOR_LIST.get(1).getModem().getStatus());
     }
 
     @Override

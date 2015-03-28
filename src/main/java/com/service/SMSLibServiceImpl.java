@@ -7,7 +7,7 @@ import org.smslib.AGateway;
 import org.smslib.GatewayException;
 import org.smslib.SMSLibException;
 import org.smslib.Service;
-import org.smslib.TimeoutException;
+
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 
@@ -27,21 +27,38 @@ public class SMSLibServiceImpl implements SMSLibService {
     }
 
     @Override
+    public void startService() {
+        try {
+            SERVICE.startService();
+        } catch (SMSLibException e) {
+            LOG.error("Exception while SMSLib service start.\n{}", e);
+        } catch (IOException e) {
+            LOG.error("Exception while SMSLib service start.\n{}", e);
+        } catch (InterruptedException e) {
+            LOG.error("Exception while SMSLib service start.\n{}", e);
+        }
+    }
+
+    @Override
+    public void stopService() {
+        try {
+            SERVICE.stopService();
+        } catch (SMSLibException e) {
+            LOG.error("Exception while SMSLib service stop.\n{}", e);
+        } catch (IOException e) {
+            LOG.error("Exception while SMSLib service start.\n{}", e);
+        } catch (InterruptedException e) {
+            LOG.error("Exception while SMSLib service start.\n{}", e);
+        }
+    }
+
+    @Override
     public void addGateway(AGateway gateway) {
         LOG.debug("Add gateway {}", gateway.getGatewayId());
         try {
             SERVICE.addGateway(gateway);
-            SERVICE.startService();
         } catch (GatewayException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-        } catch (SMSLibException e) {
-            e.printStackTrace();
+            LOG.error("Exception while gateway adding.\n{}", e);
         }
     }
 }

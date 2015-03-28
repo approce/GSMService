@@ -10,9 +10,7 @@ public abstract class Aggregator {
 
     private String description;
 
-
-
-
+    private boolean startOnSetup;
 
 
     public Integer getId() {
@@ -39,5 +37,11 @@ public abstract class Aggregator {
         this.description = description;
     }
 
+    public boolean isStartOnSetup() {
+        return startOnSetup;
+    }
 
+    public void setStartOnSetup(boolean startOnSetup) {
+        this.startOnSetup = startOnSetup;
+    }
 }

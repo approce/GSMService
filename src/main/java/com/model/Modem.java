@@ -2,6 +2,7 @@ package com.model;
 
 import com.model.sim.SIM;
 import com.utils.xml.ModemAdapterConverter;
+import org.smslib.AGateway;
 import org.smslib.modem.SerialModemGateway;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -31,6 +32,9 @@ public class Modem extends SerialModemGateway {
         this.initCommand = initCommand;
         this.manufacturer = manufacturer;
         this.model = model;
+        this.setProtocol(AGateway.Protocols.PDU);
+        this.setInbound(true);
+        this.setCustomInitString(initCommand);
     }
 
     public String getId() {

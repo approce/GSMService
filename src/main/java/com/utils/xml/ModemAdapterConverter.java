@@ -12,9 +12,10 @@ public class ModemAdapterConverter extends XmlAdapter<ModemAdapter, Modem> {
 
     @Override
     public Modem unmarshal(ModemAdapter proxy) throws Exception {
-        return new Modem(proxy.getIMEI(), proxy.getInitCommand(),
+        Modem modem = new Modem(proxy.getIMEI(), proxy.getInitCommand(),
                 proxy.getId(), proxy.getPort(), proxy.getBaudRate(),
                 proxy.getManufacturer(), proxy.getModel());
+        return modem;
     }
 
     @Override
