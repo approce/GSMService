@@ -31,15 +31,14 @@ public class AggregatorServiceImpl implements AggregatorService {
         LOG.debug("Aggregator available count: {}", AGGREGATOR_LIST.size());
 
         for (Aggregator aggregator : AGGREGATOR_LIST) {
-            smsLibService.addGateway(aggregator.getModem());
+            //smsLibService.addGateway(aggregator.getModem());
         }
     }
 
-
-
-
-
-
+    @Override
+    public List<Aggregator> getAggregatorList() {
+        return AGGREGATOR_LIST;
+    }
 
 
     @Override
