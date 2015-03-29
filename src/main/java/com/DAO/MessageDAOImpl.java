@@ -1,6 +1,5 @@
 package com.DAO;
 
-import com.DAO.interfaces.GenericDAOImpl;
 import com.DAO.interfaces.MessageDAO;
 import com.model.Message;
 import org.springframework.stereotype.Repository;

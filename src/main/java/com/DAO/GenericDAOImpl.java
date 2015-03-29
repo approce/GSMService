@@ -1,5 +1,6 @@
-package com.DAO.interfaces;
+package com.DAO;
 
+import com.DAO.interfaces.GenericDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
