@@ -1,9 +1,9 @@
 package com.utils;
 
 import com.model.Modem;
-import com.model.aggregator.AggregatorLogic;
+import com.model.aggregator.AggregatorExecutor;
 import com.model.aggregator.VerticalAggregator;
-import com.model.aggregator.VerticalAggregatorLogicImpl;
+import com.model.aggregator.VerticalAggregatorExecutorImpl;
 import com.model.sim.SIMCell;
 import com.utils.xml.XMLConverter;
 import com.utils.xml.XMLListWrapper;
@@ -31,10 +31,9 @@ public class XMLConverterTest {
 
     private static final String AGGREGATOR_ID = "13";
     private static final String SIM_CELL = "A4";
-    private static final String DESCRIPTION = "Short description about aggregator if need";
     private static final String XML_PATH = "test_xml_converter.xml";
 
-    private static VerticalAggregatorLogicImpl verticalAggregatorLogic;
+    private static VerticalAggregatorExecutorImpl verticalAggregatorLogic;
 
     @Before
     public void initialize() {
@@ -47,32 +46,30 @@ public class XMLConverterTest {
         SIMCell simCell = new SIMCell();
         simCell.setName(SIM_CELL);
         verticalAggregator.setSimCell(simCell);
-        verticalAggregator.setDescription(DESCRIPTION);
-        verticalAggregator.setStartOnSetup(true);
 
-        verticalAggregatorLogic = new VerticalAggregatorLogicImpl();
+        verticalAggregatorLogic = new VerticalAggregatorExecutorImpl();
+        verticalAggregatorLogic.setStartOnSetup(true);
         verticalAggregatorLogic.setAggregator(verticalAggregator);
     }
 
     @Test
     public void aggregatorLogicListTest() throws Exception {
-        XMLConverter<AggregatorLogic> xmlConverter =
-                new XMLConverter<AggregatorLogic>(XMLListWrapper.class, VerticalAggregatorLogicImpl.class, VerticalAggregator.class);
-        LinkedList<AggregatorLogic> aggregatorLogics = new LinkedList<>();
-        aggregatorLogics.add(verticalAggregatorLogic);
-        xmlConverter.doMarshall(aggregatorLogics, XML_PATH);
+        XMLConverter<AggregatorExecutor> xmlConverter =
+                new XMLConverter<AggregatorExecutor>(XMLListWrapper.class, VerticalAggregatorExecutorImpl.class, VerticalAggregator.class);
+        LinkedList<AggregatorExecutor> aggregatorExecutors = new LinkedList<>();
+        aggregatorExecutors.add(verticalAggregatorLogic);
+        xmlConverter.doMarshall(aggregatorExecutors, XML_PATH);
 
-        List<AggregatorLogic> aggregatorLogics1 = xmlConverter.doUnmarshall(XML_PATH);
+        List<AggregatorExecutor> aggregatorLogics1 = xmlConverter.doUnmarshall(XML_PATH);
 
-        assertThat(aggregatorLogics1.get(0), instanceOf(VerticalAggregatorLogicImpl.class));
-        VerticalAggregatorLogicImpl verticalAggregatorLogic = (VerticalAggregatorLogicImpl) aggregatorLogics1.get(0);
+        assertThat(aggregatorLogics1.get(0), instanceOf(VerticalAggregatorExecutorImpl.class));
+        VerticalAggregatorExecutorImpl verticalAggregatorLogic = (VerticalAggregatorExecutorImpl) aggregatorLogics1.get(0);
 
         assertThat(verticalAggregatorLogic.getAggregator(), instanceOf(VerticalAggregator.class));
+        assertTrue(verticalAggregatorLogic.isStartOnSetup());
         VerticalAggregator verticalAggregator = (VerticalAggregator) verticalAggregatorLogic.getAggregator();
         assertEquals(verticalAggregator.getId(), AGGREGATOR_ID);
         assertEquals(verticalAggregator.getSimCell().getName(), SIM_CELL);
-        assertEquals(verticalAggregator.getDescription(), DESCRIPTION);
-        assertTrue(verticalAggregator.isStartOnSetup());
 
         Modem modem = verticalAggregator.getModem();
         assertEquals(modem.getId(), MODEM_ID);

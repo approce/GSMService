@@ -1,11 +1,13 @@
 package com.service.interfaces;
 
-import com.model.aggregator.Aggregator;
+import com.model.aggregator.AggregatorExecutor;
+import org.smslib.AGateway;
 
 import java.util.List;
 
 public interface AggregatorService {
-    void initialize();
 
-    List<Aggregator> getAggregatorList();
+    List<AggregatorExecutor> getAggregatorList();
+
+    public AggregatorExecutor getAggregatorExecutorByGateway(AGateway gateway) throws Exception;
 }

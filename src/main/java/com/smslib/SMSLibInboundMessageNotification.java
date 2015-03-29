@@ -1,7 +1,6 @@
 package com.smslib;
 
 import com.model.Message;
-import com.model.aggregator.Aggregator;
 import com.service.interfaces.AggregatorService;
 import com.service.interfaces.MessageService;
 import org.slf4j.Logger;
@@ -38,11 +37,10 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(inboundMessage.getDate());
         message.setDate(calendar);
-
-        for (Aggregator aggregator : aggregatorService.getAggregatorList()) {
-            if (aggregator.getModem().equals(aGateway)) {
-                message.setAggregator_id(aggregator.getId());
-            }
+        try {
+            message.setAggregator_id(aggregatorService.getAggregatorExecutorByGateway(aGateway).getAggregator().getId());
+        } catch (Exception e) {
+            LOG.error("Exception while getting aggregator by gateway.\n{}", e);
         }
         messageService.save(message);
 

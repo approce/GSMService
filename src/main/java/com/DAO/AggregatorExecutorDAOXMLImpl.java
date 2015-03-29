@@ -1,9 +1,9 @@
 package com.DAO;
 
-import com.DAO.interfaces.AggregatorDAO;
-import com.model.aggregator.Aggregator;
-import com.model.aggregator.HorizontalAggregator;
+import com.DAO.interfaces.AggregatorExecutorDAO;
+import com.model.aggregator.AggregatorExecutor;
 import com.model.aggregator.VerticalAggregator;
+import com.model.aggregator.VerticalAggregatorExecutorImpl;
 import com.utils.xml.XMLConverter;
 import com.utils.xml.XMLListWrapper;
 import org.hibernate.SessionFactory;
@@ -15,15 +15,12 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.List;
 
-/**
- * Created by Roman Zayats on 26.03.2015.
- */
 @Repository("AggregatorDAO")
 @Transactional
-public class AggregatorDAOXMLImpl extends HibernateDaoSupport implements AggregatorDAO {
+public class AggregatorExecutorDAOXMLImpl extends HibernateDaoSupport implements AggregatorExecutorDAO {
 
-    private XMLConverter<Aggregator> converter =
-            new XMLConverter<Aggregator>(VerticalAggregator.class, HorizontalAggregator.class, XMLListWrapper.class);
+    private XMLConverter<AggregatorExecutor> converter =
+            new XMLConverter<AggregatorExecutor>(XMLListWrapper.class, VerticalAggregatorExecutorImpl.class, VerticalAggregator.class);
 
     @Value("${aggregator.config.path}")
     private String CONFIG_PATH;
@@ -34,7 +31,7 @@ public class AggregatorDAOXMLImpl extends HibernateDaoSupport implements Aggrega
     }
 
     @Override
-    public List<Aggregator> getAggregators() {
+    public List<AggregatorExecutor> getAggregatorExecutors() {
         return converter.doUnmarshall(CONFIG_PATH);
     }
 }

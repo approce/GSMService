@@ -1,12 +1,12 @@
 package com.model.sim;
 
-/**
- * Created by Roman Zayats on 24.03.2015.
- */
+import javax.xml.bind.annotation.XmlAttribute;
+
 public class SIMCell {
 
     private String name;
 
+    @XmlAttribute
     public String getName() {
         return name;
     }

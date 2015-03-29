@@ -1,11 +1,12 @@
 package com.service;
 
-import com.DAO.interfaces.AggregatorDAO;
-import com.model.aggregator.Aggregator;
+import com.DAO.interfaces.AggregatorExecutorDAO;
+import com.model.aggregator.AggregatorExecutor;
 import com.service.interfaces.AggregatorService;
 import com.service.interfaces.SMSLibService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.smslib.AGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,32 +17,40 @@ import java.util.List;
 public class AggregatorServiceImpl implements AggregatorService {
 
     @Autowired
-    private AggregatorDAO aggregatorDAO;
+    private AggregatorExecutorDAO aggregatorExecutorDAO;
     @Autowired
     private SMSLibService smsLibService;
 
     private static final Logger LOG = LoggerFactory.getLogger(AggregatorServiceImpl.class);
-    private static List<Aggregator> AGGREGATOR_LIST;
+    private static List<AggregatorExecutor> AGGREGATOR_LIST;
 
-    @Override
     @PostConstruct
     public void initialize() {
         LOG.debug("Start aggregators initialization");
-        AGGREGATOR_LIST = aggregatorDAO.getAggregators();
+        AGGREGATOR_LIST = aggregatorExecutorDAO.getAggregatorExecutors();
         LOG.debug("Aggregator available count: {}", AGGREGATOR_LIST.size());
 
-        for (Aggregator aggregator : AGGREGATOR_LIST) {
-            if (aggregator.isStartOnSetup()) {
-                smsLibService.addGateway(aggregator.getModem());
+        for (AggregatorExecutor aggregatorExecutor : AGGREGATOR_LIST) {
+            if (aggregatorExecutor.isStartOnSetup()) {
+                smsLibService.addGateway(aggregatorExecutor.getAggregator().getModem());
             }
         }
         smsLibService.startService();
-        System.out.println(AGGREGATOR_LIST.get(1).getModem().getStatus());
     }
 
     @Override
-    public List<Aggregator> getAggregatorList() {
+    public List<AggregatorExecutor> getAggregatorList() {
         return AGGREGATOR_LIST;
+    }
+
+    @Override
+    public AggregatorExecutor getAggregatorExecutorByGateway(AGateway gateway) throws Exception {
+        for (AggregatorExecutor aggregatorExecutor : AGGREGATOR_LIST) {
+            if (aggregatorExecutor.getAggregator().getModem().equals(gateway)) {
+                return aggregatorExecutor;
+            }
+        }
+        throw new Exception();
     }
 
 }

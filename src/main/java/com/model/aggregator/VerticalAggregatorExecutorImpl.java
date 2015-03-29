@@ -6,10 +6,10 @@ import org.slf4j.LoggerFactory;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(name = "VerticalAggregatorLogicImpl")
-public class VerticalAggregatorLogicImpl extends AggregatorLogic {
+@XmlType(name = "VerticalAggregatorExecutorImpl")
+public class VerticalAggregatorExecutorImpl extends AggregatorExecutor {
 
-    private static final Logger LOG = LoggerFactory.getLogger(VerticalAggregatorLogicImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(VerticalAggregatorExecutorImpl.class);
     private VerticalAggregator verticalAggregator;
 
     @Override
