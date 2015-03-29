@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 
@@ -16,10 +17,10 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public final void setClazz(Class<T> clazzToSet) {
-        System.out.println("ololo");
-
-        this.clazz = clazzToSet;
+    @SuppressWarnings("unchecked")
+    public GenericDAOImpl() {
+        ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        this.clazz = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
     }
 
     @Override
@@ -51,7 +52,7 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
     }
 
 
-    protected final Session getCurrentSession(){
+    protected final Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
     }
 }
