@@ -18,7 +18,7 @@ public class Message {
     private Long id;
 
     @Column(name = "aggregator_id")
-    private Integer aggregator_id;
+    private String aggregator_id;
 
     @Column(name = "originator")
     private String originator;
@@ -44,11 +44,11 @@ public class Message {
         this.id = id;
     }
 
-    public Integer getAggregator_id() {
+    public String getAggregator_id() {
         return aggregator_id;
     }
 
-    public void setAggregator_id(Integer aggregator_id) {
+    public void setAggregator_id(String aggregator_id) {
         this.aggregator_id = aggregator_id;
     }
 

@@ -29,7 +29,7 @@ public class MessageServiceImplTest {
     @Autowired
     private MessageService messageService;
 
-    private static final int MESSAGE_AGGREGATOR_ID = 124;
+    private static final String MESSAGE_AGGREGATOR_ID = "aggregator123";
     private static final String MESSAGE_ORIGINATOR = "Popular brand";
     private static final Date MESSAGE_DATE = new Date(1427629088000l);
     private static final String MESSAGE_TEXT = "I am message test text";
@@ -50,7 +50,7 @@ public class MessageServiceImplTest {
         Message receivedMessage = messageService.findById(message.getId());
 
         assertNotNull(receivedMessage);
-        assertEquals((long) receivedMessage.getAggregator_id(), MESSAGE_AGGREGATOR_ID);
+        assertEquals(receivedMessage.getAggregator_id(), MESSAGE_AGGREGATOR_ID);
         assertEquals(receivedMessage.getOriginator(), MESSAGE_ORIGINATOR);
         assertEquals(receivedMessage.getDate().getTimeInMillis(), MESSAGE_DATE.getTime());
         assertEquals(receivedMessage.getText(), MESSAGE_TEXT);
