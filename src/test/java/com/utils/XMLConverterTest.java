@@ -1,12 +1,13 @@
 package com.utils;
 
 import com.model.Modem;
-import com.model.aggregator.Aggregator;
-import com.model.aggregator.HorizontalAggregator;
+import com.model.aggregator.AggregatorLogic;
 import com.model.aggregator.VerticalAggregator;
+import com.model.aggregator.VerticalAggregatorLogicImpl;
 import com.model.sim.SIMCell;
 import com.utils.xml.XMLConverter;
 import com.utils.xml.XMLListWrapper;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
@@ -16,10 +17,10 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class XMLConverterTest {
 
-    private static XMLConverter<Aggregator> converter;
     private static final String MODEM_ID = "1430a";
     private static final String MODEM_IMEI = "1365372637";
     private static final String MODEM_INIT_COMMAND = "AT+CFUN";
@@ -28,48 +29,59 @@ public class XMLConverterTest {
     private static final String MODEM_MANUFACTURER = "HUAWEI";
     private static final String MODEM_MODEL = "E1550";
 
+    private static final String AGGREGATOR_ID = "13";
     private static final String SIM_CELL = "A4";
     private static final String DESCRIPTION = "Short description about aggregator if need";
     private static final String XML_PATH = "test_xml_converter.xml";
 
-    @Test
-    public void testConverter() throws Exception {
-        converter = new XMLConverter<Aggregator>(VerticalAggregator.class, HorizontalAggregator.class, XMLListWrapper.class);
-        List<Aggregator> values = new LinkedList<Aggregator>();
-        VerticalAggregator verticalAggregator = new VerticalAggregator();
+    private static VerticalAggregatorLogicImpl verticalAggregatorLogic;
+
+    @Before
+    public void initialize() {
         Modem modem = new Modem(MODEM_IMEI, MODEM_INIT_COMMAND,
                 MODEM_ID, MODEM_PORT, MODEM_BAUD_RATE, MODEM_MANUFACTURER, MODEM_MODEL);
+
+        VerticalAggregator verticalAggregator = new VerticalAggregator();
+        verticalAggregator.setId(AGGREGATOR_ID);
         verticalAggregator.setModem(modem);
         SIMCell simCell = new SIMCell();
         simCell.setName(SIM_CELL);
         verticalAggregator.setSimCell(simCell);
-        verticalAggregator.setId(1);
         verticalAggregator.setDescription(DESCRIPTION);
-        values.add(verticalAggregator);
-        HorizontalAggregator horizontalAggregator = new HorizontalAggregator();
-        horizontalAggregator.setId(2);
-        values.add(horizontalAggregator);
+        verticalAggregator.setStartOnSetup(true);
 
-        converter.doMarshall(values, XML_PATH);
+        verticalAggregatorLogic = new VerticalAggregatorLogicImpl();
+        verticalAggregatorLogic.setAggregator(verticalAggregator);
+    }
 
-        List<Aggregator> read_values = converter.doUnmarshall(XML_PATH);
+    @Test
+    public void aggregatorLogicListTest() throws Exception {
+        XMLConverter<AggregatorLogic> xmlConverter =
+                new XMLConverter<AggregatorLogic>(XMLListWrapper.class, VerticalAggregatorLogicImpl.class, VerticalAggregator.class);
+        LinkedList<AggregatorLogic> aggregatorLogics = new LinkedList<>();
+        aggregatorLogics.add(verticalAggregatorLogic);
+        xmlConverter.doMarshall(aggregatorLogics, XML_PATH);
 
-        assertThat(read_values.get(0), instanceOf(VerticalAggregator.class));
-        assertEquals(read_values.get(0).getId(), new Integer(1));
-        assertEquals(((VerticalAggregator) read_values.get(0)).getSimCell().getName(), SIM_CELL);
-        assertEquals(read_values.get(0).getDescription(), DESCRIPTION);
+        List<AggregatorLogic> aggregatorLogics1 = xmlConverter.doUnmarshall(XML_PATH);
 
-        Modem verticalAggregatorModem = read_values.get(0).getModem();
-        assertEquals(verticalAggregatorModem.getId(), MODEM_ID);
-        assertEquals(verticalAggregatorModem.getIMEI(), MODEM_IMEI);
-        assertEquals(verticalAggregatorModem.getPort(), MODEM_PORT);
-        assertEquals(verticalAggregatorModem.getInitCommand(), MODEM_INIT_COMMAND);
-        assertEquals(verticalAggregatorModem.getManufacturer(), MODEM_MANUFACTURER);
-        assertEquals(verticalAggregatorModem.getModel(), MODEM_MODEL);
-        assertEquals(verticalAggregatorModem.getBaudRate(), MODEM_BAUD_RATE);
+        assertThat(aggregatorLogics1.get(0), instanceOf(VerticalAggregatorLogicImpl.class));
+        VerticalAggregatorLogicImpl verticalAggregatorLogic = (VerticalAggregatorLogicImpl) aggregatorLogics1.get(0);
 
-        assertThat(read_values.get(1), instanceOf(HorizontalAggregator.class));
-        assertEquals(read_values.get(1).getId(), new Integer(2));
+        assertThat(verticalAggregatorLogic.getAggregator(), instanceOf(VerticalAggregator.class));
+        VerticalAggregator verticalAggregator = (VerticalAggregator) verticalAggregatorLogic.getAggregator();
+        assertEquals(verticalAggregator.getId(), AGGREGATOR_ID);
+        assertEquals(verticalAggregator.getSimCell().getName(), SIM_CELL);
+        assertEquals(verticalAggregator.getDescription(), DESCRIPTION);
+        assertTrue(verticalAggregator.isStartOnSetup());
+
+        Modem modem = verticalAggregator.getModem();
+        assertEquals(modem.getId(), MODEM_ID);
+        assertEquals(modem.getIMEI(), MODEM_IMEI);
+        assertEquals(modem.getInitCommand(), MODEM_INIT_COMMAND);
+        assertEquals(modem.getPort(), MODEM_PORT);
+        assertEquals(modem.getBaudRate(), MODEM_BAUD_RATE);
+        assertEquals(modem.getManufacturer(), MODEM_MANUFACTURER);
+        assertEquals(modem.getModel(), MODEM_MODEL);
 
         new File(XML_PATH).delete();
     }

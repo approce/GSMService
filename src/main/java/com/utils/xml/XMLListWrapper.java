@@ -5,16 +5,13 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
-/**
- * Created by Roman Zayats on 26.03.2015.
- */
-@XmlRootElement
+@XmlRootElement(name = "configuration")
 public class XMLListWrapper<T> {
 
     private List<T> list;
 
-    @XmlElementWrapper(name = "element")
-    @XmlElement
+    @XmlElementWrapper(name = "elements_list")
+    @XmlElement(name = "element")
     public List<T> getList() {
         return list;
     }
