@@ -1,16 +1,13 @@
 package com.model.aggregator;
 
 import com.model.sim.SIMCell;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "aggregator")
+@XmlType(name = "VerticalAggregator")
 public class VerticalAggregator extends Aggregator {
     private SIMCell simCell;
-    private static final Logger LOG = LoggerFactory.getLogger(VerticalAggregator.class);
 
     @XmlElement
     public SIMCell getSimCell() {
