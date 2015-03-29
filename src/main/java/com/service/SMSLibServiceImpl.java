@@ -3,6 +3,7 @@ package com.service;
 import com.service.interfaces.SMSLibService;
 import com.smslib.SMSLibGatewayStatusNotification;
 import com.smslib.SMSLibInboundMessageNotification;
+import com.smslib.SMSLibUSSDNotification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smslib.AGateway;
@@ -21,6 +22,9 @@ public class SMSLibServiceImpl implements SMSLibService {
     @Autowired
     private SMSLibGatewayStatusNotification smsLibGatewayStatusNotification;
 
+    @Autowired
+    private SMSLibUSSDNotification smsLibUSSDNotification;
+
     private static final Logger LOG = LoggerFactory.getLogger(SMSLibServiceImpl.class);
     private static final Service SERVICE = Service.getInstance();
 
@@ -34,7 +38,7 @@ public class SMSLibServiceImpl implements SMSLibService {
 
         SERVICE.setInboundMessageNotification(smsLibInboundMessageNotification);
         SERVICE.setGatewayStatusNotification(smsLibGatewayStatusNotification);
-
+        SERVICE.setUSSDNotification(smsLibUSSDNotification);
     }
 
     @Override
