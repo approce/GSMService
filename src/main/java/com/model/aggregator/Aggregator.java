@@ -2,9 +2,11 @@ package com.model.aggregator;
 
 import com.model.Modem;
 
+import javax.xml.bind.annotation.XmlAttribute;
+
 public abstract class Aggregator {
 
-    private Integer id;
+    private String id;
 
     private Modem modem;
 
@@ -13,11 +15,11 @@ public abstract class Aggregator {
     private boolean startOnSetup;
 
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -37,6 +39,7 @@ public abstract class Aggregator {
         this.description = description;
     }
 
+    @XmlAttribute
     public boolean isStartOnSetup() {
         return startOnSetup;
     }
