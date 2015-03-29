@@ -1,9 +1,11 @@
-package com.model.smslib;
+package com.smslib;
 
-import com.DAO.interfaces.MessageDAO;
 import com.model.Message;
 import com.model.aggregator.Aggregator;
 import com.service.interfaces.AggregatorService;
+import com.service.interfaces.MessageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.smslib.AGateway;
 import org.smslib.IInboundMessageNotification;
 import org.smslib.InboundMessage;
@@ -19,7 +21,9 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
     private AggregatorService aggregatorService;
 
     @Autowired
-    private MessageDAO messageDAO;
+    private MessageService messageService;
+
+    private static final Logger LOG = LoggerFactory.getLogger(SMSLibInboundMessageNotification.class);
 
     @Override
     public void process(AGateway aGateway, org.smslib.Message.MessageTypes messageTypes, InboundMessage inboundMessage) {
@@ -40,7 +44,12 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
                 message.setAggregator_id(aggregator.getId());
             }
         }
-        messageDAO.save(message);
-        //TODO delete message
+        messageService.save(message);
+
+        try {
+            aGateway.deleteMessage(inboundMessage);
+        } catch (Exception e) {
+            LOG.error("Exception while deleting inbound message.\n{}", e);
+        }
     }
 }

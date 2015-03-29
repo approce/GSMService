@@ -1,6 +1,6 @@
 package com.service;
 
-import com.model.smslib.SMSLibInboundMessageNotification;
+import com.smslib.SMSLibInboundMessageNotification;
 import com.service.interfaces.SMSLibService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
