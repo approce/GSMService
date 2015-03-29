@@ -12,9 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
 
-/**
- * Created by Roman Zayats on 28.03.2015.
- */
 @Component
 public class SMSLibInboundMessageNotification implements IInboundMessageNotification {
 
@@ -43,7 +40,7 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
                 message.setAggregator_id(aggregator.getId());
             }
         }
-        messageDAO.saveMessage(message);
+        messageDAO.save(message);
         //TODO delete message
     }
 }
