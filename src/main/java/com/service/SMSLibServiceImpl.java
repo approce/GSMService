@@ -50,12 +50,8 @@ public class SMSLibServiceImpl implements SMSLibService {
     public void stopService() {
         try {
             SERVICE.stopService();
-        } catch (SMSLibException e) {
+        } catch (Exception e) {
             LOG.error("Exception while SMSLib service stop.\n{}", e);
-        } catch (IOException e) {
-            LOG.error("Exception while SMSLib service start.\n{}", e);
-        } catch (InterruptedException e) {
-            LOG.error("Exception while SMSLib service start.\n{}", e);
         }
     }
 
