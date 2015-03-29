@@ -14,7 +14,7 @@
             <id>2</id>
             <description>this is very first aggregator</description>
             <modem baudRate="57600" imei="45754733" id="28700a" initCommand="AT+CFUN=1\r" manufacturer="HUAWEI" model="E1550" port="COM9"/>
-            <startOnSetup>true</startOnSetup>
+            <startOnSetup>false</startOnSetup>
             <simCell/>
         </list>
     </element>
