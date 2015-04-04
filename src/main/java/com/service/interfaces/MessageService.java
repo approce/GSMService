@@ -6,5 +6,5 @@ public interface MessageService {
 
     void save(Message message);
 
-    public Message findById(long id);
+    Message findById(long id);
 }
