@@ -17,18 +17,4 @@ public class VerticalAggregatorExecutorImpl extends AggregatorExecutor {
     public void setMessage(Message message) {
 
     }
-
-    @Override
-    public void setAggregator(Aggregator aggregator) {
-        if (aggregator instanceof VerticalAggregator) {
-            this.verticalAggregator = (VerticalAggregator) aggregator;
-        } else {
-            LOG.error("Wrong aggregator set to {}", this.getClass().getName());
-        }
-    }
-
-    @Override
-    public Aggregator getAggregator() {
-        return verticalAggregator;
-    }
 }

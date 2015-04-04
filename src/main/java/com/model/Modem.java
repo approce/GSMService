@@ -20,7 +20,8 @@ public class Modem extends SerialModemGateway {
 
     transient private SIM sim;
 
-    public Modem(String IMEI, String initCommand, String id, String comPort, int baudRate, String manufacturer, String model) {
+    public Modem(String id, String IMEI, String comPort, int baudRate,
+                 String initCommand, String manufacturer, String model) {
         super(id, comPort, baudRate, manufacturer, model);
         this.IMEI = IMEI;
         this.port = comPort;
