@@ -1,13 +1,9 @@
 package com.model;
 
 import com.model.sim.SIM;
-import com.utils.xml.ModemAdapterConverter;
 import org.smslib.AGateway;
 import org.smslib.modem.SerialModemGateway;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-@XmlJavaTypeAdapter(ModemAdapterConverter.class)
 public class Modem extends SerialModemGateway {
 
     private final String IMEI;

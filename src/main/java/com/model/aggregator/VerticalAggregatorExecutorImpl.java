@@ -3,14 +3,10 @@ package com.model.aggregator;
 import com.model.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
 
-@XmlType(name = "VerticalAggregatorExecutorImpl")
 public class VerticalAggregatorExecutorImpl extends AggregatorExecutor {
 
     private static final Logger LOG = LoggerFactory.getLogger(VerticalAggregatorExecutorImpl.class);
-    private VerticalAggregator verticalAggregator;
 
     @Override
     public void setUSSDMessage(String message) {
@@ -32,7 +28,6 @@ public class VerticalAggregatorExecutorImpl extends AggregatorExecutor {
     }
 
     @Override
-    @XmlElement
     public Aggregator getAggregator() {
         return verticalAggregator;
     }
