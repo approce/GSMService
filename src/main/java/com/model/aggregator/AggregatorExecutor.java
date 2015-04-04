@@ -6,7 +6,7 @@ import com.model.Modem;
 public abstract class AggregatorExecutor {
 
     private String aggregatorId;
-    private boolean startOnSetup;
+    private Boolean startOnSetup;
     private Modem modem;
 
     public abstract void setUSSDMessage(String message);
@@ -21,11 +21,11 @@ public abstract class AggregatorExecutor {
         this.aggregatorId = aggregatorId;
     }
 
-    public boolean isStartOnSetup() {
+    public Boolean isStartOnSetup() {
         return startOnSetup;
     }
 
-    public void setStartOnSetup(boolean startOnSetup) {
+    public void setStartOnSetup(Boolean startOnSetup) {
         this.startOnSetup = startOnSetup;
     }
 

@@ -38,7 +38,7 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
         calendar.setTime(inboundMessage.getDate());
         message.setDate(calendar);
         try {
-            message.setAggregator_id(aggregatorService.getAggregatorExecutorByGateway(aGateway).getAggregator().getId());
+            message.setAggregator_id(aggregatorService.getAggregatorExecutorByGateway(aGateway).getAggregatorId());
         } catch (Exception e) {
             LOG.error("Exception while getting aggregator by gateway.\n{}", e);
         }

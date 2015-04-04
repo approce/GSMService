@@ -1,6 +1,6 @@
 package com.smslib;
 
-import com.utils.xml.StringMethods;
+import com.utils.StringMethods;
 import org.ajwcc.pduUtils.gsm3040.PduUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
