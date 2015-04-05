@@ -1,22 +1,22 @@
 package com.DAO;
 
 import com.DAO.interfaces.GenericDAO;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 
 @Repository
-public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
+public abstract class GenericDAOImpl<T, PK extends Serializable> implements GenericDAO<T> {
 
-    private Class<T> clazz;
+    protected Class<T> clazz;
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    protected EntityManager entityManager;
 
     @SuppressWarnings("unchecked")
     public GenericDAOImpl() {
@@ -25,35 +25,32 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public T findById(long id) {
-        return (T) getCurrentSession().get(clazz, id);
+        return this.entityManager.find(clazz, id);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<T> findAll() {
-        return getCurrentSession().createQuery("FROM " + clazz.getName()).list();
+        return (List<T>) this.entityManager.createQuery("FROM " + clazz.getName()).getResultList();
     }
 
     @Override
     public void save(T t) {
-        getCurrentSession().save(t);
+        this.entityManager.persist(t);
     }
 
     @Override
     public void update(T t) {
-        getCurrentSession().update(t);
+        this.entityManager.merge(t);
 
     }
 
     @Override
     public void delete(T t) {
-        sessionFactory.getCurrentSession().delete(t);
+        t = this.entityManager.merge(t);
+        this.entityManager.remove(t);
     }
 
 
-    protected final Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
-    }
 }
