@@ -19,7 +19,7 @@ public class SMSLibGatewayStatusNotification implements IGatewayStatusNotificati
 
     @Override
     public void process(AGateway aGateway, AGateway.GatewayStatuses oldStatus, AGateway.GatewayStatuses newStatus) {
-        LOG.debug("Gateway id:" + aGateway.getGatewayId() + " status " + oldStatus + " changed to " + newStatus);
+        LOG.debug("Gateway ID:" + aGateway.getGatewayId() + " status " + oldStatus + " changed to " + newStatus);
         if (newStatus.equals(AGateway.GatewayStatuses.STARTED)) {
             String command = "*161*";
             byte[] dataToSend = null;
