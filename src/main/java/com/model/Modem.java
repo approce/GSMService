@@ -6,23 +6,26 @@ import org.smslib.modem.SerialModemGateway;
 
 public class Modem extends SerialModemGateway {
 
-    private final String IMEI;
+    public final String ID;
 
-    private final String port;
+    public final String IMEI;
 
-    private final Integer baudRate;
+    public final String port;
 
-    private final String initCommand;
+    public final Integer baudRate;
 
-    private final String manufacturer;
+    public final String initCommand;
 
-    private final String model;
+    public final String manufacturer;
 
-    transient private SIM sim;
+    public final String model;
+
+    public SIM sim;
 
     public Modem(String id, String IMEI, String comPort, int baudRate,
                  String initCommand, String manufacturer, String model) {
         super(id, comPort, baudRate, manufacturer, model);
+        this.ID=id;
         this.IMEI = IMEI;
         this.port = comPort;
         this.baudRate = baudRate;
@@ -32,37 +35,5 @@ public class Modem extends SerialModemGateway {
         this.setProtocol(AGateway.Protocols.PDU);
         this.setInbound(true);
         this.setCustomInitString(initCommand);
-    }
-
-    public String getId() {
-        return getGatewayId();
-    }
-
-    public String getIMEI() {
-        return IMEI;
-    }
-
-    public String getPort() {
-        return port;
-    }
-
-    public Integer getBaudRate() {
-        return baudRate;
-    }
-
-    public String getInitCommand() {
-        return initCommand;
-    }
-
-    @Override
-    public String getManufacturer() {
-//        return super.getManufacturer();
-        return manufacturer;
-    }
-
-    @Override
-    public String getModel() {
-//        return super.getModel();
-        return model;
     }
 }

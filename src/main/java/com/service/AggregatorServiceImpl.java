@@ -20,10 +20,9 @@ public class AggregatorServiceImpl implements AggregatorService {
     private List<AggregatorExecutor> aggregatorExecutors;
 
     private static final Logger LOG = LoggerFactory.getLogger(AggregatorServiceImpl.class);
-    private static List<AggregatorExecutor> AGGREGATOR_LIST;
 
     public AggregatorExecutor getAggregatorExecutorByGateway(AGateway gateway) throws Exception {
-        for (AggregatorExecutor aggregatorExecutor : AGGREGATOR_LIST) {
+        for (AggregatorExecutor aggregatorExecutor : aggregatorExecutors) {
             if (aggregatorExecutor.MODEM.equals(gateway)) {
                 return aggregatorExecutor;
             }

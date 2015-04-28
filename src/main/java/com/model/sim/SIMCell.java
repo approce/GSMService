@@ -2,13 +2,9 @@ package com.model.sim;
 
 public class SIMCell {
 
-    private String name;
+    public final String name;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public SIMCell(String name) {
         this.name = name;
     }
 }

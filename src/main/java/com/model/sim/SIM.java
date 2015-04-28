@@ -2,9 +2,15 @@ package com.model.sim;
 
 public class SIM {
 
-    private Integer id;
+    public final Integer ID;
 
-    private Integer number;
+    public final Integer NUMBER;
 
-    private SIMProvider provider;
+    public final SIMProvider SIM_PROVIDER;
+
+    public SIM(Integer ID, Integer NUMBER, SIMProvider SIM_PROVIDER) {
+        this.ID = ID;
+        this.NUMBER = NUMBER;
+        this.SIM_PROVIDER = SIM_PROVIDER;
+    }
 }

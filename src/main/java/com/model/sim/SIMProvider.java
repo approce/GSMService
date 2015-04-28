@@ -2,8 +2,13 @@ package com.model.sim;
 
 public class SIMProvider {
 
-    private Integer id;
+    public final Integer ID;
 
-    private String name;
+    public final String NAME;
+
+    public SIMProvider(Integer ID, String NAME) {
+        this.ID = ID;
+        this.NAME = NAME;
+    }
 
 }
