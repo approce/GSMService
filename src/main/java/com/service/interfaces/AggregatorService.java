@@ -1,13 +1,14 @@
 package com.service.interfaces;
 
-import com.model.aggregator.AggregatorExecutor;
+import com.model.Message;
 import org.smslib.AGateway;
-
-import java.util.List;
+import org.smslib.AGateway.GatewayStatuses;
 
 public interface AggregatorService {
 
-    List<AggregatorExecutor> getAggregatorList();
+    void proccessInboundMessage(Message message, AGateway gateway);
 
-    public AggregatorExecutor getAggregatorExecutorByGateway(AGateway gateway) throws Exception;
+    void proccessUSSDNotification(String notification, AGateway gateway);
+
+    void proccessStatusNotification(GatewayStatuses oldStatus, GatewayStatuses newStatus, AGateway gateway);
 }

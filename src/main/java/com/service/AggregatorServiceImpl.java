@@ -1,5 +1,6 @@
 package com.service;
 
+import com.model.Message;
 import com.model.aggregator.AggregatorExecutor;
 import com.service.interfaces.AggregatorService;
 import com.service.interfaces.SMSLibService;
@@ -21,18 +22,27 @@ public class AggregatorServiceImpl implements AggregatorService {
     private static final Logger LOG = LoggerFactory.getLogger(AggregatorServiceImpl.class);
     private static List<AggregatorExecutor> AGGREGATOR_LIST;
 
-    @Override
-    public List<AggregatorExecutor> getAggregatorList() {
-        return AGGREGATOR_LIST;
-    }
-
-    @Override
     public AggregatorExecutor getAggregatorExecutorByGateway(AGateway gateway) throws Exception {
         for (AggregatorExecutor aggregatorExecutor : AGGREGATOR_LIST) {
-            if (aggregatorExecutor.getModem().equals(gateway)) {
+            if (aggregatorExecutor.MODEM.equals(gateway)) {
                 return aggregatorExecutor;
             }
         }
         throw new Exception();
+    }
+
+    @Override
+    public void proccessInboundMessage(Message message, AGateway gateway) {
+
+    }
+
+    @Override
+    public void proccessUSSDNotification(String notification, AGateway gateway) {
+
+    }
+
+    @Override
+    public void proccessStatusNotification(AGateway.GatewayStatuses oldStatus, AGateway.GatewayStatuses newStatus, AGateway gateway) {
+
     }
 }

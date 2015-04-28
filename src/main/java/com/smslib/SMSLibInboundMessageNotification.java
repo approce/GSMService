@@ -19,6 +19,7 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
     @Autowired
     private AggregatorService aggregatorService;
 
+    //TODO move it from here:
     @Autowired
     private MessageService messageService;
 
@@ -37,17 +38,16 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(inboundMessage.getDate());
         message.setDate(calendar);
-        try {
-            message.setAggregator_id(aggregatorService.getAggregatorExecutorByGateway(aGateway).getAggregatorId());
-        } catch (Exception e) {
-            LOG.error("Exception while getting aggregator by gateway.\n{}", e);
-        }
-        messageService.save(message);
+            //TODO move this to aggregator service:
+//            message.setAggregator_id(aggregatorService.getAggregatorExecutorByGateway(aGateway).getAggregatorId());
+//            messageService.save(message);
 
         try {
             aGateway.deleteMessage(inboundMessage);
         } catch (Exception e) {
             LOG.error("Exception while deleting inbound message.\n{}", e);
         }
+
+        aggregatorService.proccessInboundMessage(message,aGateway);
     }
 }
