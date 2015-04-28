@@ -1,6 +1,5 @@
 package com.model.aggregator;
 
-import com.model.Message;
 import com.model.Modem;
 
 public abstract class AggregatorExecutor {
@@ -14,9 +13,4 @@ public abstract class AggregatorExecutor {
         this.START_ON_SETUP = START_ON_SETUP;
         this.MODEM = MODEM;
     }
-
-    public abstract void setUSSDMessage(String message);
-
-    public abstract void setMessage(Message message);
-
 }
