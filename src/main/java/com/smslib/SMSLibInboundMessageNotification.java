@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.smslib.AGateway;
 import org.smslib.IInboundMessageNotification;
 import org.smslib.InboundMessage;
+import org.smslib.Message.MessageTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,18 +20,29 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
     @Autowired
     private AggregatorService aggregatorService;
 
-    //TODO move it from here:
     @Autowired
     private MessageService messageService;
 
-    private static final Logger LOG = LoggerFactory.getLogger(SMSLibInboundMessageNotification.class);
+    private static final Logger LOG =
+            LoggerFactory.getLogger(SMSLibInboundMessageNotification.class);
 
     @Override
-    public void process(AGateway aGateway, org.smslib.Message.MessageTypes messageTypes, InboundMessage inboundMessage) {
-        if (!messageTypes.equals(org.smslib.Message.MessageTypes.INBOUND)) {
+    public void process(AGateway aGateway, MessageTypes messageType,
+                        InboundMessage inboundMessage) {
+        if (!messageType.equals(MessageTypes.INBOUND)) {
+            LOG.warn("Fail to process message. MessageType:{}", messageType);
             return;
         }
 
+        Message message = getMessage(aGateway, inboundMessage);
+        messageService.save(message);
+        deleteMessage(aGateway, inboundMessage);
+        aggregatorService.processInboundMessage(message, aGateway);
+
+        LOG.debug("Message ID:{} have been successfully processed.", message.getId());
+    }
+
+    private Message getMessage(AGateway aGateway, InboundMessage inboundMessage) {
         Message message = new Message();
         message.setOriginator(inboundMessage.getOriginator());
         message.setText(inboundMessage.getText());
@@ -38,16 +50,15 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(inboundMessage.getDate());
         message.setDate(calendar);
-            //TODO move this to aggregator service:
-//            message.setAggregator_id(aggregatorService.getAggregatorExecutorByGateway(aGateway).getAggregatorId());
-//            messageService.save(message);
+        message.setAggregator_id(aGateway.getGatewayId());
+        return message;
+    }
 
+    private void deleteMessage(AGateway aGateway, InboundMessage inboundMessage) {
         try {
             aGateway.deleteMessage(inboundMessage);
         } catch (Exception e) {
             LOG.error("Exception while deleting inbound message.\n{}", e);
         }
-
-        aggregatorService.processInboundMessage(message, aGateway);
     }
 }
