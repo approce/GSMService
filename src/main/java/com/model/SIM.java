@@ -1,4 +1,4 @@
-package com.model.sim;
+package com.model;
 
 public class SIM {
 

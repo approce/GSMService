@@ -16,7 +16,7 @@
 
     </bean>
 
-    <bean id="aggregator_vertical_1" class="com.model.aggregator.VerticalAggregatorExecutorImpl">
+    <bean id="aggregator_vertical_1" class="com.aggregators.VerticalAggregatorExecutorImpl">
         <constructor-arg name="ID" value="first"/>
         <constructor-arg name="START_ON_SETUP" value="true"/>
         <constructor-arg name="MODEM" ref="aggregator_vertical_1_modem_1"/>

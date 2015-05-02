@@ -1,7 +1,7 @@
 package com.service;
 
 import com.model.Message;
-import com.model.aggregator.AggregatorExecutor;
+import com.aggregators.AggregatorExecutor;
 import com.service.interfaces.AggregatorService;
 import com.service.interfaces.SMSLibService;
 import org.slf4j.Logger;

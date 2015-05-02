@@ -1,4 +1,4 @@
-package com.model.aggregator;
+package com.aggregators;
 
 import com.model.Modem;
 
