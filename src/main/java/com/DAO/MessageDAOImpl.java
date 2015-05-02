@@ -8,6 +8,6 @@ import javax.transaction.Transactional;
 
 @Repository("MessageDAO")
 @Transactional
-public class MessageDAOImpl extends GenericDAOImpl<Message,Long> implements MessageDAO {
+public class MessageDAOImpl extends GenericDAOImpl<Message> implements MessageDAO {
 
 }

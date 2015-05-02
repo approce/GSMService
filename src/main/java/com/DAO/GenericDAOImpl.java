@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @Repository
-public abstract class GenericDAOImpl<T, PK extends Serializable> implements GenericDAO<T> {
+public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
 
     protected Class<T> clazz;
 
