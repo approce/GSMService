@@ -2,9 +2,13 @@ package com.model;
 
 public class SIMCell {
 
-    public final String name;
+    //TODO: use hibernate
+    public final String NAME;
 
-    public SIMCell(String name) {
-        this.name = name;
+    public final SIMProvider SIM_PROVIDER;
+
+    public SIMCell(String NAME, SIMProvider SIM_PROVIDER) {
+        this.NAME = NAME;
+        this.SIM_PROVIDER = SIM_PROVIDER;
     }
 }
