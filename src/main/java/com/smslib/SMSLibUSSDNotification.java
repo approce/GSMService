@@ -30,6 +30,6 @@ public class SMSLibUSSDNotification implements IUSSDNotification {
             LOG.error("Exception while USSD find body {}", e);
         }
 
-        aggregatorService.proccessUSSDNotification(body,aGateway);
+        aggregatorService.processUSSDNotification(body, aGateway);
     }
 }

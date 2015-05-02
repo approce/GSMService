@@ -48,6 +48,6 @@ public class SMSLibGatewayStatusNotification implements IGatewayStatusNotificati
             }
         }
 
-        aggregatorService.proccessStatusNotification(oldStatus,newStatus,aGateway);
+        aggregatorService.processStatusNotification(oldStatus, newStatus, aGateway);
     }
 }

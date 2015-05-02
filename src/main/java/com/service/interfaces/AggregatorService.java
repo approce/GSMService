@@ -6,9 +6,9 @@ import org.smslib.AGateway.GatewayStatuses;
 
 public interface AggregatorService {
 
-    void proccessInboundMessage(Message message, AGateway gateway);
+    void processInboundMessage(Message message, AGateway gateway);
 
-    void proccessUSSDNotification(String notification, AGateway gateway);
+    void processUSSDNotification(String notification, AGateway gateway);
 
-    void proccessStatusNotification(GatewayStatuses oldStatus, GatewayStatuses newStatus, AGateway gateway);
+    void processStatusNotification(GatewayStatuses oldStatus, GatewayStatuses newStatus, AGateway gateway);
 }

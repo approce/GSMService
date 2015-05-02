@@ -17,21 +17,9 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageDAO messageDAO;
 
-    @PostConstruct
-    public void dos() {
-        List<Message> all = messageDAO.findAll();
-        System.out.println("asd");
-        System.out.println("asd");
-        System.out.println("asdasdsd");
-    }
-
     @Override
     public void save(Message message) {
         messageDAO.save(message);
     }
 
-    @Override
-    public Message findById(long message) {
-        return messageDAO.findById(message);
-    }
 }

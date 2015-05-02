@@ -48,6 +48,6 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
             LOG.error("Exception while deleting inbound message.\n{}", e);
         }
 
-        aggregatorService.proccessInboundMessage(message,aGateway);
+        aggregatorService.processInboundMessage(message, aGateway);
     }
 }

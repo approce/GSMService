@@ -31,17 +31,17 @@ public class AggregatorServiceImpl implements AggregatorService {
     }
 
     @Override
-    public void proccessInboundMessage(Message message, AGateway gateway) {
+    public void processInboundMessage(Message message, AGateway gateway) {
 
     }
 
     @Override
-    public void proccessUSSDNotification(String notification, AGateway gateway) {
+    public void processUSSDNotification(String notification, AGateway gateway) {
 
     }
 
     @Override
-    public void proccessStatusNotification(AGateway.GatewayStatuses oldStatus, AGateway.GatewayStatuses newStatus, AGateway gateway) {
+    public void processStatusNotification(AGateway.GatewayStatuses oldStatus, AGateway.GatewayStatuses newStatus, AGateway gateway) {
 
     }
 }
