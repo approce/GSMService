@@ -10,5 +10,5 @@ public interface AggregatorService {
 
     void processUSSDNotification(String notification, AGateway gateway);
 
-    void processStatusNotification(GatewayStatuses oldStatus, GatewayStatuses newStatus, AGateway gateway);
+    void processStatusNotification(GatewayStatuses newStatus, AGateway gateway);
 }

@@ -7,6 +7,7 @@ import com.service.interfaces.SMSLibService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smslib.AGateway;
+import org.smslib.AGateway.GatewayStatuses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -41,7 +42,7 @@ public class AggregatorServiceImpl implements AggregatorService {
     }
 
     @Override
-    public void processStatusNotification(AGateway.GatewayStatuses oldStatus, AGateway.GatewayStatuses newStatus, AGateway gateway) {
+    public void processStatusNotification(GatewayStatuses newStatus, AGateway gateway) {
 
     }
 }
