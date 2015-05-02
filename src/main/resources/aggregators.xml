@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
        ">
 
-    <bean id="aggregator_vertical_1_modem_1" class="com.model.Modem">
-        <constructor-arg index="0" value="modem_id_1"/>
+    <bean id="aggregator_1" class="com.model.Modem">
+        <constructor-arg index="0" value="aggregator_1"/>
         <constructor-arg index="1" value="051251251255"/>
         <constructor-arg index="2" value="COM14"/>
         <constructor-arg index="3" value="56700"/>
@@ -16,10 +18,14 @@
 
     </bean>
 
-    <bean id="aggregator_vertical_1" class="com.aggregators.VerticalAggregatorExecutorImpl">
+    <bean id="aggregator_executor_1" class="com.aggregators.VerticalAggregatorExecutorImpl">
         <constructor-arg name="ID" value="first"/>
         <constructor-arg name="START_ON_SETUP" value="true"/>
-        <constructor-arg name="MODEM" ref="aggregator_vertical_1_modem_1"/>
+        <constructor-arg name="MODEM" ref="aggregator_1"/>
     </bean>
+
+    <util:map id="aggregatorsMap" value-type="com.aggregators.AggregatorExecutor">
+        <entry key="aggregator_1" value-ref="aggregator_executor_1"/>
+    </util:map>
 
 </beans>

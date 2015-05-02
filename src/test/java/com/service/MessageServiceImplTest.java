@@ -47,7 +47,7 @@ public class MessageServiceImplTest {
 
         messageService.save(message);
 
-        Message receivedMessage = messageService.findById(message.getId());
+        Message receivedMessage = null;
 
         assertNotNull(receivedMessage);
         assertEquals(receivedMessage.getAggregator_id(), MESSAGE_AGGREGATOR_ID);
