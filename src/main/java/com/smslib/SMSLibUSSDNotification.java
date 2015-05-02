@@ -21,15 +21,17 @@ public class SMSLibUSSDNotification implements IUSSDNotification {
 
     @Override
     public void process(AGateway aGateway, USSDResponse ussdResponse) {
-        String body = null;
         try {
-            String bodyDecoded = StringMethods.find(ussdResponse.getRawResponse(), "\"", "\"");
-            body = PduUtils.decodeUcs2Encoding(null, PduUtils.pduToBytes(bodyDecoded));
-            LOG.debug("USSD response received gateway ID: {}\n{}", aGateway.getGatewayId(), body);
+            String body = getBody(ussdResponse);
+            aggregatorService.processUSSDNotification(body, aGateway);
+            LOG.debug("Gateway ID: {}. Received USSD response:\n{}", aGateway.getGatewayId(), body);
         } catch (Exception e) {
-            LOG.error("Exception while USSD find body {}", e);
+            LOG.error("Exception while process USSD response.\n{}", e);
         }
+    }
 
-        aggregatorService.processUSSDNotification(body, aGateway);
+    private String getBody(USSDResponse ussdResponse) throws Exception {
+        String bodyDecoded = StringMethods.find(ussdResponse.getRawResponse(), "\"", "\"");
+        return PduUtils.decodeUcs2Encoding(null, PduUtils.pduToBytes(bodyDecoded));
     }
 }
