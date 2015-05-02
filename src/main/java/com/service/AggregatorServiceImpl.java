@@ -25,10 +25,10 @@ public class AggregatorServiceImpl implements AggregatorService {
 
     @Autowired
     @Resource(name = "aggregatorsMap")
-    private Map<String ,AggregatorExecutor> AGGREGATORS_MAP;
+    private Map<String, AggregatorExecutor> AGGREGATORS_MAP;
 
     @PostConstruct
-    public void dos(){
+    public void dos() {
         System.out.println("asd");
     }
 
@@ -45,7 +45,10 @@ public class AggregatorServiceImpl implements AggregatorService {
     }
 
     @Override
-    public void processStatusNotification(GatewayStatuses newStatus, AGateway gateway) {
-
+    public void processStatusNotification(GatewayStatuses newStatus, GatewayStatuses oldStatus,
+                                          AGateway gateway) {
+        if (newStatus.equals(GatewayStatuses.STARTED)) {
+            AGGREGATORS_MAP.get(gateway.getGatewayId()).sendGetNumberUSSD();
+        }
     }
 }

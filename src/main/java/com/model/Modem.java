@@ -11,13 +11,7 @@ public class Modem extends SerialModemGateway {
 
     public final String port;
 
-    public final Integer baudRate;
-
     public final String initCommand;
-
-    public final String manufacturer;
-
-    public final String model;
 
     public SIM sim;
 
@@ -27,10 +21,7 @@ public class Modem extends SerialModemGateway {
         this.ID=id;
         this.IMEI = IMEI;
         this.port = comPort;
-        this.baudRate = baudRate;
         this.initCommand = initCommand;
-        this.manufacturer = manufacturer;
-        this.model = model;
         this.setProtocol(AGateway.Protocols.PDU);
         this.setInbound(true);
         this.setCustomInitString(initCommand);

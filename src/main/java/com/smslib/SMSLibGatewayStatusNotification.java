@@ -1,53 +1,30 @@
 package com.smslib;
 
-import com.model.Modem;
 import com.service.interfaces.AggregatorService;
-import org.ajwcc.pduUtils.gsm3040.PduUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smslib.AGateway;
-import org.smslib.GatewayException;
 import org.smslib.IGatewayStatusNotification;
-import org.smslib.TimeoutException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
+import static org.smslib.AGateway.GatewayStatuses;
 
 @Component
 public class SMSLibGatewayStatusNotification implements IGatewayStatusNotification {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SMSLibGatewayStatusNotification.class);
+    private static final Logger LOG =
+            LoggerFactory.getLogger(SMSLibGatewayStatusNotification.class);
 
     @Autowired
     private AggregatorService aggregatorService;
 
     @Override
-    public void process(AGateway aGateway, AGateway.GatewayStatuses oldStatus, AGateway.GatewayStatuses newStatus) {
-        LOG.debug("Gateway ID:" + aGateway.getGatewayId() + " status " + oldStatus + " changed to " + newStatus);
-        if (newStatus.equals(AGateway.GatewayStatuses.STARTED)) {
-            //TODO move this logic out from here:
-            String command = "*161*";
-            byte[] dataToSend = null;
-            byte[] dataToSend2 = null;
-            dataToSend = PduUtils.stringToUnencodedSeptets(command);
-            dataToSend2 = PduUtils.encode7bitUserData(null, dataToSend);
-            command = PduUtils.bytesToPdu(dataToSend2);
-            //send command to gateway from SMSlib:
-            try {
-                String resp = ((Modem)aGateway).sendCustomATCommand("AT+CUSD=1,\"" + command + "\",15\r");
-                //TODO use multiCatch. Set IDEA java version.
-            } catch (GatewayException e) {
-                e.printStackTrace();
-            } catch (TimeoutException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public void process(AGateway aGateway, GatewayStatuses oldStatus, GatewayStatuses newStatus) {
+        LOG.debug("Gateway ID: {} changed status from {} to {}\n", aGateway.getGatewayId(),
+                oldStatus, newStatus);
 
-        aggregatorService.processStatusNotification(oldStatus, newStatus, aGateway);
+        aggregatorService.processStatusNotification(newStatus, oldStatus, aGateway);
     }
+
 }

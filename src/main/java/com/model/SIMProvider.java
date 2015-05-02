@@ -6,9 +6,12 @@ public class SIMProvider {
 
     public final String NAME;
 
-    public SIMProvider(Integer ID, String NAME) {
+    public final String GET_NUMBER_COMMAND;
+
+    public SIMProvider(Integer ID, String NAME, String GET_NUMBER_COMMAND) {
         this.ID = ID;
         this.NAME = NAME;
+        this.GET_NUMBER_COMMAND = GET_NUMBER_COMMAND;
     }
 
 }
