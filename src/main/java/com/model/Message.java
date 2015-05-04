@@ -30,9 +30,6 @@ public class Message {
     @Column(name = "receipt_date")
     private Calendar receipt_date;
 
-    //TODO join service.
-
-
     public Long getId() {
         return id;
     }
