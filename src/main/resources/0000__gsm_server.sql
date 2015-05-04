@@ -21,7 +21,9 @@ CREATE TABLE providers (
 CREATE TABLE sim_cells (
   sim_cell_id   VARCHAR(4)   NOT NULL UNIQUE,
   description   VARCHAR(100) DEFAULT NULL,
-  PRIMARY KEY (sim_cell_id)
+  provider_id   INT          DEFAULT NULL,
+  PRIMARY KEY (sim_cell_id),
+  FOREIGN KEY (provider_id) REFERENCES providers(provider_id)
 );
 
 CREATE TABLE messages (
