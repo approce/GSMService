@@ -1,1 +1,0 @@
-INSERT INTO MODEM (id,imei,brand,model,gatewaySpeed,port, init_commant) values (0, '380449164448461', 'HUAWEI', 'E1550',3545455,'COM-13', 'AT+CFUN=1\r')
