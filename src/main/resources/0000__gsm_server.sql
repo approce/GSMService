@@ -3,10 +3,9 @@ CREATE DATABASE IF NOT EXISTS gsm_service
   DEFAULT COLLATE utf8_general_ci;
 
 CREATE TABLE sims (
-  sim_id      INT    NOT NULL AUTO_INCREMENT,
-  number      BIGINT NOT NULL UNIQUE,
+  sim_number  BIGINT NOT NULL UNIQUE,
   provider_id INT    NOT NULL,
-  PRIMARY KEY (sim_id),
+  PRIMARY KEY (sim_number),
   FOREIGN KEY (provider_id) REFERENCES providers (provider_id)
 );
 
