@@ -13,6 +13,7 @@ import javax.persistence.Table;
 @Table(name = "sims")
 public class SIM {
 
+    @Id
     @Column(name = "sim_number")
     public final Integer NUMBER;
 

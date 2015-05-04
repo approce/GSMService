@@ -13,7 +13,7 @@ public class SIMCell {
 
     @Id
     @Column(name = "sim_cell_id")
-    public final String ID;
+    private String ID;
 
     @Column(name = "description")
     public final String DESCRIPTION;
@@ -22,9 +22,16 @@ public class SIMCell {
     @JoinColumn(name = "provider_id")
     public final SIMProvider SIM_PROVIDER;
 
-    public SIMCell(String ID, String DESCRIPTION, SIMProvider SIM_PROVIDER) {
-        this.ID = ID;
+    public SIMCell(String DESCRIPTION, SIMProvider SIM_PROVIDER) {
         this.DESCRIPTION = DESCRIPTION;
         this.SIM_PROVIDER = SIM_PROVIDER;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 }

@@ -14,7 +14,7 @@ public class SIMProvider {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "provider_id")
-    public final Integer ID;
+    private Integer ID;
 
     @Column(name = "name")
     public final String NAME;
@@ -23,12 +23,26 @@ public class SIMProvider {
     public final String GET_NUMBER_COMMAND;
 
     @Column(name = "description")
-    public final String DESCRIPTION;
+    private String DESCRIPTION;
 
-    public SIMProvider(Integer ID, String NAME, String GET_NUMBER_COMMAND, String DESCRIPTION) {
-        this.ID = ID;
+    public SIMProvider(String NAME, String GET_NUMBER_COMMAND) {
         this.NAME = NAME;
         this.GET_NUMBER_COMMAND = GET_NUMBER_COMMAND;
+    }
+
+    public Integer getID() {
+        return ID;
+    }
+
+    public void setID(Integer ID) {
+        this.ID = ID;
+    }
+
+    public String getDESCRIPTION() {
+        return DESCRIPTION;
+    }
+
+    public void setDESCRIPTION(String DESCRIPTION) {
         this.DESCRIPTION = DESCRIPTION;
     }
 }
