@@ -9,12 +9,12 @@ import javax.persistence.Table;
 import java.util.Calendar;
 
 @Entity
-@Table(name = "message")
+@Table(name = "messages")
 public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "message_id")
     private Long id;
 
     @Column(name = "aggregator_id")
@@ -24,14 +24,11 @@ public class Message {
     private String originator;
 
     //TODO validate this to avoid SQL injection
-    @Column(name = "text")
-    private String text;
+    @Column(name = "body")
+    private String body;
 
-    @Column(name = "code")
-    private String code;
-
-    @Column(name = "date")
-    private Calendar date;
+    @Column(name = "receipt_date")
+    private Calendar receipt_date;
 
     //TODO join service.
 
@@ -60,27 +57,19 @@ public class Message {
         this.originator = originator;
     }
 
-    public String getText() {
-        return text;
+    public String getBody() {
+        return body;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setBody(String body) {
+        this.body = body;
     }
 
-    public String getCode() {
-        return code;
+    public Calendar getReceipt_date() {
+        return receipt_date;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Calendar getDate() {
-        return date;
-    }
-
-    public void setDate(Calendar date) {
-        this.date = date;
+    public void setReceipt_date(Calendar receipt_date) {
+        this.receipt_date = receipt_date;
     }
 }

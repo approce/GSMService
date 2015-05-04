@@ -28,6 +28,7 @@ CREATE TABLE sim_cells (
 
 CREATE TABLE messages (
   message_id    BIGINT       NOT NULL AUTO_INCREMENT,
+  aggregator_id INT          DEFAULT NULL,
   originator    VARCHAR(100) NOT NULL,
   body          VARCHAR(500) DEFAULT NULL,
   receipt_date  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -21,7 +21,7 @@ public class SIM {
     @Column(name = "number")
     public final Integer NUMBER;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name= "provider_id")
     public final SIMProvider SIM_PROVIDER;
 

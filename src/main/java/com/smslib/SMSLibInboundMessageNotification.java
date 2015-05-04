@@ -45,11 +45,11 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
     private Message getMessage(AGateway aGateway, InboundMessage inboundMessage) {
         Message message = new Message();
         message.setOriginator(inboundMessage.getOriginator());
-        message.setText(inboundMessage.getText());
+        message.setBody(inboundMessage.getText());
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(inboundMessage.getDate());
-        message.setDate(calendar);
+        message.setReceipt_date(calendar);
         message.setAggregator_id(aGateway.getGatewayId());
         return message;
     }

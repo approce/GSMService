@@ -42,8 +42,8 @@ public class MessageServiceImplTest {
         message.setOriginator(MESSAGE_ORIGINATOR);
         Calendar date = Calendar.getInstance();
         date.setTime(MESSAGE_DATE);
-        message.setDate(date);
-        message.setText(MESSAGE_TEXT);
+        message.setReceipt_date(date);
+        message.setBody(MESSAGE_TEXT);
 
         messageService.save(message);
 
@@ -52,7 +52,7 @@ public class MessageServiceImplTest {
         assertNotNull(receivedMessage);
         assertEquals(receivedMessage.getAggregator_id(), MESSAGE_AGGREGATOR_ID);
         assertEquals(receivedMessage.getOriginator(), MESSAGE_ORIGINATOR);
-        assertEquals(receivedMessage.getDate().getTimeInMillis(), MESSAGE_DATE.getTime());
-        assertEquals(receivedMessage.getText(), MESSAGE_TEXT);
+        assertEquals(receivedMessage.getReceipt_date().getTimeInMillis(), MESSAGE_DATE.getTime());
+        assertEquals(receivedMessage.getBody(), MESSAGE_TEXT);
     }
 }
