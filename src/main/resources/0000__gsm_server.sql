@@ -2,12 +2,7 @@ CREATE DATABASE IF NOT EXISTS gsm_service
   DEFAULT CHARACTER SET utf8
   DEFAULT COLLATE utf8_general_ci;
 
-CREATE TABLE sims (
-  sim_number  BIGINT NOT NULL UNIQUE,
-  provider_id INT    NOT NULL,
-  PRIMARY KEY (sim_number),
-  FOREIGN KEY (provider_id) REFERENCES providers (provider_id)
-);
+USE gsm_service;
 
 CREATE TABLE providers (
   provider_id     INT         NOT NULL      AUTO_INCREMENT,
@@ -17,12 +12,36 @@ CREATE TABLE providers (
   PRIMARY KEY (provider_id)
 );
 
+CREATE TABLE sims (
+sim_number  BIGINT NOT NULL UNIQUE,
+provider_id INT    NOT NULL,
+PRIMARY KEY (sim_number),
+FOREIGN KEY (provider_id) REFERENCES providers (provider_id)
+);
+
+
 CREATE TABLE sim_cells (
   sim_cell_id VARCHAR(4) NOT NULL UNIQUE,
   description VARCHAR(100) DEFAULT NULL,
   provider_id INT          DEFAULT NULL,
   PRIMARY KEY (sim_cell_id),
   FOREIGN KEY (provider_id) REFERENCES providers (provider_id)
+);
+
+CREATE TABLE services (
+  service_id INT         NOT NULL AUTO_INCREMENT,
+  short_name VARCHAR(10) NOT NULL,
+  full_name  VARCHAR(50) NOT NULL,
+  PRIMARY KEY (service_id)
+);
+
+CREATE TABLE requests (
+  request_id  BIGINT    NOT NULL    AUTO_INCREMENT,
+  service_id  INT       NOT NULL,
+  create_date TIMESTAMP NOT NULL    DEFAULT CURRENT_TIMESTAMP,
+  finish_date TIMESTAMP,
+  PRIMARY KEY (request_id),
+  FOREIGN KEY (service_id) REFERENCES services (service_id)
 );
 
 CREATE TABLE messages (
@@ -36,18 +55,5 @@ CREATE TABLE messages (
   FOREIGN KEY (request_id) REFERENCES requests (request_id)
 );
 
-CREATE TABLE requests (
-  request_id  BIGINT    NOT NULL    AUTO_INCREMENT,
-  service_id  INT       NOT NULL,
-  create_date TIMESTAMP NOT NULL    DEFAULT CURRENT_TIMESTAMP,
-  finish_date TIMESTAMP             DEFAULT NULL,
-  PRIMARY KEY (request_id),
-  FOREIGN KEY (service_id) REFERENCES services (service_id)
-);
 
-CREATE TABLE services (
-  service_id INT         NOT NULL AUTO_INCREMENT,
-  short_name VARCHAR(10) NOT NULL,
-  full_name  VARCHAR(50) NOT NULL,
-  PRIMARY KEY (service_id)
-)
+
