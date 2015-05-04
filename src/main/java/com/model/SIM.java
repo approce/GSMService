@@ -18,7 +18,7 @@ public class SIM {
     @Column(name = "sim_id")
     public final Integer ID;
 
-    @Column
+    @Column(name = "number")
     public final Integer NUMBER;
 
     @ManyToOne()
