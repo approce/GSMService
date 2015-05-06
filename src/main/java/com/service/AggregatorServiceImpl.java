@@ -20,15 +20,18 @@ public class AggregatorServiceImpl implements AggregatorService {
 
     private static final Logger LOG = LoggerFactory.getLogger(AggregatorServiceImpl.class);
 
-    @Autowired private SMSLibService smsLibService;
+    @Autowired
+    private SMSLibService smsLibService;
 
-    @Autowired @Resource(name = "aggregatorsMap") private Map<String, AggregatorExecutor>
-            AGGREGATORS_MAP;
+    @Autowired
+    @Resource(name = "aggregatorsMap")
+    private Map<String, AggregatorExecutor> AGGREGATORS_MAP;
 
     @PostConstruct
     public void initialize() {
         LOG.debug("Start AggregatorService initialization");
         initializeGateways();
+        smsLibService.startService();
     }
 
     @Override
@@ -50,8 +53,7 @@ public class AggregatorServiceImpl implements AggregatorService {
     }
 
     private void initializeGateways() {
-        AGGREGATORS_MAP.values().stream()
-                .filter(ae -> ae.START_ON_SETUP)
+        AGGREGATORS_MAP.values().stream().filter(ae -> ae.START_ON_SETUP)
                 .forEach(ae -> smsLibService.addGateway(ae.MODEM));
     }
 }

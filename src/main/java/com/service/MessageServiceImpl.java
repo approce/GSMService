@@ -17,6 +17,14 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageDAO messageDAO;
 
+    @PostConstruct
+    public void init(){
+        Message message = new Message();
+        message.setId(1l);
+        message.setOriginator("asdas");
+        messageDAO.save(message);
+    }
+
     @Override
     public void save(Message message) {
         messageDAO.save(message);
