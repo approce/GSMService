@@ -7,8 +7,6 @@ public interface SMSLibService {
 
     void initialize();
 
-    Service getInstance();
-
     void startService();
 
     void stopService();

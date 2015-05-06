@@ -21,7 +21,7 @@ public class SMSLibServiceImplTest {
     @Autowired
     private SMSLibServiceImpl smsLibService;
 
-    @Test
+  /*  @Test
     public void stopServiceTest() throws Exception {
         if (smsLibService.getInstance().getServiceStatus().equals(Service.ServiceStatus.STOPPED)) {
             smsLibService.startService();
@@ -37,5 +37,5 @@ public class SMSLibServiceImplTest {
         }
         smsLibService.startService();
         assertEquals(smsLibService.getInstance().getServiceStatus(), Service.ServiceStatus.STARTED);
-    }
+    }*/
 }

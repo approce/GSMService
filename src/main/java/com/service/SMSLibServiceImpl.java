@@ -32,18 +32,20 @@ public class SMSLibServiceImpl implements SMSLibService {
     @Override
     public void initialize() {
         LOG.debug("Start SMSLibService initialization");
+        setParameters();
+        setListeners();
+    }
+
+    private void setParameters(){
         SERVICE.S.CONCURRENT_GATEWAY_START = false;
         SERVICE.S.SERIAL_POLLING = true;
         SERVICE.S.AT_WAIT_AFTER_RESET = 30;
+    }
 
+    private void setListeners() {
         SERVICE.setInboundMessageNotification(smsLibInboundMessageNotification);
         SERVICE.setGatewayStatusNotification(smsLibGatewayStatusNotification);
         SERVICE.setUSSDNotification(smsLibUSSDNotification);
-    }
-
-    @Override
-    public Service getInstance() {
-        return SERVICE;
     }
 
     @Override
