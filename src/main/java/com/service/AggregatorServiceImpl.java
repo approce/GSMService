@@ -1,8 +1,7 @@
 package com.service;
 
-import com.model.Message;
 import com.aggregators.AggregatorExecutor;
-import com.model.Modem;
+import com.model.Message;
 import com.service.interfaces.AggregatorService;
 import com.service.interfaces.SMSLibService;
 import org.slf4j.Logger;
@@ -14,25 +13,23 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Map;
 
 @Service
 public class AggregatorServiceImpl implements AggregatorService {
 
-    @Autowired
-    private SMSLibService smsLibService;
+    private static final Logger LOG = LoggerFactory.getLogger(AggregatorServiceImpl.class);
 
-    @Autowired
-    @Resource(name = "aggregatorsMap")
-    private Map<String, AggregatorExecutor> AGGREGATORS_MAP;
+    @Autowired private SMSLibService smsLibService;
+
+    @Autowired @Resource(name = "aggregatorsMap") private Map<String, AggregatorExecutor>
+            AGGREGATORS_MAP;
 
     @PostConstruct
-    public void dos() {
-        System.out.println("asd");
+    public void initialize() {
+        LOG.debug("Start AggregatorService initialization");
+        initializeGateways();
     }
-
-    private static final Logger LOG = LoggerFactory.getLogger(AggregatorServiceImpl.class);
 
     @Override
     public void processInboundMessage(Message message, AGateway gateway) {
@@ -47,8 +44,14 @@ public class AggregatorServiceImpl implements AggregatorService {
     @Override
     public void processStatusNotification(GatewayStatuses newStatus, GatewayStatuses oldStatus,
                                           AGateway gateway) {
-        if (newStatus.equals(GatewayStatuses.STARTED)) {
+        if(newStatus.equals(GatewayStatuses.STARTED)) {
             AGGREGATORS_MAP.get(gateway.getGatewayId()).sendGetNumberUSSD();
         }
+    }
+
+    private void initializeGateways() {
+        AGGREGATORS_MAP.values().stream()
+                .filter(ae -> ae.START_ON_SETUP)
+                .forEach(ae -> smsLibService.addGateway(ae.MODEM));
     }
 }

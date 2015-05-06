@@ -16,17 +16,16 @@ import javax.annotation.PostConstruct;
 @org.springframework.stereotype.Service(value = "SIMLibService")
 public class SMSLibServiceImpl implements SMSLibService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(SMSLibServiceImpl.class);
+
+    private static final Service SERVICE = Service.getInstance();
+
     @Autowired
     private SMSLibInboundMessageNotification smsLibInboundMessageNotification;
-
     @Autowired
     private SMSLibGatewayStatusNotification smsLibGatewayStatusNotification;
-
     @Autowired
     private SMSLibUSSDNotification smsLibUSSDNotification;
-
-    private static final Logger LOG = LoggerFactory.getLogger(SMSLibServiceImpl.class);
-    private static final Service SERVICE = Service.getInstance();
 
     @PostConstruct
     @Override
