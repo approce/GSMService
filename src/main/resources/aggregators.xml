@@ -8,13 +8,13 @@
        ">
 
     <bean id="aggregator_1" class="com.model.Modem">
-        <constructor-arg index="0" value="aggregator_1"/>
-        <constructor-arg index="1" value="051251251255"/>
-        <constructor-arg index="2" value="COM14"/>
-        <constructor-arg index="3" value="56700"/>
-        <constructor-arg index="4" value="AT+CFUN=1\r"/>
-        <constructor-arg index="5" value="HUAWEI"/>
-        <constructor-arg index="6" value="E1550"/>
+        <constructor-arg name="id" value="aggregator_1"/>
+        <constructor-arg name="IMEI" value="051251251255"/>
+        <constructor-arg name="comPort" value="COM4"/>
+        <constructor-arg name="baudRate" value="56700"/>
+        <constructor-arg name="initCommand" value="AT+CFUN=1\r"/>
+        <constructor-arg name="manufacturer" value="HUAWEI"/>
+        <constructor-arg name="model" value="E1550"/>
     </bean>
 
     <bean id="aggregator_executor_1" class="com.aggregators.VerticalAggregatorExecutorImpl">
