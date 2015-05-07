@@ -7,7 +7,7 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
        ">
 
-    <bean id="aggregator_1" class="com.model.Modem">
+    <bean id="aggregator_1" class="sms.com.model.Modem">
         <constructor-arg name="id" value="aggregator_1"/>
         <constructor-arg name="IMEI" value="051251251255"/>
         <constructor-arg name="comPort" value="COM4"/>
@@ -17,7 +17,7 @@
         <constructor-arg name="model" value="E1550"/>
     </bean>
 
-    <bean id="aggregator_executor_1" class="com.aggregators.VerticalAggregatorExecutorImpl">
+    <bean id="aggregator_executor_1" class="sms.com.aggregators.VerticalAggregatorExecutorImpl">
         <constructor-arg name="id" value="aggregator_1"/>
         <constructor-arg name="startOnSetup" value="true"/>
         <constructor-arg name="modem" ref="aggregator_1"/>
@@ -25,7 +25,7 @@
         <constructor-arg name="availableCount" value="100"/>
     </bean>
 
-    <util:map id="aggregatorsMap" value-type="com.aggregators.AggregatorExecutor">
+    <util:map id="aggregatorsMap" value-type="sms.com.aggregators.AggregatorExecutor">
         <entry key="aggregator_1" value-ref="aggregator_executor_1"/>
     </util:map>
 
