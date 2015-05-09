@@ -13,13 +13,13 @@ public class SIM {
 
     @Id
     @Column(name = "sim_number")
-    public final Integer NUMBER;
+    public final Long NUMBER;
 
     @ManyToOne
     @JoinColumn(name= "provider_id")
     public final SIMProvider SIM_PROVIDER;
 
-    public SIM(Integer NUMBER, SIMProvider SIM_PROVIDER) {
+    public SIM(Long NUMBER, SIMProvider SIM_PROVIDER) {
         this.NUMBER = NUMBER;
         this.SIM_PROVIDER = SIM_PROVIDER;
     }
