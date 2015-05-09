@@ -19,7 +19,7 @@ public class RequestPoolServiceImpl implements RequestPoolService {
     private RequestRepository requestRepository;
 
     @Autowired
-    private AggregatorService aggregatorService;
+    private AggregatorPoolService aggregatorPoolService;
 
     public static Set<Request> getAvailableRequestSet() {
         return AVAILABLE_REQUEST_SET;
@@ -33,7 +33,7 @@ public class RequestPoolServiceImpl implements RequestPoolService {
     }
 
     private void matchRequestToAggregators(Request request) {
-        List<AggregatorExecutor> aggregators = aggregatorService.getAggregators();
+        List<AggregatorExecutor> aggregators = aggregatorPoolService.getAggregators();
         double currentMatchIndex = 0;
         AggregatorExecutor currentAggregator = null;
 

@@ -6,6 +6,7 @@ import org.smslib.AGateway.GatewayStatuses;
 import org.smslib.GatewayException;
 import org.smslib.TimeoutException;
 import org.smslib.USSDResponse;
+import sms.com.model.Message;
 import sms.com.model.Modem;
 import sms.com.model.Request;
 import sms.com.model.SIM;
@@ -18,7 +19,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import static sms.com.aggregators.AggregatorStatus.*;
+import static sms.com.aggregators.AggregatorStatus.FAILED_TO_START;
+import static sms.com.aggregators.AggregatorStatus.NUMBER_ASSIGNED;
 
 public abstract class AggregatorExecutor {
 
@@ -67,6 +69,14 @@ public abstract class AggregatorExecutor {
 
     public void startInitialization() {
         sendATCommand(initializationATCommand);
+    }
+
+    public void processUSSDResponse(String body) {
+
+    }
+
+    public void processMessage(Message message) {
+
     }
 
     public void processUSSDResponse(USSDResponse response) {

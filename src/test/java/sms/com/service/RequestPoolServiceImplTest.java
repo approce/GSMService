@@ -31,7 +31,7 @@ public class RequestPoolServiceImplTest {
     private RequestPoolServiceImpl requestPoolService = new RequestPoolServiceImpl();
 
     @Mock
-    private AggregatorService aggregatorService;
+    private AggregatorPoolService aggregatorPoolService;
 
     @Mock
     private RequestRepository requestRepository;
@@ -109,6 +109,6 @@ public class RequestPoolServiceImplTest {
         List<AggregatorExecutor> mockedAggregators =
                 Arrays.asList(aggregator1, aggregator2, aggregator3);
 
-        when(aggregatorService.getAggregators()).thenReturn(mockedAggregators);
+        when(aggregatorPoolService.getAggregators()).thenReturn(mockedAggregators);
     }
 }

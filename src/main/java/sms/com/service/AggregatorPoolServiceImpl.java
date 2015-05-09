@@ -2,13 +2,9 @@ package sms.com.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.smslib.AGateway;
-import org.smslib.AGateway.GatewayStatuses;
-import org.smslib.USSDResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sms.com.aggregators.AggregatorExecutor;
-import sms.com.model.Message;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -16,9 +12,9 @@ import java.util.LinkedList;
 import java.util.Map;
 
 @Service
-public class AggregatorServiceImpl implements AggregatorService {
+public class AggregatorPoolServiceImpl implements AggregatorPoolService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AggregatorServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AggregatorPoolServiceImpl.class);
 
     @Autowired
     private SMSLibService smsLibService;
@@ -31,6 +27,7 @@ public class AggregatorServiceImpl implements AggregatorService {
     public void initialize() {
         LOG.debug("Start AggregatorService initialization");
         initializeGateways();
+        //TODO remove start from here.
         smsLibService.startService();
     }
 
@@ -40,26 +37,8 @@ public class AggregatorServiceImpl implements AggregatorService {
     }
 
     @Override
-    public void processInboundMessage(Message message, AGateway gateway) {
-
-    }
-
-    @Override
-    public void processUSSDNotification(String notification, AGateway gateway) {
-
-    }
-
-    @Override
-    public void process(AGateway gateway, GatewayStatuses oldStatus,
-                        GatewayStatuses newStatus) {
-        AggregatorExecutor aggregator = AGGREGATORS_MAP.get(gateway.getGatewayId());
-        aggregator.processStatus(oldStatus, newStatus);
-    }
-
-    @Override
-    public void process(AGateway gateway, USSDResponse ussdResponse) {
-        AggregatorExecutor aggregator = AGGREGATORS_MAP.get(gateway.getGatewayId());
-        aggregator.processUSSDResponse(ussdResponse);
+    public AggregatorExecutor getAggregator(String id) {
+        return AGGREGATORS_MAP.get(id);
     }
 
     private void initializeGateways() {

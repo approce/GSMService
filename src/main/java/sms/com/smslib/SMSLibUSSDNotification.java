@@ -1,7 +1,5 @@
 package sms.com.smslib;
 
-import sms.com.service.AggregatorService;
-import sms.com.utils.StringMethods;
 import org.ajwcc.pduUtils.gsm3040.PduUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +8,9 @@ import org.smslib.IUSSDNotification;
 import org.smslib.USSDResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import sms.com.aggregators.AggregatorExecutor;
+import sms.com.service.AggregatorPoolService;
+import sms.com.utils.StringMethods;
 
 @Component
 public class SMSLibUSSDNotification implements IUSSDNotification {
@@ -17,15 +18,16 @@ public class SMSLibUSSDNotification implements IUSSDNotification {
     private static final Logger LOG = LoggerFactory.getLogger(SMSLibUSSDNotification.class);
 
     @Autowired
-    private AggregatorService aggregatorService;
+    private AggregatorPoolService aggregatorPoolService;
 
     @Override
     public void process(AGateway aGateway, USSDResponse ussdResponse) {
+        AggregatorExecutor aggregator = aggregatorPoolService.getAggregator(aGateway.getGatewayId());
         try {
             String body = getBody(ussdResponse);
-            aggregatorService.processUSSDNotification(body, aGateway);
+            aggregator.processUSSDResponse(body);
             LOG.debug("Gateway ID: {}. Received USSD response:\n{}", aGateway.getGatewayId(), body);
-        } catch (Exception e) {
+        } catch(Exception e) {
             LOG.error("Exception while process USSD response.\n{}", e);
         }
     }

@@ -7,6 +7,7 @@ import org.smslib.GatewayException;
 import org.smslib.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import sms.com.smslib.SMSLibInboundMessageNotification;
+import sms.com.smslib.SMSLibStatusNotification;
 import sms.com.smslib.SMSLibUSSDNotification;
 
 import javax.annotation.PostConstruct;
@@ -22,10 +23,13 @@ public class SMSLibServiceImpl implements SMSLibService {
     private SMSLibInboundMessageNotification smsLibInboundMessageNotification;
 
     @Autowired
+    private SMSLibStatusNotification smsLibStatusNotification;
+
+    @Autowired
     private SMSLibUSSDNotification smsLibUSSDNotification;
 
     @Autowired
-    private AggregatorService aggregatorService;
+    private AggregatorPoolService aggregatorPoolService;
 
     @PostConstruct
     @Override
@@ -71,7 +75,7 @@ public class SMSLibServiceImpl implements SMSLibService {
 
     private void setListeners() {
         SERVICE.setInboundMessageNotification(smsLibInboundMessageNotification);
-        SERVICE.setGatewayStatusNotification(aggregatorService);
-        SERVICE.setUSSDNotification(aggregatorService);
+        SERVICE.setGatewayStatusNotification(smsLibStatusNotification);
+        SERVICE.setUSSDNotification(smsLibUSSDNotification);
     }
 }
