@@ -8,41 +8,52 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "sim_provider")
+@Table(name = "providers")
 public class SIMProvider {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "provider_id")
-    private Integer ID;
+    private Integer id;
 
     @Column(name = "name")
-    public final String NAME;
+    private String name;
 
     @Column(name = "get_number_ussd")
-    public final String GET_NUMBER_COMMAND;
+    private String getNumberUSSD;
 
     @Column(name = "description")
-    private String DESCRIPTION;
+    private String description;
 
-    public SIMProvider(String NAME, String GET_NUMBER_COMMAND) {
-        this.NAME = NAME;
-        this.GET_NUMBER_COMMAND = GET_NUMBER_COMMAND;
+    public Integer getId() {
+        return id;
     }
 
-    public Integer getID() {
-        return ID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setID(Integer ID) {
-        this.ID = ID;
+    public String getName() {
+        return name;
     }
 
-    public String getDESCRIPTION() {
-        return DESCRIPTION;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setDESCRIPTION(String DESCRIPTION) {
-        this.DESCRIPTION = DESCRIPTION;
+    public String getGetNumberUSSD() {
+        return getNumberUSSD;
+    }
+
+    public void setGetNumberUSSD(String getNumberUSSD) {
+        this.getNumberUSSD = getNumberUSSD;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

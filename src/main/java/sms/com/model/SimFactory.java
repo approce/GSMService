@@ -1,7 +1,4 @@
-package sms.com.aggregators;
-
-import sms.com.model.SIM;
-import sms.com.model.SIMProvider;
+package sms.com.model;
 
 public class SimFactory {
 

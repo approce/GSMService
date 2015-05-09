@@ -8,30 +8,41 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "sim_cell")
+@Table(name = "sim_cells")
 public class SIMCell {
 
     @Id
     @Column(name = "sim_cell_id")
-    private String ID;
+    private String id;
 
     @Column(name = "description")
-    public final String DESCRIPTION;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "provider_id")
-    public final SIMProvider SIM_PROVIDER;
+    private SIMProvider simProvider;
 
-    public SIMCell(String DESCRIPTION, SIMProvider SIM_PROVIDER) {
-        this.DESCRIPTION = DESCRIPTION;
-        this.SIM_PROVIDER = SIM_PROVIDER;
+    public String getId() {
+        return id;
     }
 
-    public String getID() {
-        return ID;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public SIMProvider getSimProvider() {
+        return simProvider;
+    }
+
+    public void setSimProvider(SIMProvider simProvider) {
+        this.simProvider = simProvider;
     }
 }

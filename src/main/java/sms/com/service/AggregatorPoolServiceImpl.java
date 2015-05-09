@@ -43,6 +43,6 @@ public class AggregatorPoolServiceImpl implements AggregatorPoolService {
 
     private void initializeGateways() {
         AGGREGATORS_MAP.values().stream().filter(ae -> ae.START_ON_SETUP)
-                       .forEach(ae -> smsLibService.addGateway(ae.MODEM));
+                       .forEach(ae -> smsLibService.addGateway(ae.modemExecutor.getModem()));
     }
 }

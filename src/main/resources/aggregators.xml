@@ -18,7 +18,6 @@
     </bean>
 
     <bean id="aggregator_executor_1" class="sms.com.aggregators.VerticalAggregatorExecutorImpl">
-        <constructor-arg name="id" value="aggregator_1"/>
         <constructor-arg name="startOnSetup" value="true"/>
         <constructor-arg name="modem" ref="aggregator_1"/>
         <constructor-arg name="simCell" value="A0"/>
