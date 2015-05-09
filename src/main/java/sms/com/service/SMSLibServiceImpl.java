@@ -1,6 +1,5 @@
 package sms.com.service;
 
-import sms.com.service.interfaces.SMSLibService;
 import sms.com.smslib.SMSLibGatewayStatusNotification;
 import sms.com.smslib.SMSLibInboundMessageNotification;
 import sms.com.smslib.SMSLibUSSDNotification;

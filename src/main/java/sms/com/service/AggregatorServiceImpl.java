@@ -2,8 +2,6 @@ package sms.com.service;
 
 import sms.com.aggregators.AggregatorExecutor;
 import sms.com.model.Message;
-import sms.com.service.interfaces.AggregatorService;
-import sms.com.service.interfaces.SMSLibService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smslib.AGateway;

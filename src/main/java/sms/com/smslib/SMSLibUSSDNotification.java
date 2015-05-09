@@ -1,6 +1,6 @@
 package sms.com.smslib;
 
-import sms.com.service.interfaces.AggregatorService;
+import sms.com.service.AggregatorService;
 import sms.com.utils.StringMethods;
 import org.ajwcc.pduUtils.gsm3040.PduUtils;
 import org.slf4j.Logger;

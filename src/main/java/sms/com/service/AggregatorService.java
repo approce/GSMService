@@ -1,4 +1,4 @@
-package sms.com.service.interfaces;
+package sms.com.service;
 
 import sms.com.model.Message;
 import org.smslib.AGateway;

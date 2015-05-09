@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sms.com.repository.MessageRepository;
 import sms.com.model.Message;
-import sms.com.service.interfaces.MessageService;
 
 @Service(value = "MessageService")
 public class MessageServiceImpl implements MessageService {
