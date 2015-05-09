@@ -18,11 +18,9 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class AggregatorExecutor {
+import static sms.com.aggregators.AggregatorStatus.*;
 
-    public static enum AggregatorStatus {
-        EXECUTING, FAILED_TO_START, NUMBER_ASSIGNED
-    }
+public abstract class AggregatorExecutor {
 
     protected static final Logger LOG = LoggerFactory.getLogger(AggregatorExecutor.class);
 
@@ -81,7 +79,7 @@ public abstract class AggregatorExecutor {
             if(sentATCommandTimes < TRIES_COUNT) {
                 startInitialization();
             } else {
-                status = AggregatorStatus.FAILED_TO_START;
+                status = FAILED_TO_START;
             }
         }
         if(body != null) {
@@ -108,6 +106,6 @@ public abstract class AggregatorExecutor {
 
     private void setSIM(long number) {
         currentSIM = simFactory.createSIM(number);
-        status = AggregatorStatus.NUMBER_ASSIGNED;
+        status = NUMBER_ASSIGNED;
     }
 }
