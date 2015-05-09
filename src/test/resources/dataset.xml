@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<dataset>
-    <modem id="1" imei="123123123" brand="HUAWEI" model="E1550" gatewaySpeed="54300" init_commant="123" port="540"/>
-
-    <message id="1" aggregator_id="1408" receipt_date="2015-01-01 00:11:22" originator="380123456789"
-             body="Hello world message"/>
-</dataset>
