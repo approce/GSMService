@@ -2,6 +2,8 @@ package sms.com.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,10 +13,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "requests")
 public class Request {
+
+    public static enum RequestStatus {
+        AVAILABLE, EXECUTING
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,6 +41,10 @@ public class Request {
     @ManyToOne
     @JoinColumn(name = "service_id")
     private ServiceModel service;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private RequestStatus requestStatus;
 
     public Long getID() {
         return ID;
@@ -73,5 +84,27 @@ public class Request {
 
     public void setService(ServiceModel service) {
         this.service = service;
+    }
+
+    public RequestStatus getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(RequestStatus requestStatus) {
+        this.requestStatus = requestStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return ID.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Request otherRequest = (Request) obj;
+        return Objects.equals(this.ID, otherRequest.ID);
     }
 }
