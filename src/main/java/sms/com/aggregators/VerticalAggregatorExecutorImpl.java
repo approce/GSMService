@@ -1,6 +1,7 @@
 package sms.com.aggregators;
 
 import sms.com.model.Modem;
+import sms.com.model.Request;
 import sms.com.model.SIMCell;
 import sms.com.model.SIMCellFactory;
 import sms.com.utils.SMSLibUtils;
@@ -31,6 +32,12 @@ public class VerticalAggregatorExecutorImpl extends AggregatorExecutor {
     @Override
     public void initialize() {
 
+    }
+
+    @Override
+    public double match(Request request) {
+        //TODO add logic.
+        return 10;
     }
 
     private void sendATCommand(String command) {

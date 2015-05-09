@@ -1,10 +1,15 @@
 package sms.com.service;
 
-import sms.com.model.Message;
 import org.smslib.AGateway;
 import org.smslib.AGateway.GatewayStatuses;
+import sms.com.aggregators.AggregatorExecutor;
+import sms.com.model.Message;
+
+import java.util.List;
 
 public interface AggregatorService {
+
+    List<AggregatorExecutor> getAggregators();
 
     void processInboundMessage(Message message, AGateway gateway);
 

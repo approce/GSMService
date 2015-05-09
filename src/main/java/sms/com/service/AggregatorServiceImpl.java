@@ -1,16 +1,17 @@
 package sms.com.service;
 
-import sms.com.aggregators.AggregatorExecutor;
-import sms.com.model.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smslib.AGateway;
 import org.smslib.AGateway.GatewayStatuses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sms.com.aggregators.AggregatorExecutor;
+import sms.com.model.Message;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.util.LinkedList;
 import java.util.Map;
 
 @Service
@@ -33,6 +34,11 @@ public class AggregatorServiceImpl implements AggregatorService {
     }
 
     @Override
+    public LinkedList<AggregatorExecutor> getAggregators() {
+        return new LinkedList<>(AGGREGATORS_MAP.values());
+    }
+
+    @Override
     public void processInboundMessage(Message message, AGateway gateway) {
 
     }
@@ -52,6 +58,6 @@ public class AggregatorServiceImpl implements AggregatorService {
 
     private void initializeGateways() {
         AGGREGATORS_MAP.values().stream().filter(ae -> ae.START_ON_SETUP)
-                .forEach(ae -> smsLibService.addGateway(ae.MODEM));
+                       .forEach(ae -> smsLibService.addGateway(ae.MODEM));
     }
 }
