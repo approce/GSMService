@@ -1,6 +1,5 @@
 package sms.com.model;
 
-import org.smslib.AGateway;
 import org.smslib.modem.SerialModemGateway;
 
 public class Modem extends SerialModemGateway {
@@ -13,16 +12,18 @@ public class Modem extends SerialModemGateway {
 
     public final String initCommand;
 
-    public SIM sim;
-
     public Modem(String id, String IMEI, String comPort, int baudRate,
                  String initCommand, String manufacturer, String model) {
         super(id, comPort, baudRate, manufacturer, model);
-        this.ID=id;
+        this.ID = id;
         this.IMEI = IMEI;
         this.port = comPort;
         this.initCommand = initCommand;
-        this.setProtocol(AGateway.Protocols.PDU);
+        initParameters(initCommand);
+    }
+
+    private void initParameters(String initCommand) {
+        this.setProtocol(Protocols.PDU);
         this.setInbound(true);
         this.setCustomInitString(initCommand);
     }
