@@ -1,13 +1,13 @@
 package sms.com.service;
 
 import org.smslib.AGateway;
-import org.smslib.AGateway.GatewayStatuses;
+import org.smslib.IGatewayStatusNotification;
 import sms.com.aggregators.AggregatorExecutor;
 import sms.com.model.Message;
 
 import java.util.List;
 
-public interface AggregatorService {
+public interface AggregatorService extends IGatewayStatusNotification{
 
     List<AggregatorExecutor> getAggregators();
 
@@ -15,6 +15,4 @@ public interface AggregatorService {
 
     void processUSSDNotification(String notification, AGateway gateway);
 
-    void processStatusNotification(GatewayStatuses newStatus, GatewayStatuses oldStatus,
-                                   AGateway gateway);
 }

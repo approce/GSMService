@@ -11,6 +11,8 @@ import sms.com.utils.SMSLibUtils;
 
 import java.io.IOException;
 
+import static org.smslib.AGateway.GatewayStatuses;
+
 public class VerticalAggregatorExecutorImpl extends AggregatorExecutor {
 
     private SIMCell SIM_CELL;
@@ -27,21 +29,23 @@ public class VerticalAggregatorExecutorImpl extends AggregatorExecutor {
     }
 
     @Override
-    public void sendGetNumberUSSD() {
-        String command =
-                SMSLibUtils.convertGetNumberCommand(SIM_CELL.SIM_PROVIDER.GET_NUMBER_COMMAND);
-        sendATCommand(command);
-    }
-
-    @Override
-    public void initialize() {
-
-    }
-
-    @Override
     public double match(Request request) {
         //TODO add logic.
         return 10;
+    }
+
+    @Override
+    public void changeStatus(GatewayStatuses oldStatus, GatewayStatuses newStatus) {
+        if(oldStatus.equals(GatewayStatuses.STARTING) &&
+                newStatus.equals(GatewayStatuses.STARTED)) {
+            startInitialization();
+        }
+    }
+
+    private void startInitialization() {
+        String command =
+                SMSLibUtils.convertGetNumberCommand(SIM_CELL.SIM_PROVIDER.GET_NUMBER_COMMAND);
+        sendATCommand(command);
     }
 
     private void sendATCommand(String command) {

@@ -49,11 +49,10 @@ public class AggregatorServiceImpl implements AggregatorService {
     }
 
     @Override
-    public void processStatusNotification(GatewayStatuses newStatus, GatewayStatuses oldStatus,
-                                          AGateway gateway) {
-        if(newStatus.equals(GatewayStatuses.STARTED)) {
-            AGGREGATORS_MAP.get(gateway.getGatewayId()).sendGetNumberUSSD();
-        }
+    public void process(AGateway gateway, GatewayStatuses oldStatus,
+                        GatewayStatuses newStatus) {
+        AggregatorExecutor aggregator = AGGREGATORS_MAP.get(gateway.getGatewayId());
+        aggregator.changeStatus(oldStatus, newStatus);
     }
 
     private void initializeGateways() {

@@ -2,6 +2,7 @@ package sms.com.aggregators;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.smslib.AGateway.GatewayStatuses;
 import sms.com.model.Modem;
 import sms.com.model.Request;
 
@@ -23,11 +24,9 @@ public abstract class AggregatorExecutor {
         this.MODEM = modem;
     }
 
-    public abstract void sendGetNumberUSSD();
-
-    public abstract void initialize();
-
     public abstract double match(Request request);
+
+    public abstract void changeStatus(GatewayStatuses oldStatus, GatewayStatuses newStatus);
 
     public void addRequest(Request request) {
         requests.add(request);
