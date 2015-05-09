@@ -6,5 +6,4 @@ public class SIMCellFactory {
         //TODO add DAO:
         return new SIMCell(simCell, new SIMProvider("Beline", "*161#"));
     }
-
 }

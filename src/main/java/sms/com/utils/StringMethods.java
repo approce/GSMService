@@ -38,6 +38,6 @@ public class StringMethods {
         if(buffer.length() > big.length()) {
             big = buffer;
         }
-        return Integer.parseInt(big);
+        return Long.parseLong(big);
     }
 }

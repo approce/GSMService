@@ -72,6 +72,6 @@ public class SMSLibServiceImpl implements SMSLibService {
     private void setListeners() {
         SERVICE.setInboundMessageNotification(smsLibInboundMessageNotification);
         SERVICE.setGatewayStatusNotification(aggregatorService);
-        SERVICE.setUSSDNotification(smsLibUSSDNotification);
+        SERVICE.setUSSDNotification(aggregatorService);
     }
 }
