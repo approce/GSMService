@@ -19,17 +19,19 @@ import java.util.Objects;
 @Table(name = "requests")
 public class Request {
 
-    public static enum RequestStatus {
-        AVAILABLE, EXECUTING
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "request_id")
     private Long ID;
 
+    @Column(name = "aggregator_id")
+    private String aggregator_id;
+
     @Column(name = "create_date")
     private Calendar create_date;
+
+    @Column(name = "start_date")
+    private Calendar start_date;
 
     @Column(name = "finish_date")
     private Calendar finish_date;
@@ -106,5 +108,25 @@ public class Request {
         }
         Request otherRequest = (Request) obj;
         return Objects.equals(this.ID, otherRequest.ID);
+    }
+
+    public String getAggregator_id() {
+        return aggregator_id;
+    }
+
+    public void setAggregator_id(String aggregator_id) {
+        this.aggregator_id = aggregator_id;
+    }
+
+    public Calendar getStart_date() {
+        return start_date;
+    }
+
+    public void setStart_date(Calendar start_date) {
+        this.start_date = start_date;
+    }
+
+    public static enum RequestStatus {
+        AVAILABLE, EXECUTING
     }
 }
