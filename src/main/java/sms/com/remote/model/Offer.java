@@ -8,19 +8,25 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "services")
+@Table(name = "offers")
 public class Offer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "service_id")
+    @Column(name = "offer_id")
     private Integer id;
 
     @Column(name = "short_name")
     private String short_name;
 
+    @Column(name = "full_name")
+    private String full_name;
+
     @Column(name = "priority")
     private Float priority;
+
+    @Column(name = "originator")
+    private String originator;
 
     public Integer getId() {
         return id;
@@ -38,11 +44,27 @@ public class Offer {
         this.short_name = short_name;
     }
 
+    public String getFull_name() {
+        return full_name;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
+    }
+
     public Float getPriority() {
         return priority;
     }
 
     public void setPriority(Float priority) {
         this.priority = priority;
+    }
+
+    public String getOriginator() {
+        return originator;
+    }
+
+    public void setOriginator(String originator) {
+        this.originator = originator;
     }
 }
