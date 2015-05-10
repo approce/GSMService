@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.smslib.AGateway.GatewayStatuses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import sms.com.matcher.RequestMatch;
 import sms.com.model.Message;
 import sms.com.model.Modem;
 import sms.com.model.Request;
@@ -39,7 +40,7 @@ public abstract class AggregatorExecutor {
 
     protected SIM currentSIM;
 
-    private final String ID;
+    public final String ID;
 
     private final Set<Request> requests = new HashSet<>();
 
@@ -75,7 +76,7 @@ public abstract class AggregatorExecutor {
         this.simFactory = new SimFactory(this.simCell.getSimProvider());
     }
 
-    public abstract double match(Request request);
+    public abstract RequestMatch match(Request request);
 
     public void startInitialization() {
         modemExecutor.sendGetNumberUSSD();

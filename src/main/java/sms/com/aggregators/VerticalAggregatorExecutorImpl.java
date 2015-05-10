@@ -1,5 +1,6 @@
 package sms.com.aggregators;
 
+import sms.com.matcher.RequestMatch;
 import sms.com.model.Modem;
 import sms.com.model.Request;
 
@@ -14,8 +15,8 @@ public class VerticalAggregatorExecutorImpl extends AggregatorExecutor {
     }
 
     @Override
-    public double match(Request request) {
+    public RequestMatch match(Request request) {
         //TODO add logic.
-        return 10;
+        return new RequestMatch();
     }
 }

@@ -3,6 +3,7 @@ package sms.com.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sms.com.aggregators.AggregatorExecutor;
+import sms.com.matcher.RequestMatcher;
 import sms.com.model.Request;
 import sms.com.repository.RequestRepository;
 
@@ -10,10 +11,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static sms.com.model.Request.RequestStatus.EXECUTING;
+
 @Service
 public class RequestPoolServiceImpl implements RequestPoolService {
 
     private static final Set<Request> AVAILABLE_REQUEST_SET = new HashSet<>();
+
+    private RequestMatcher requestMatcher = new RequestMatcher();
 
     @Autowired
     private RequestRepository requestRepository;
@@ -27,28 +32,18 @@ public class RequestPoolServiceImpl implements RequestPoolService {
 
     @Override
     public void add(Request request) {
-        AVAILABLE_REQUEST_SET.add(request);
         saveToDB(request);
+        AVAILABLE_REQUEST_SET.add(request);
         matchRequestToAggregators(request);
     }
 
     private void matchRequestToAggregators(Request request) {
-        List<AggregatorExecutor> aggregators = aggregatorPoolService.getAggregators();
-        double currentMatchIndex = 0;
-        AggregatorExecutor currentAggregator = null;
+        List<AggregatorExecutor> availableAggregators = aggregatorPoolService.getAggregators();
+        Request resultRequest = requestMatcher.setMatchedAggregator(availableAggregators, request);
 
-        for(AggregatorExecutor aggregator : aggregators) {
-            double matchIndex = aggregator.match(request);
+        boolean requestMatchedToAggregator = resultRequest.getRequestStatus().equals(EXECUTING);
 
-            if(matchIndex > currentMatchIndex) {
-                currentAggregator = aggregator;
-                currentMatchIndex = matchIndex;
-            }
-        }
-
-        if(currentAggregator != null) {
-            request.setRequestStatus(Request.RequestStatus.EXECUTING);
-            currentAggregator.addRequest(request);
+        if(requestMatchedToAggregator) {
             AVAILABLE_REQUEST_SET.remove(request);
             saveToDB(request);
         }
