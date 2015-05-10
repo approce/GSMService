@@ -30,19 +30,19 @@ public abstract class AggregatorExecutor {
 
     protected static final Logger LOG = LoggerFactory.getLogger(AggregatorExecutor.class);
 
-    public final Boolean START_ON_SETUP;
+    public final String ID;
 
-    public final ModemExecutor modemExecutor;
+    private final Boolean startOnSetup;
+
+    private final ModemExecutor modemExecutor;
+
+    private final Set<Request> requests = new HashSet<>();
 
     public AggregatorStatus status;
 
     protected SIMCell simCell;
 
     protected SIM currentSIM;
-
-    public final String ID;
-
-    private final Set<Request> requests = new HashSet<>();
 
     private SimFactory simFactory;
 
@@ -56,7 +56,7 @@ public abstract class AggregatorExecutor {
 
     public AggregatorExecutor(Boolean startOnSetup, Modem modem, String simCell) {
         this.ID = modem.getGatewayId();
-        this.START_ON_SETUP = startOnSetup;
+        this.startOnSetup = startOnSetup;
         this.modemExecutor = new ModemExecutor(modem);
         this.simCellId = simCell;
     }
@@ -102,6 +102,14 @@ public abstract class AggregatorExecutor {
         requests.add(request);
     }
 
+    public Modem getModem() {
+        return modemExecutor.getModem();
+    }
+
+    public Boolean getStartOnSetup() {
+        return startOnSetup;
+    }
+
     private void setCurrentSim(long number) {
         currentSIM = simRepository.findOne(number);
         if(currentSIM == null) {
@@ -109,3 +117,5 @@ public abstract class AggregatorExecutor {
         }
     }
 }
+
+

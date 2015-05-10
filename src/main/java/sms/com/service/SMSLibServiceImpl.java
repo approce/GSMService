@@ -6,6 +6,8 @@ import org.smslib.AGateway;
 import org.smslib.GatewayException;
 import org.smslib.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import sms.com.aggregators.AggregatorExecutor;
+import sms.com.model.Modem;
 import sms.com.smslib.SMSLibInboundMessageNotification;
 import sms.com.smslib.SMSLibStatusNotification;
 import sms.com.smslib.SMSLibUSSDNotification;
@@ -17,7 +19,7 @@ public class SMSLibServiceImpl implements SMSLibService {
 
     private static final Logger LOG = LoggerFactory.getLogger(SMSLibServiceImpl.class);
 
-    private static final Service SERVICE = Service.getInstance();
+    private Service SERVICE = Service.getInstance();
 
     @Autowired
     private SMSLibInboundMessageNotification smsLibInboundMessageNotification;
@@ -37,6 +39,7 @@ public class SMSLibServiceImpl implements SMSLibService {
         LOG.debug("Start SMSLibService initialization");
         setParameters();
         setListeners();
+        addGateways();
     }
 
     @Override
@@ -68,14 +71,24 @@ public class SMSLibServiceImpl implements SMSLibService {
     }
 
     private void setParameters() {
-        SERVICE.S.CONCURRENT_GATEWAY_START = false;
-        SERVICE.S.SERIAL_POLLING = true;
-        SERVICE.S.AT_WAIT_AFTER_RESET = 30;
+        SERVICE.getSettings().CONCURRENT_GATEWAY_START = false;
+        SERVICE.getSettings().SERIAL_POLLING = true;
+        SERVICE.getSettings().AT_WAIT_AFTER_RESET = 30;
     }
 
     private void setListeners() {
         SERVICE.setInboundMessageNotification(smsLibInboundMessageNotification);
         SERVICE.setGatewayStatusNotification(smsLibStatusNotification);
         SERVICE.setUSSDNotification(smsLibUSSDNotification);
+    }
+
+    private void addGateways() {
+        aggregatorPoolService.getAggregators()
+                             .stream()
+                             .filter(AggregatorExecutor::getStartOnSetup)
+                             .forEach(aggregator -> {
+                                 Modem modem = aggregator.getModem();
+                                 addGateway(modem);
+                             });
     }
 }
