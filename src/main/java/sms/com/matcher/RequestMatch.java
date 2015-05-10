@@ -16,7 +16,7 @@ public class RequestMatch {
         this.aggregatorExecutor = aggregatorExecutor;
     }
 
-    public boolean isCanBeExecuted() {
+    public boolean isExecutable() {
         return canBeExecuted;
     }
 

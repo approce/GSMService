@@ -16,7 +16,6 @@ public class RequestMatcher {
 
     private LinkedList<RequestMatch> requestMatchList = new LinkedList<>();
 
-
     public Request setMatchedAggregator(List<AggregatorExecutor> aggregatorExecutorList, Request request) {
 
         prepareMatcherList(aggregatorExecutorList, request);
@@ -25,7 +24,7 @@ public class RequestMatcher {
 
         RequestMatch mostAppropriateResult = requestMatchList.getFirst();
 
-        boolean canBeExecuted = mostAppropriateResult.isCanBeExecuted();
+        boolean canBeExecuted = mostAppropriateResult.isExecutable();
 
         if(canBeExecuted) {
             setAggregator(request, mostAppropriateResult.getAggregatorExecutor());
