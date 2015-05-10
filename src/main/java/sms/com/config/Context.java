@@ -3,18 +3,29 @@ package sms.com.config;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.vendor.Database;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 @SpringBootApplication
-@ComponentScan("sms")
-@ImportResource(value ={"classpath:aggregators.xml", "classpath:jpa.xml"})
-@EnableTransactionManagement
+@ComponentScan("sms.com")
+@ImportResource(value = {"classpath:aggregators.xml"})
 public class Context {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(Context.class, args);
         System.out.println(ctx.getBeanDefinitionCount());
+    }
+
+    @Bean(name = "jpaVendorAdapter")
+    public JpaVendorAdapter jpaVendorAdapter() {
+        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+        jpaVendorAdapter.setShowSql(true);
+        jpaVendorAdapter.setGenerateDdl(true);
+        jpaVendorAdapter.setDatabase(Database.MYSQL);
+        return jpaVendorAdapter;
     }
 }
