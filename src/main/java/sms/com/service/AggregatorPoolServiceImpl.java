@@ -28,7 +28,7 @@ public class AggregatorPoolServiceImpl implements AggregatorPoolService {
         LOG.debug("Start AggregatorService initialization");
         initializeGateways();
         //TODO remove start from here.
-        smsLibService.startService();
+//        smsLibService.startService();
     }
 
     @Override

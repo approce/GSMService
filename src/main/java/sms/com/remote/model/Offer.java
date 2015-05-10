@@ -1,4 +1,4 @@
-package sms.com.model;
+package sms.com.remote.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "service")
-public class ServiceModel {
+@Table(name = "services")
+public class Offer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,8 +19,8 @@ public class ServiceModel {
     @Column(name = "short_name")
     private String short_name;
 
-    @Column(name = "full_name")
-    private String full_name;
+    @Column(name = "priority")
+    private Float priority;
 
     public Integer getId() {
         return id;
@@ -38,11 +38,11 @@ public class ServiceModel {
         this.short_name = short_name;
     }
 
-    public String getFull_name() {
-        return full_name;
+    public Float getPriority() {
+        return priority;
     }
 
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setPriority(Float priority) {
+        this.priority = priority;
     }
 }

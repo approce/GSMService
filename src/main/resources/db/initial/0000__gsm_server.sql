@@ -13,10 +13,10 @@ CREATE TABLE providers (
 );
 
 CREATE TABLE sims (
-sim_number  BIGINT NOT NULL UNIQUE,
-provider_id INT    NOT NULL,
-PRIMARY KEY (sim_number),
-FOREIGN KEY (provider_id) REFERENCES providers (provider_id)
+  sim_number  BIGINT NOT NULL UNIQUE,
+  provider_id INT    NOT NULL,
+  PRIMARY KEY (sim_number),
+  FOREIGN KEY (provider_id) REFERENCES providers (provider_id)
 );
 
 
@@ -36,12 +36,11 @@ CREATE TABLE services (
 );
 
 CREATE TABLE requests (
-  request_id  BIGINT    NOT NULL    AUTO_INCREMENT,
-  service_id  INT       NOT NULL,
-  create_date TIMESTAMP NOT NULL    DEFAULT CURRENT_TIMESTAMP,
+  request_id  BIGINT      NOT NULL    AUTO_INCREMENT,
+  offer       VARCHAR(12) NOT NULL,
+  create_date TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP,
   finish_date TIMESTAMP,
-  PRIMARY KEY (request_id),
-  FOREIGN KEY (service_id) REFERENCES services (service_id)
+  PRIMARY KEY (request_id)
 );
 
 CREATE TABLE messages (

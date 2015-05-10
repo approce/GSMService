@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Calendar;
@@ -40,9 +39,8 @@ public class Request {
     @JoinColumn(name = "request_id")
     private List<Message> messageList;
 
-    @ManyToOne
-    @JoinColumn(name = "service_id")
-    private ServiceModel service;
+    @Column(name = "offer")
+    private String offer;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
@@ -80,12 +78,12 @@ public class Request {
         this.messageList = messageList;
     }
 
-    public ServiceModel getService() {
-        return service;
+    public String getOffer() {
+        return offer;
     }
 
-    public void setService(ServiceModel service) {
-        this.service = service;
+    public void setOffer(String offer) {
+        this.offer = offer;
     }
 
     public RequestStatus getRequestStatus() {
