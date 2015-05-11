@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sms.com.aggregators.AggregatorExecutor;
 
-import javax.annotation.Resource;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class AggregatorPoolServiceImpl implements AggregatorPoolService {
@@ -17,16 +15,17 @@ public class AggregatorPoolServiceImpl implements AggregatorPoolService {
     private static final Logger LOG = LoggerFactory.getLogger(AggregatorPoolServiceImpl.class);
 
     @Autowired
-    @Resource(name = "aggregatorsMap")
-    private Map<String, AggregatorExecutor> AGGREGATORS_MAP;
+    private LinkedList<AggregatorExecutor> aggregatorExecutorList;
 
     @Override
     public List<AggregatorExecutor> getAggregators() {
-        return new LinkedList<>(AGGREGATORS_MAP.values());
+        return aggregatorExecutorList;
     }
 
     @Override
-    public AggregatorExecutor getAggregator(String id) {
-        return AGGREGATORS_MAP.get(id);
+    public AggregatorExecutor getAggregatorByGateway(String id) {
+        return aggregatorExecutorList.stream()
+                                     .filter(ag -> ag.getGatewayId().equals(id))
+                                     .findFirst().get();
     }
 }
