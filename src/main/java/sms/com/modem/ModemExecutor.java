@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.smslib.GatewayException;
 import org.smslib.TimeoutException;
 import sms.com.model.Modem;
+import sms.com.utils.SMSLibUtils;
 
 import java.io.IOException;
 
@@ -12,16 +13,16 @@ public class ModemExecutor {
 
     protected static final Logger LOG = LoggerFactory.getLogger(ModemExecutor.class);
 
-    private Modem modem;
+    private final String ID;
 
-    private String getNumberUSSD;
+    private final Modem modem;
 
-    public ModemExecutor(Modem modem) {
+    private final String getNumberUSSDCommand;
+
+    public ModemExecutor(String id, Modem modem, String getNumberUSSD) {
+        this.ID = id;
         this.modem = modem;
-    }
-
-    public void setGetNumberUSSDCommand(String initializationATCommand) {
-        this.getNumberUSSD = initializationATCommand;
+        this.getNumberUSSDCommand = SMSLibUtils.convertGetNumberCommand(getNumberUSSD);
     }
 
     public Modem getModem() {
@@ -30,12 +31,12 @@ public class ModemExecutor {
 
     public void sendGetNumberUSSD() {
         try {
-            this.modem.sendCustomATCommand(getNumberUSSD);
+            this.modem.sendCustomATCommand(getNumberUSSDCommand);
             LOG.debug("Gateway id: {}. Successfully USSD requested to get number.",
-                      modem.getGatewayId());
+                      ID);
         } catch(GatewayException | TimeoutException | IOException | InterruptedException e) {
             LOG.error("Gateway id: {}. Error while send USSD request to get number.\n{}",
-                      modem.getGatewayId(), e);
+                      ID, e);
         }
     }
 }

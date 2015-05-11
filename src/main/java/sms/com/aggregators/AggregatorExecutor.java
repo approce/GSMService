@@ -3,77 +3,44 @@ package sms.com.aggregators;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smslib.AGateway.GatewayStatuses;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import sms.com.matcher.RequestMatch;
 import sms.com.model.Message;
 import sms.com.model.Modem;
 import sms.com.model.Request;
-import sms.com.model.SIM;
-import sms.com.model.SIMCell;
-import sms.com.model.SimFactory;
 import sms.com.modem.ModemExecutor;
-import sms.com.repository.SIMCellRepository;
-import sms.com.repository.SIMRepository;
-import sms.com.utils.SMSLibUtils;
 import sms.com.utils.StringMethods;
 
-import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.Set;
 
-import static sms.com.aggregators.AggregatorStatus.FAILED_TO_START;
-import static sms.com.aggregators.AggregatorStatus.NUMBER_ASSIGNED;
+import static sms.com.aggregators.AggregatorStatus.SIM_DEFINED;
 
 @Component
 public abstract class AggregatorExecutor {
 
     protected static final Logger LOG = LoggerFactory.getLogger(AggregatorExecutor.class);
 
-    public final String ID;
+    private final String ID;
 
     private final Boolean startOnSetup;
 
+    private final Set<Request> requests = new HashSet<>();
+
     private final ModemExecutor modemExecutor;
 
-    private final Set<Request> requests = new HashSet<>();
+    private final SIMExecutor simExecutor;
 
     public AggregatorStatus status;
 
-    protected SIMCell simCell;
-
-    protected SIM currentSIM;
-
-    private SimFactory simFactory;
-
-    private String simCellId;
-
-    @Autowired
-    private SIMCellRepository simCellRepository;
-
-    @Autowired
-    private SIMRepository simRepository;
-
-    public AggregatorExecutor(Boolean startOnSetup, Modem modem, String simCell) {
-        this.ID = modem.getGatewayId();
+    public AggregatorExecutor(String id,
+                              Boolean startOnSetup,
+                              ModemExecutor modemExecutor,
+                              SIMExecutor simExecutor) {
+        this.ID = id;
         this.startOnSetup = startOnSetup;
-        this.modemExecutor = new ModemExecutor(modem);
-        this.simCellId = simCell;
-    }
-
-    @PostConstruct
-    public void init() {
-        simCell = simCellRepository.findOne(simCellId);
-        if(simCell == null) {
-            LOG.error("Aggregator:{}. Wrong sim cell assigned:{}", ID, simCellId);
-            this.status = FAILED_TO_START;
-            return;
-        }
-        String getNumberUSSDCommand = simCell.getSimProvider().getGetNumberUSSD();
-        getNumberUSSDCommand = SMSLibUtils.convertGetNumberCommand(getNumberUSSDCommand);
-        modemExecutor.setGetNumberUSSDCommand(getNumberUSSDCommand);
-
-        this.simFactory = new SimFactory(this.simCell.getSimProvider());
+        this.modemExecutor = modemExecutor;
+        this.simExecutor = simExecutor;
     }
 
     public abstract RequestMatch match(Request request);
@@ -90,8 +57,8 @@ public abstract class AggregatorExecutor {
 
     public void processUSSDResponse(String body) {
         long number = StringMethods.findLongNumber(body);
-        setCurrentSim(number);
-        status = NUMBER_ASSIGNED;
+        simExecutor.create(number);
+        status = SIM_DEFINED;
     }
 
     public void processMessage(Message message) {
@@ -110,11 +77,12 @@ public abstract class AggregatorExecutor {
         return startOnSetup;
     }
 
-    private void setCurrentSim(long number) {
-        currentSIM = simRepository.findOne(number);
-        if(currentSIM == null) {
-            currentSIM = simFactory.createSIM(number);
-        }
+    public String getId() {
+        return ID;
+    }
+
+    public String getGatewayId() {
+        return modemExecutor.getModem().getGatewayId();
     }
 }
 

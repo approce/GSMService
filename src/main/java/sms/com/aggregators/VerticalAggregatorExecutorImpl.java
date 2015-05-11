@@ -1,16 +1,19 @@
 package sms.com.aggregators;
 
 import sms.com.matcher.RequestMatch;
-import sms.com.model.Modem;
 import sms.com.model.Request;
+import sms.com.modem.ModemExecutor;
 
 public class VerticalAggregatorExecutorImpl extends AggregatorExecutor {
 
     private int AVAILABLE_COUNT;
 
-    public VerticalAggregatorExecutorImpl(Boolean startOnSetup, Modem modem, String simCell,
+    public VerticalAggregatorExecutorImpl(String id,
+                                          Boolean startOnSetup,
+                                          ModemExecutor modemExecutor,
+                                          SIMExecutor simExecutor,
                                           int availableCount) {
-        super(startOnSetup, modem, simCell);
+        super(id, startOnSetup, modemExecutor,simExecutor);
         this.AVAILABLE_COUNT = availableCount;
     }
 
