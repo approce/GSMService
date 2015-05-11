@@ -36,7 +36,7 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
 
         Message message = getMessage(aGateway, inboundMessage);
         messageService.save(message);
-        AggregatorExecutor aggregator = aggregatorPoolService.getAggregator(aGateway.getGatewayId());
+        AggregatorExecutor aggregator = aggregatorPoolService.getAggregatorByGateway(aGateway.getGatewayId());
         aggregator.processMessage(message);
         deleteMessage(aGateway, inboundMessage);
 

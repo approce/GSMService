@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
        ">
 
-    <bean id="aggregator_1" class="sms.com.model.Modem">
-        <constructor-arg name="id" value="aggregator_1"/>
+    <bean name="modem" class="sms.com.model.Modem">
+        <constructor-arg name="id" value="${aggregator_1_id}_gateway"/>
         <constructor-arg name="IMEI" value="051251251255"/>
         <constructor-arg name="comPort" value="COM4"/>
         <constructor-arg name="baudRate" value="56700"/>
@@ -17,15 +15,23 @@
         <constructor-arg name="model" value="E1550"/>
     </bean>
 
-    <bean id="aggregator_executor_1" class="sms.com.aggregators.VerticalAggregatorExecutorImpl">
-        <constructor-arg name="startOnSetup" value="true"/>
-        <constructor-arg name="modem" ref="aggregator_1"/>
-        <constructor-arg name="simCell" value="A0"/>
-        <constructor-arg name="availableCount" value="100"/>
+    <bean name="modemExecutor" class="sms.com.modem.ModemExecutor">
+        <constructor-arg name="id" value="${aggregator_1_id}_modem_executor"/>
+        <constructor-arg name="modem" ref="modem"/>
+        <constructor-arg name="getNumberUSSD" value="*161#"/>
     </bean>
 
-    <util:map id="aggregatorsMap" value-type="sms.com.aggregators.AggregatorExecutor">
-        <entry key="aggregator_1" value-ref="aggregator_executor_1"/>
-    </util:map>
+    <bean name="simExecutor" class="sms.com.aggregators.SIMExecutor">
+        <constructor-arg name="id" value="${aggregator_1_id}_sim_executor"/>
+        <constructor-arg name="providerId" value="1"/>
+    </bean>
+
+    <bean id="${aggregator_1_id}" class="sms.com.aggregators.VerticalAggregatorExecutorImpl">
+        <constructor-arg name="id" value="${aggregator_1_id}"/>
+        <constructor-arg name="startOnSetup" value="true"/>
+        <constructor-arg name="modemExecutor" ref="modemExecutor"/>
+        <constructor-arg name="simExecutor" ref="simExecutor"/>
+        <constructor-arg name="availableCount" value="100"/>
+    </bean>
 
 </beans>

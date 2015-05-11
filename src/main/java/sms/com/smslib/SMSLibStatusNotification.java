@@ -25,7 +25,7 @@ public class SMSLibStatusNotification implements IGatewayStatusNotification {
         LOG.debug("Gateway ID: {} changed status from {} to {}\n", aGateway.getGatewayId(),
                   oldStatus, newStatus);
 
-        AggregatorExecutor aggregator = aggregatorPoolService.getAggregator(aGateway.getGatewayId());
+        AggregatorExecutor aggregator = aggregatorPoolService.getAggregatorByGateway(aGateway.getGatewayId());
         aggregator.processStatus(oldStatus, newStatus);
     }
 }

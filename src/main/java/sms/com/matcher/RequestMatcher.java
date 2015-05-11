@@ -41,7 +41,7 @@ public class RequestMatcher {
     }
 
     private void setAggregator(Request request, AggregatorExecutor aggregatorExecutor) {
-        request.setAggregator_id(aggregatorExecutor.ID);
+        request.setAggregator_id(aggregatorExecutor.getId());
         request.setRequestStatus(EXECUTING);
         request.setStart_date(Calendar.getInstance());
     }

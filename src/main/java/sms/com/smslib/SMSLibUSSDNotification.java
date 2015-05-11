@@ -22,7 +22,7 @@ public class SMSLibUSSDNotification implements IUSSDNotification {
 
     @Override
     public void process(AGateway aGateway, USSDResponse ussdResponse) {
-        AggregatorExecutor aggregator = aggregatorPoolService.getAggregator(aGateway.getGatewayId());
+        AggregatorExecutor aggregator = aggregatorPoolService.getAggregatorByGateway(aGateway.getGatewayId());
         try {
             String body = getBody(ussdResponse);
             aggregator.processUSSDResponse(body);

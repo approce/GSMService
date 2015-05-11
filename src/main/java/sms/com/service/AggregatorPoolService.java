@@ -8,5 +8,5 @@ public interface AggregatorPoolService {
 
     List<AggregatorExecutor> getAggregators();
 
-    AggregatorExecutor getAggregator(String id);
+    AggregatorExecutor getAggregatorByGateway(String id);
 }
