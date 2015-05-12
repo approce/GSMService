@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sms.com.aggregators.AggregatorExecutor;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -15,7 +14,7 @@ public class AggregatorPoolServiceImpl implements AggregatorPoolService {
     private static final Logger LOG = LoggerFactory.getLogger(AggregatorPoolServiceImpl.class);
 
     @Autowired
-    private LinkedList<AggregatorExecutor> aggregatorExecutorList;
+    private List<AggregatorExecutor> aggregatorExecutorList;
 
     @Override
     public List<AggregatorExecutor> getAggregators() {

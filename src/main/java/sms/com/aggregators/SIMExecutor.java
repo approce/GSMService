@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import sms.com.model.SIM;
-import sms.com.model.SIMProvider;
-import sms.com.repository.ProviderRepository;
+import sms.com.model.SIMCell;
+import sms.com.repository.SIMCellRepository;
 import sms.com.repository.SIMRepository;
 
 import javax.annotation.PostConstruct;
@@ -21,24 +21,29 @@ public class SIMExecutor {
     private SIMRepository simRepository;
 
     @Autowired
-    private ProviderRepository providerRepository;
+    private SIMCellRepository simCellRepository;
+
+    private SIMCell simCell;
+
+    private String simCellId;
+
+    private String getNumberCode;
 
     private SIM currentSIM;
 
-    private Integer providerId;
 
-    private SIMProvider simProvider;
-
-    public SIMExecutor(String id, Integer providerId) {
+    public SIMExecutor(String id, String simCellId) {
         ID = id;
-        this.providerId = providerId;
+        this.simCellId = simCellId;
     }
 
     @PostConstruct
     public void init() {
-        simProvider = providerRepository.findOne(providerId);
-        if(simProvider==null){
+        this.simCell = simCellRepository.findOne(simCellId);
+        if(simCell == null) {
             //TODO throw exception.
+        } else {
+            this.getNumberCode = simCell.getSimProvider().getGetNumberUSSD();
         }
     }
 
@@ -54,8 +59,16 @@ public class SIMExecutor {
         return currentSIM;
     }
 
+    public String getGetNumberCode() {
+        return getNumberCode;
+    }
+
+    public void setGetNumberCode(String getNumberCode) {
+        this.getNumberCode = getNumberCode;
+    }
+
     private SIM createSIM(long number) {
-        return new SIM(number, simProvider);
+        return new SIM(number, simCell.getSimProvider());
     }
 
     private SIM findSIMInDB(long number) {

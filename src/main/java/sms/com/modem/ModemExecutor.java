@@ -4,9 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smslib.GatewayException;
 import org.smslib.TimeoutException;
+import org.springframework.beans.factory.annotation.Autowired;
+import sms.com.aggregators.SIMExecutor;
 import sms.com.model.Modem;
 import sms.com.utils.SMSLibUtils;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 public class ModemExecutor {
@@ -17,12 +20,20 @@ public class ModemExecutor {
 
     private final Modem modem;
 
-    private final String getNumberUSSDCommand;
+    private String getNumberUSSDCommand;
 
-    public ModemExecutor(String id, Modem modem, String getNumberUSSD) {
+    @Autowired
+    private SIMExecutor simExecutor;
+
+    public ModemExecutor(String id, Modem modem) {
         this.ID = id;
         this.modem = modem;
-        this.getNumberUSSDCommand = SMSLibUtils.convertGetNumberCommand(getNumberUSSD);
+    }
+
+    @PostConstruct
+    public void init() {
+        String getNumberCode = simExecutor.getGetNumberCode();
+        this.getNumberUSSDCommand = SMSLibUtils.convertGetNumberCommand(getNumberCode);
     }
 
     public Modem getModem() {

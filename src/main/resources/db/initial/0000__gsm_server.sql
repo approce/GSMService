@@ -22,8 +22,8 @@ CREATE TABLE sims (
 
 CREATE TABLE sim_cells (
   sim_cell_id VARCHAR(4) NOT NULL UNIQUE,
+  provider_id INT        NOT NULL,
   description VARCHAR(100) DEFAULT NULL,
-  provider_id INT          DEFAULT NULL,
   PRIMARY KEY (sim_cell_id),
   FOREIGN KEY (provider_id) REFERENCES providers (provider_id)
 );
@@ -36,16 +36,19 @@ CREATE TABLE services (
 );
 
 CREATE TABLE requests (
-  request_id  BIGINT      NOT NULL    AUTO_INCREMENT,
-  offer       VARCHAR(12) NOT NULL,
-  create_date TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP,
-  finish_date TIMESTAMP,
+  request_id    BIGINT      NOT NULL    AUTO_INCREMENT,
+  aggregator_id VARCHAR(30)             DEFAULT NULL,
+  status        ENUM('AVAILABLE', 'EXECUTING'),
+  offer         VARCHAR(12) NOT NULL,
+  create_date   TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP,
+  start_date    TIMESTAMP,
+  finish_date   TIMESTAMP,
   PRIMARY KEY (request_id)
 );
 
 CREATE TABLE messages (
   message_id    BIGINT       NOT NULL AUTO_INCREMENT,
-  aggregator_id INT                   DEFAULT NULL,
+  aggregator_id VARCHAR(30)           DEFAULT NULL,
   request_id    BIGINT                DEFAULT NULL,
   originator    VARCHAR(100) NOT NULL,
   body          VARCHAR(500)          DEFAULT NULL,
@@ -53,6 +56,14 @@ CREATE TABLE messages (
   PRIMARY KEY (message_id),
   FOREIGN KEY (request_id) REFERENCES requests (request_id)
 );
+
+INSERT INTO providers (provider_id, name, get_number_ussd, description)
+VALUES (1, 'kyivstar', '*161#', 'ukrainian kyivstart provider');
+
+INSERT INTO sim_cells (sim_cell_id, description, provider_id)
+VALUES ('A0', 'sim cell with clear sims', 1);
+
+
 
 
 
