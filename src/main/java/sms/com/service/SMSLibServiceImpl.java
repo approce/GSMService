@@ -36,10 +36,10 @@ public class SMSLibServiceImpl implements SMSLibService {
     @PostConstruct
     @Override
     public void initialize() {
-        LOG.debug("Start SMSLibService initialization");
         setParameters();
         setListeners();
         addGateways();
+        LOG.debug("SMSLibService have been successfully initialized.");
     }
 
     @Override
@@ -62,7 +62,7 @@ public class SMSLibServiceImpl implements SMSLibService {
 
     @Override
     public void addGateway(AGateway gateway) {
-        LOG.debug("Add gateway {}", gateway.getGatewayId());
+        LOG.debug("Add gateway {} to SMSLib", gateway.getGatewayId());
         try {
             SERVICE.addGateway(gateway);
         } catch(GatewayException e) {

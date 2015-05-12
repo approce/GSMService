@@ -31,7 +31,6 @@ public class SIMExecutor {
 
     private SIM currentSIM;
 
-
     public SIMExecutor(String id, String simCellId) {
         ID = id;
         this.simCellId = simCellId;
@@ -45,6 +44,7 @@ public class SIMExecutor {
         } else {
             this.getNumberCode = simCell.getSimProvider().getGetNumberUSSD();
         }
+        LOG.trace("SIMExecutor ID: {} have been successfully initialized.", ID);
     }
 
     public void create(long number) {
@@ -61,10 +61,6 @@ public class SIMExecutor {
 
     public String getGetNumberCode() {
         return getNumberCode;
-    }
-
-    public void setGetNumberCode(String getNumberCode) {
-        this.getNumberCode = getNumberCode;
     }
 
     private SIM createSIM(long number) {

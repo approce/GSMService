@@ -20,10 +20,10 @@ public class ModemExecutor {
 
     private final Modem modem;
 
-    private String getNumberUSSDCommand;
-
     @Autowired
     private SIMExecutor simExecutor;
+
+    private String getNumberUSSDCommand;
 
     public ModemExecutor(String id, Modem modem) {
         this.ID = id;
@@ -34,6 +34,7 @@ public class ModemExecutor {
     public void init() {
         String getNumberCode = simExecutor.getGetNumberCode();
         this.getNumberUSSDCommand = SMSLibUtils.convertGetNumberCommand(getNumberCode);
+        LOG.trace("ModemExecutor ID: {} have been successfully initialized.", ID);
     }
 
     public Modem getModem() {
