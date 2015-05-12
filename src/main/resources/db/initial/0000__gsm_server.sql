@@ -28,11 +28,13 @@ CREATE TABLE sim_cells (
   FOREIGN KEY (provider_id) REFERENCES providers (provider_id)
 );
 
-CREATE TABLE services (
-  service_id INT         NOT NULL AUTO_INCREMENT,
+CREATE TABLE offers (
+  offer_id   INT         NOT NULL AUTO_INCREMENT,
   short_name VARCHAR(10) NOT NULL,
   full_name  VARCHAR(50) NOT NULL,
-  PRIMARY KEY (service_id)
+  originator VARCHAR(30) NOT NULL,
+  priority   DOUBLE,
+  PRIMARY KEY (offer_id)
 );
 
 CREATE TABLE requests (
