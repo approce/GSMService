@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Calendar;
 
@@ -29,6 +31,10 @@ public class Message {
 
     @Column(name = "receipt_date")
     private Calendar receipt_date;
+
+    @JoinColumn(name = "sim_number")
+    @ManyToOne
+    private SIM sim;
 
     public Long getId() {
         return id;
@@ -68,5 +74,13 @@ public class Message {
 
     public void setReceipt_date(Calendar receipt_date) {
         this.receipt_date = receipt_date;
+    }
+
+    public SIM getSim() {
+        return sim;
+    }
+
+    public void setSim(SIM sim) {
+        this.sim = sim;
     }
 }

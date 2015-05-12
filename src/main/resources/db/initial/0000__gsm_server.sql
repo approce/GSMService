@@ -51,12 +51,14 @@ CREATE TABLE requests (
 CREATE TABLE messages (
   message_id    BIGINT       NOT NULL AUTO_INCREMENT,
   aggregator_id VARCHAR(30)           DEFAULT NULL,
+  sim_number    BIGINT       NOT NULL,
   request_id    BIGINT                DEFAULT NULL,
   originator    VARCHAR(100) NOT NULL,
   body          VARCHAR(500)          DEFAULT NULL,
   receipt_date  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (message_id),
-  FOREIGN KEY (request_id) REFERENCES requests (request_id)
+  FOREIGN KEY (request_id) REFERENCES requests (request_id),
+  FOREIGN KEY (sim_number) REFERENCES sims (sim_number)
 );
 
 INSERT INTO providers (provider_id, name, get_number_ussd, description)
