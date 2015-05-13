@@ -39,8 +39,8 @@ public class Request {
     @JoinColumn(name = "request_id")
     private List<Message> messageList;
 
-    @Column(name = "offer")
-    private String offer;
+    @JoinColumn(name = "offer_id")
+    private Offer offer;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
@@ -78,11 +78,11 @@ public class Request {
         this.messageList = messageList;
     }
 
-    public String getOffer() {
+    public Offer getOffer() {
         return offer;
     }
 
-    public void setOffer(String offer) {
+    public void setOffer(Offer offer) {
         this.offer = offer;
     }
 

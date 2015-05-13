@@ -38,14 +38,15 @@ CREATE TABLE offers (
 );
 
 CREATE TABLE requests (
-  request_id    BIGINT      NOT NULL    AUTO_INCREMENT,
-  aggregator_id VARCHAR(30)             DEFAULT NULL,
+  request_id    BIGINT    NOT NULL    AUTO_INCREMENT,
+  aggregator_id VARCHAR(30)           DEFAULT NULL,
   status        ENUM('AVAILABLE', 'EXECUTING'),
-  offer         VARCHAR(12) NOT NULL,
-  create_date   TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP,
+  offer_id        INT       NOT NULL,
+  create_date   TIMESTAMP NOT NULL    DEFAULT CURRENT_TIMESTAMP,
   start_date    TIMESTAMP,
   finish_date   TIMESTAMP,
-  PRIMARY KEY (request_id)
+  PRIMARY KEY (request_id),
+  FOREIGN KEY (offer_id) REFERENCES  offers (offer_id)
 );
 
 CREATE TABLE messages (
