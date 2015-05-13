@@ -41,17 +41,18 @@ CREATE TABLE requests (
   request_id    BIGINT    NOT NULL    AUTO_INCREMENT,
   aggregator_id VARCHAR(30)           DEFAULT NULL,
   status        ENUM('AVAILABLE', 'EXECUTING'),
-  offer_id        INT       NOT NULL,
+  offer_id      INT       NOT NULL,
   create_date   TIMESTAMP NOT NULL    DEFAULT CURRENT_TIMESTAMP,
   start_date    TIMESTAMP,
   finish_date   TIMESTAMP,
   PRIMARY KEY (request_id),
-  FOREIGN KEY (offer_id) REFERENCES  offers (offer_id)
+  FOREIGN KEY (offer_id) REFERENCES offers (offer_id)
 );
 
 CREATE TABLE messages (
   message_id    BIGINT       NOT NULL AUTO_INCREMENT,
   aggregator_id VARCHAR(30)           DEFAULT NULL,
+  offer_id      INT          NOT NULL,
   sim_number    BIGINT       NOT NULL,
   request_id    BIGINT                DEFAULT NULL,
   originator    VARCHAR(100) NOT NULL,
@@ -59,7 +60,9 @@ CREATE TABLE messages (
   receipt_date  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (message_id),
   FOREIGN KEY (request_id) REFERENCES requests (request_id),
-  FOREIGN KEY (sim_number) REFERENCES sims (sim_number)
+  FOREIGN KEY (sim_number) REFERENCES sims (sim_number),
+  FOREIGN KEY (offer_id) REFERENCES offers (offer_id)
+
 );
 
 INSERT INTO providers (provider_id, name, get_number_ussd, description)

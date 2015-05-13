@@ -36,6 +36,10 @@ public class Message {
     @ManyToOne
     private SIM sim;
 
+    @JoinColumn(name = "offer_id")
+    @ManyToOne
+    private Offer offer;
+
     public Long getId() {
         return id;
     }
@@ -82,5 +86,13 @@ public class Message {
 
     public void setSim(SIM sim) {
         this.sim = sim;
+    }
+
+    public Offer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
     }
 }
