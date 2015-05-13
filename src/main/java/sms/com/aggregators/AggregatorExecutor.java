@@ -8,6 +8,7 @@ import sms.com.matcher.RequestMatch;
 import sms.com.model.Message;
 import sms.com.model.Modem;
 import sms.com.model.Request;
+import sms.com.model.SIM;
 import sms.com.modem.ModemExecutor;
 import sms.com.utils.StringMethods;
 
@@ -31,19 +32,27 @@ public abstract class AggregatorExecutor {
 
     private final SIMExecutor simExecutor;
 
+    private final AggregatorRequestMatcher aggregatorRequestMatcher;
+
     public AggregatorStatus status;
 
     public AggregatorExecutor(String id,
                               Boolean startOnSetup,
                               ModemExecutor modemExecutor,
-                              SIMExecutor simExecutor) {
+                              SIMExecutor simExecutor,
+                              AggregatorRequestMatcher aggregatorRequestMatcher) {
         this.ID = id;
         this.startOnSetup = startOnSetup;
         this.modemExecutor = modemExecutor;
         this.simExecutor = simExecutor;
+        this.aggregatorRequestMatcher = aggregatorRequestMatcher;
     }
 
-    public abstract RequestMatch match(Request request);
+    public RequestMatch match(Request request, SIM currentSim) {
+        RequestMatch result = aggregatorRequestMatcher.match(request, simExecutor.getCurrentSIM());
+        result.setAggregatorExecutor(this);
+        return result;
+    }
 
     public void startInitialization() {
         modemExecutor.sendGetNumberUSSD();

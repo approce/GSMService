@@ -1,7 +1,5 @@
 package sms.com.aggregators;
 
-import sms.com.matcher.RequestMatch;
-import sms.com.model.Request;
 import sms.com.modem.ModemExecutor;
 
 public class VerticalAggregatorExecutorImpl extends AggregatorExecutor {
@@ -12,14 +10,10 @@ public class VerticalAggregatorExecutorImpl extends AggregatorExecutor {
                                           Boolean startOnSetup,
                                           ModemExecutor modemExecutor,
                                           SIMExecutor simExecutor,
+                                          AggregatorRequestMatcher aggregatorRequestMatcher,
                                           int availableCount) {
-        super(id, startOnSetup, modemExecutor,simExecutor);
+        super(id, startOnSetup, modemExecutor, simExecutor, aggregatorRequestMatcher);
         this.AVAILABLE_COUNT = availableCount;
     }
 
-    @Override
-    public RequestMatch match(Request request) {
-        //TODO add logic.
-        return new RequestMatch();
-    }
 }

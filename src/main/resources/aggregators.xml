@@ -25,11 +25,14 @@
         <constructor-arg name="simCellId" value="A0"/>
     </bean>
 
+    <bean name="request_matcher" class="sms.com.aggregators.AggregatorRequestMatcher"/>
+
     <bean id="${aggregator_1_id}" class="sms.com.aggregators.VerticalAggregatorExecutorImpl">
         <constructor-arg name="id" value="${aggregator_1_id}"/>
         <constructor-arg name="startOnSetup" value="true"/>
         <constructor-arg name="modemExecutor" ref="modemExecutor"/>
         <constructor-arg name="simExecutor" ref="simExecutor"/>
+        <constructor-arg name="aggregatorRequestMatcher" ref="request_matcher"/>
         <constructor-arg name="availableCount" value="100"/>
     </bean>
 
