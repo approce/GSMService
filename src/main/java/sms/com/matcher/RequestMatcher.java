@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static sms.com.model.Request.RequestStatus.EXECUTING;
 
@@ -14,11 +15,10 @@ public class RequestMatcher {
 
     private Comparator<RequestMatch> comparator = new RequestMatchComparator();
 
-    private LinkedList<RequestMatch> requestMatchList = new LinkedList<>();
-
     public Request setMatchedAggregator(List<AggregatorExecutor> aggregatorExecutorList, Request request) {
 
-        prepareMatcherList(aggregatorExecutorList, request);
+        LinkedList<RequestMatch> requestMatchList = getMatcherAggregatorMatches(aggregatorExecutorList,
+                                                                                request);
 
         requestMatchList.sort(comparator);
 
@@ -27,20 +27,19 @@ public class RequestMatcher {
         boolean canBeExecuted = mostAppropriateResult.isExecutable();
 
         if(canBeExecuted) {
-            setAggregator(request, mostAppropriateResult.getAggregatorExecutor());
+            assignAggregatorToRequest(request, mostAppropriateResult.getAggregatorExecutor());
         }
         return request;
     }
 
-    private void prepareMatcherList(List<AggregatorExecutor> aggregatorExecutorList, Request request) {
-
-        aggregatorExecutorList.forEach(aggregatorExecutor -> {
-            RequestMatch result = aggregatorExecutor.match(request);
-            requestMatchList.add(result);
-        });
+    private LinkedList<RequestMatch> getMatcherAggregatorMatches(
+            List<AggregatorExecutor> aggregatorExecutorList, Request request) {
+        return aggregatorExecutorList.stream()
+                                     .map(aggregatorExecutor -> aggregatorExecutor.match(request))
+                                     .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    private void setAggregator(Request request, AggregatorExecutor aggregatorExecutor) {
+    private void assignAggregatorToRequest(Request request, AggregatorExecutor aggregatorExecutor) {
         request.setAggregator_id(aggregatorExecutor.getId());
         request.setRequestStatus(EXECUTING);
         request.setStart_date(Calendar.getInstance());
