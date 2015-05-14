@@ -8,7 +8,6 @@ import sms.com.matcher.RequestMatch;
 import sms.com.model.Message;
 import sms.com.model.Modem;
 import sms.com.model.Request;
-import sms.com.model.SIM;
 import sms.com.modem.ModemExecutor;
 import sms.com.utils.StringMethods;
 
@@ -48,7 +47,7 @@ public abstract class AggregatorExecutor {
         this.aggregatorRequestMatcher = aggregatorRequestMatcher;
     }
 
-    public RequestMatch match(Request request, SIM currentSim) {
+    public RequestMatch match(Request request) {
         RequestMatch result = aggregatorRequestMatcher.match(request, simExecutor.getCurrentSIM());
         result.setAggregatorExecutor(this);
         return result;
