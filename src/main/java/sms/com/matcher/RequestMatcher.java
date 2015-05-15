@@ -17,8 +17,7 @@ public class RequestMatcher {
 
     public Request setMatchedAggregator(List<AggregatorExecutor> aggregatorExecutorList, Request request) {
 
-        LinkedList<RequestMatch> requestMatchList = getMatcherAggregatorMatches(aggregatorExecutorList,
-                                                                                request);
+        LinkedList<RequestMatch> requestMatchList = getMatcherAggregatorMatches(aggregatorExecutorList, request);
 
         requestMatchList.sort(comparator);
 

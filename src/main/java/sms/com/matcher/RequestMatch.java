@@ -8,6 +8,8 @@ public class RequestMatch {
 
     private boolean canBeExecuted;
 
+    private Double match_index;
+
     public AggregatorExecutor getAggregatorExecutor() {
         return aggregatorExecutor;
     }
@@ -22,5 +24,13 @@ public class RequestMatch {
 
     public void setCanBeExecuted(boolean canBeExecuted) {
         this.canBeExecuted = canBeExecuted;
+    }
+
+    public Double getMatch_index() {
+        return match_index;
+    }
+
+    public void setMatch_index(Double match_index) {
+        this.match_index = match_index;
     }
 }

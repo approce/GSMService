@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import sms.com.matcher.RequestMatcher;
 import sms.com.model.Request;
+import sms.com.model.Offer;
 import sms.com.repository.RequestRepository;
 
 import java.util.Calendar;
@@ -88,10 +89,11 @@ public class RequestPoolServiceImplTest {
     }
 
     private Request getRequest() {
+        Offer offer=new Offer();
         Request request = new Request();
         request.setID(123l);
         request.setCreate_date(Calendar.getInstance());
-        request.setOffer("fb");
+        request.setOffer(offer);
         return request;
     }
 }
