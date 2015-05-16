@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Calendar;
@@ -39,6 +40,7 @@ public class Request {
     @JoinColumn(name = "request_id")
     private List<Message> messageList;
 
+    @ManyToOne
     @JoinColumn(name = "offer_id")
     private Offer offer;
 
