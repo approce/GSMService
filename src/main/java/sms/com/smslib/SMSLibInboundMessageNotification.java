@@ -8,9 +8,7 @@ import org.smslib.InboundMessage;
 import org.smslib.Message.MessageTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sms.com.aggregators.AggregatorExecutor;
 import sms.com.model.Message;
-import sms.com.service.AggregatorPoolService;
 import sms.com.service.MessageService;
 
 import java.util.Calendar;
@@ -18,11 +16,7 @@ import java.util.Calendar;
 @Component
 public class SMSLibInboundMessageNotification implements IInboundMessageNotification {
 
-    private static final Logger LOG =
-            LoggerFactory.getLogger(SMSLibInboundMessageNotification.class);
-
-    @Autowired
-    private AggregatorPoolService aggregatorPoolService;
+    private static final Logger LOG = LoggerFactory.getLogger(SMSLibInboundMessageNotification.class);
 
     @Autowired
     private MessageService messageService;
@@ -34,21 +28,19 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
             return;
         }
 
-        Message message = getMessage(aGateway, inboundMessage);
-        messageService.save(message);
-        AggregatorExecutor aggregator = aggregatorPoolService.getAggregatorByGateway(aGateway.getGatewayId());
-        aggregator.processMessage(message);
-        deleteMessage(aGateway, inboundMessage);
+        Message message = convertMessage(aGateway, inboundMessage);
+
+        messageService.process(message);
+
+        //        deleteMessage(aGateway, inboundMessage);
 
         LOG.debug("Message ID:{} have been successfully processed.", message.getId());
     }
 
-    private Message getMessage(AGateway aGateway, InboundMessage inboundMessage) {
-        //TODO make factory?
+    private Message convertMessage(AGateway aGateway, InboundMessage inboundMessage) {
         Message message = new Message();
         message.setOriginator(inboundMessage.getOriginator());
         message.setBody(inboundMessage.getText());
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(inboundMessage.getDate());
         message.setReceipt_date(calendar);
