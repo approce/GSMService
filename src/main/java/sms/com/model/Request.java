@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -78,6 +79,13 @@ public class Request {
 
     public void setMessageList(List<Message> messageList) {
         this.messageList = messageList;
+    }
+
+    public void addMessage(Message message) {
+        if(messageList == null) {
+            messageList = new LinkedList<>();
+        }
+        messageList.add(message);
     }
 
     public Offer getOffer() {
