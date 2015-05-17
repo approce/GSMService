@@ -64,7 +64,11 @@ public class SIMExecutor {
     }
 
     private SIM createSIM(long number) {
-        return new SIM(number, simCell.getSimProvider());
+        SIM sim = new SIM();
+        sim.setNumber(number);
+        sim.setSimProvider(simCell.getSimProvider());
+        simRepository.save(sim);
+        return sim;
     }
 
     private SIM findSIMInDB(long number) {

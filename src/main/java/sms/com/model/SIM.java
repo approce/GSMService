@@ -16,18 +16,29 @@ public class SIM {
 
     @Id
     @Column(name = "sim_number")
-    public final Long NUMBER;
+    private Long number;
 
     @ManyToOne
     @JoinColumn(name = "provider_id")
-    public final SIMProvider SIM_PROVIDER;
+    private SIMProvider simProvider;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "sim")
     private List<Message> messageList;
 
-    public SIM(Long NUMBER, SIMProvider SIM_PROVIDER) {
-        this.NUMBER = NUMBER;
-        this.SIM_PROVIDER = SIM_PROVIDER;
+    public Long getNumber() {
+        return number;
+    }
+
+    public void setNumber(Long number) {
+        this.number = number;
+    }
+
+    public SIMProvider getSimProvider() {
+        return simProvider;
+    }
+
+    public void setSimProvider(SIMProvider simProvider) {
+        this.simProvider = simProvider;
     }
 
     public List<Message> getMessageList() {
