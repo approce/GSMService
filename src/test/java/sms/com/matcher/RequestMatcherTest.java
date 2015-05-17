@@ -71,19 +71,19 @@ public class RequestMatcherTest {
 
     @Test
     public void testSetBestMatcherAggregator() throws Exception {
-        Request resultRequest = requestMatcher.setMatchedAggregator(aggregatorExecutors, request);
+        AggregatorExecutor aggregatorExecutor = requestMatcher.setMatchedAggregator(aggregatorExecutors, request);
 
-        assertThat(resultRequest.getAggregator_id()).isEqualTo(aggregator_1_id);
+        assertThat(aggregatorExecutor.getId()).isEqualTo(aggregator_1_id);
 
     }
 
     @Test
     public void testAllFieldsToRequestAreAssigned() throws Exception {
-        Request resultRequest = requestMatcher.setMatchedAggregator(aggregatorExecutors, request);
+        requestMatcher.setMatchedAggregator(aggregatorExecutors, request);
 
-        assertThat(resultRequest.getAggregator_id()).isEqualTo(aggregator_1_id);
-        assertThat(resultRequest.getRequestStatus()).isEqualTo(RequestStatus.EXECUTING);
-        assertThat(resultRequest.getStart_date()).isNotNull();
+        assertThat(request.getAggregator_id()).isEqualTo(aggregator_1_id);
+        assertThat(request.getRequestStatus()).isEqualTo(RequestStatus.EXECUTING);
+        assertThat(request.getStart_date()).isNotNull();
     }
 
     @Test
@@ -91,9 +91,9 @@ public class RequestMatcherTest {
         requestMatch1.setCanBeExecuted(false);
         requestMatch2.setCanBeExecuted(false);
 
-        Request resultRequest = requestMatcher.setMatchedAggregator(aggregatorExecutors, request);
+        requestMatcher.setMatchedAggregator(aggregatorExecutors, request);
 
-        assertThat(resultRequest.getRequestStatus()).isEqualTo(RequestStatus.AVAILABLE);
-        assertThat(resultRequest.getAggregator_id()).isNull();
+        assertThat(request.getRequestStatus()).isEqualTo(RequestStatus.AVAILABLE);
+        assertThat(request.getAggregator_id()).isNull();
     }
 }
