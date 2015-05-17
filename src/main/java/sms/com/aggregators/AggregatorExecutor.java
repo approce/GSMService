@@ -11,10 +11,8 @@ import sms.com.model.Request;
 import sms.com.modem.ModemExecutor;
 import sms.com.utils.StringMethods;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import static sms.com.aggregators.AggregatorStatus.SIM_DEFINED;
+
 
 @Component
 public abstract class AggregatorExecutor {
@@ -25,36 +23,25 @@ public abstract class AggregatorExecutor {
 
     private final Boolean startOnSetup;
 
-    private final Set<Request> requests = new HashSet<>();
-
     private final ModemExecutor modemExecutor;
 
     private final SIMExecutor simExecutor;
 
-    private final AggregatorRequestMatcher aggregatorRequestMatcher;
+    private final AggregatorRequestExecutor aggregatorRequestExecutor;
 
-    public AggregatorStatus status;
+    private AggregatorStatus status;
 
-    public AggregatorExecutor(String id,
-                              Boolean startOnSetup,
-                              ModemExecutor modemExecutor,
-                              SIMExecutor simExecutor,
-                              AggregatorRequestMatcher aggregatorRequestMatcher) {
+    public AggregatorExecutor(String id, Boolean startOnSetup, ModemExecutor modemExecutor, SIMExecutor simExecutor,
+                              AggregatorRequestExecutor aggregatorRequestExecutor) {
         this.ID = id;
         this.startOnSetup = startOnSetup;
         this.modemExecutor = modemExecutor;
         this.simExecutor = simExecutor;
-        this.aggregatorRequestMatcher = aggregatorRequestMatcher;
+        this.aggregatorRequestExecutor = aggregatorRequestExecutor;
     }
 
     public RequestMatch match(Request request) {
-        RequestMatch result = aggregatorRequestMatcher.match(request, simExecutor.getCurrentSIM());
-        result.setAggregatorExecutor(this);
-        return result;
-    }
-
-    public void startInitialization() {
-        modemExecutor.sendGetNumberUSSD();
+        return aggregatorRequestExecutor.matchRequest(request, simExecutor.getCurrentSIM(), this);
     }
 
     public void processStatus(GatewayStatuses oldStatus, GatewayStatuses newStatus) {
@@ -67,14 +54,17 @@ public abstract class AggregatorExecutor {
         long number = StringMethods.findLongNumber(body);
         simExecutor.create(number);
         status = SIM_DEFINED;
+        LOG.trace("Gateway ID: {}. SIM successfully initialized. Status: {}.", ID, status);
     }
 
     public void processMessage(Message message) {
+        message.setSim(simExecutor.getCurrentSIM());
 
+        aggregatorRequestExecutor.matchMessageWithRequest(message);
     }
 
     public void addRequest(Request request) {
-        requests.add(request);
+        aggregatorRequestExecutor.addRequest(request);
     }
 
     public Modem getModem() {
@@ -91,6 +81,10 @@ public abstract class AggregatorExecutor {
 
     public String getGatewayId() {
         return modemExecutor.getModem().getGatewayId();
+    }
+
+    private void startInitialization() {
+        modemExecutor.sendGetNumberUSSD();
     }
 }
 
