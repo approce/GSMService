@@ -63,6 +63,16 @@ CREATE TABLE messages (
 
 );
 
+INSERT INTO offers (offer_id, originator, priority) VALUES
+  ('vk', 'VKcom', 1.0);
+
+INSERT INTO offers (offer_id, originator, priority) VALUES
+  ('od', 'OKru', 1.0);
+
+INSERT INTO offers (offer_id, originator, priority) VALUES
+  ('google', 'google', 1.0);
+
+
 INSERT INTO providers (provider_id, name, get_number_ussd, description)
 VALUES (1, 'kyivstar', '*161#', 'ukrainian kyivstart provider');
 
