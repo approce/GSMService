@@ -37,13 +37,20 @@ public class RequestPoolServiceImpl implements RequestPoolService {
         matchRequestToAggregators(request);
     }
 
+    @Override
+    public void finish(Request request) {
+        // TODO: add implementation
+
+    }
+
     private void matchRequestToAggregators(Request request) {
         List<AggregatorExecutor> availableAggregators = aggregatorPoolService.getAggregators();
-        Request resultRequest = requestMatcher.setMatchedAggregator(availableAggregators, request);
+        AggregatorExecutor aggregatorExecutor = requestMatcher.setMatchedAggregator(availableAggregators, request);
 
-        boolean requestMatchedToAggregator = resultRequest.getRequestStatus().equals(EXECUTING);
+        boolean requestMatchedToAggregator = request.getRequestStatus().equals(EXECUTING);
 
         if(requestMatchedToAggregator) {
+            aggregatorExecutor.addRequest(request);
             AVAILABLE_REQUEST_SET.remove(request);
             saveToDB(request);
         }
