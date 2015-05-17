@@ -2,8 +2,6 @@ package sms.com.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,15 +10,8 @@ import javax.persistence.Table;
 public class Offer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "offer_id")
-    private Long ID;
-
-    @Column(name = "short_name")
-    private String short_name;
-
-    @Column(name = "full_name")
-    private String full_name;
+    private String offer_id;
 
     @Column(name = "originator")
     private String originator;
@@ -28,28 +19,12 @@ public class Offer {
     @Column(name = "priority")
     private Double priority;
 
-    public Long getID() {
-        return ID;
+    public String getOffer_id() {
+        return offer_id;
     }
 
-    public void setID(Long ID) {
-        this.ID = ID;
-    }
-
-    public String getShort_name() {
-        return short_name;
-    }
-
-    public void setShort_name(String short_name) {
-        this.short_name = short_name;
-    }
-
-    public String getFull_name() {
-        return full_name;
-    }
-
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setOffer_id(String offer_id) {
+        this.offer_id = offer_id;
     }
 
     public String getOriginator() {
@@ -74,6 +49,6 @@ public class Offer {
             return false;
         }
         Offer offer = (Offer) obj;
-        return this.getShort_name().equals(offer.getShort_name());
+        return this.getOffer_id().equals(offer.getOffer_id());
     }
 }

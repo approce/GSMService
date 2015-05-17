@@ -29,20 +29,18 @@ CREATE TABLE sim_cells (
 );
 
 CREATE TABLE offers (
-  offer_id   INT         NOT NULL AUTO_INCREMENT,
-  short_name VARCHAR(10) NOT NULL,
-  full_name  VARCHAR(50) NOT NULL,
+  offer_id   VARCHAR(10) NOT NULL,
   originator VARCHAR(30) NOT NULL,
   priority   DOUBLE,
   PRIMARY KEY (offer_id)
 );
 
 CREATE TABLE requests (
-  request_id    BIGINT    NOT NULL    AUTO_INCREMENT,
-  aggregator_id VARCHAR(30)           DEFAULT NULL,
+  request_id    BIGINT      NOT NULL    AUTO_INCREMENT,
+  aggregator_id VARCHAR(30)             DEFAULT NULL,
   status        ENUM('AVAILABLE', 'EXECUTING'),
-  offer_id      INT       NOT NULL,
-  create_date   TIMESTAMP NOT NULL    DEFAULT CURRENT_TIMESTAMP,
+  offer_id      VARCHAR(10) NOT NULL,
+  create_date   TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP,
   start_date    TIMESTAMP,
   finish_date   TIMESTAMP,
   PRIMARY KEY (request_id),
@@ -52,7 +50,7 @@ CREATE TABLE requests (
 CREATE TABLE messages (
   message_id    BIGINT       NOT NULL AUTO_INCREMENT,
   aggregator_id VARCHAR(30)           DEFAULT NULL,
-  offer_id      INT          NOT NULL,
+  offer_id      VARCHAR(10)  NOT NULL,
   sim_number    BIGINT       NOT NULL,
   request_id    BIGINT                DEFAULT NULL,
   originator    VARCHAR(100) NOT NULL,
