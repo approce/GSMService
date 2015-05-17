@@ -1,6 +1,6 @@
 CREATE DATABASE IF NOT EXISTS gsm_service
   DEFAULT CHARACTER SET utf8
-  DEFAULT COLLATE utf8_general_ci;
+  DEFAULT COLLATE utf8_bin;
 
 USE gsm_service;
 
@@ -50,7 +50,7 @@ CREATE TABLE requests (
 CREATE TABLE messages (
   message_id    BIGINT       NOT NULL AUTO_INCREMENT,
   aggregator_id VARCHAR(30)           DEFAULT NULL,
-  offer_id      VARCHAR(10)  NOT NULL,
+  offer_id      VARCHAR(10)           DEFAULT NULL,
   sim_number    BIGINT       NOT NULL,
   request_id    BIGINT                DEFAULT NULL,
   originator    VARCHAR(100) NOT NULL,
@@ -78,6 +78,12 @@ VALUES (1, 'kyivstar', '*161#', 'ukrainian kyivstart provider');
 
 INSERT INTO sim_cells (sim_cell_id, description, provider_id)
 VALUES ('A0', 'sim cell with clear sims', 1);
+
+INSERT INTO sims (sim_number, provider_id) VALUES
+  (380968552860, 1);
+
+INSERT INTO messages (aggregator_id, sim_number, originator, body) VALUES
+  ('ag_1', 380968552860, 'kyivstart', 'фів');
 
 
 

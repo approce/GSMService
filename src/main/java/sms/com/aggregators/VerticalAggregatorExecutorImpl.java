@@ -10,9 +10,9 @@ public class VerticalAggregatorExecutorImpl extends AggregatorExecutor {
                                           Boolean startOnSetup,
                                           ModemExecutor modemExecutor,
                                           SIMExecutor simExecutor,
-                                          AggregatorRequestMatcher aggregatorRequestMatcher,
+                                          AggregatorRequestExecutor aggregatorRequestExecutor,
                                           int availableCount) {
-        super(id, startOnSetup, modemExecutor, simExecutor, aggregatorRequestMatcher);
+        super(id, startOnSetup, modemExecutor, simExecutor, aggregatorRequestExecutor);
         this.AVAILABLE_COUNT = availableCount;
     }
 

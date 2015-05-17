@@ -40,6 +40,7 @@ public class SMSLibServiceImpl implements SMSLibService {
         setListeners();
         addGateways();
         LOG.debug("SMSLibService have been successfully initialized.");
+        startService();
     }
 
     @Override

@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+import sms.com.aggregators.AggregatorExecutor;
 import sms.com.matcher.RequestMatcher;
 import sms.com.model.Request;
 import sms.com.model.Offer;
@@ -17,6 +18,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -47,7 +49,7 @@ public class RequestPoolServiceImplTest {
     public void init() throws Exception {
         MockitoAnnotations.initMocks(this);
         testRequest = getRequest();
-        when(requestMatcher.setMatchedAggregator(any(), any())).thenReturn(testRequest);
+        when(requestMatcher.setMatchedAggregator(any(), any())).thenReturn(mock(AggregatorExecutor.class));
     }
 
     @Test
