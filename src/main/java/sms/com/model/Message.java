@@ -29,6 +29,9 @@ public class Message {
     @Column(name = "body")
     private String body;
 
+    @Column(name = "bode")
+    private String code;
+
     @Column(name = "receipt_date")
     private Calendar receipt_date;
 
@@ -94,5 +97,13 @@ public class Message {
 
     public void setOffer(Offer offer) {
         this.offer = offer;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

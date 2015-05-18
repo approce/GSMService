@@ -6,6 +6,7 @@ import sms.com.aggregators.AggregatorExecutor;
 import sms.com.model.Message;
 import sms.com.repository.MessageRepository;
 import sms.com.repository.OfferRepository;
+import sms.com.utils.StringMethods;
 
 import java.util.stream.StreamSupport;
 
@@ -46,6 +47,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     private void findCodeInMessage(Message message) {
-        //TODO add impl
+        //TODO:add support of multiple strategies.
+        long longNumber = StringMethods.findLongNumber(message.getBody());
+        message.setCode(String.valueOf(longNumber));
     }
 }

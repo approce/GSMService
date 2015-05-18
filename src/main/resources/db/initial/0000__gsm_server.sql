@@ -55,6 +55,7 @@ CREATE TABLE messages (
   request_id    BIGINT                DEFAULT NULL,
   originator    VARCHAR(100) NOT NULL,
   body          VARCHAR(500)          DEFAULT NULL,
+  code          VARCHAR(50)           DEFAULT NULL,
   receipt_date  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (message_id),
   FOREIGN KEY (request_id) REFERENCES requests (request_id),
