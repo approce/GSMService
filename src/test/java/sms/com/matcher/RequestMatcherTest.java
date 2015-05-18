@@ -5,8 +5,8 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import sms.com.aggregators.AggregatorExecutor;
-import sms.com.aggregators.VerticalAggregatorExecutorImpl;
+import sms.com.aggregators.AggregatorFacade;
+import sms.com.aggregators.VerticalAggregatorFacadeImpl;
 import sms.com.model.Request;
 import sms.com.model.Request.RequestStatus;
 
@@ -25,11 +25,11 @@ public class RequestMatcherTest {
     @InjectMocks
     private RequestMatcher requestMatcher;
 
-    private List<AggregatorExecutor> aggregatorExecutors;
+    private List<AggregatorFacade> aggregatorFacades;
 
-    private VerticalAggregatorExecutorImpl aggregator1;
+    private VerticalAggregatorFacadeImpl aggregator1;
 
-    private VerticalAggregatorExecutorImpl aggregator2;
+    private VerticalAggregatorFacadeImpl aggregator2;
 
     private RequestMatch requestMatch1 = new RequestMatch();
 
@@ -47,39 +47,39 @@ public class RequestMatcherTest {
         when(comparator.compare(requestMatch1, requestMatch2)).thenReturn(-1);
         request = new Request();
         request.setRequestStatus(RequestStatus.AVAILABLE);
-        aggregator1 = mock(VerticalAggregatorExecutorImpl.class);
-        aggregator2 = mock(VerticalAggregatorExecutorImpl.class);
+        aggregator1 = mock(VerticalAggregatorFacadeImpl.class);
+        aggregator2 = mock(VerticalAggregatorFacadeImpl.class);
 
         requestMatch1.setCanBeExecuted(true);
         requestMatch1.setMatch_index(1.2);
-        requestMatch1.setAggregatorExecutor(aggregator1);
+        requestMatch1.setAggregatorFacade(aggregator1);
 
         requestMatch2.setCanBeExecuted(true);
         requestMatch2.setMatch_index(1.1);
-        requestMatch2.setAggregatorExecutor(aggregator2);
+        requestMatch2.setAggregatorFacade(aggregator2);
 
-        aggregatorExecutors = new LinkedList<>();
+        aggregatorFacades = new LinkedList<>();
 
         when(aggregator1.match(request)).thenReturn(requestMatch1);
         when(aggregator2.match(request)).thenReturn(requestMatch2);
         when(aggregator1.getId()).thenReturn(aggregator_1_id);
         when(aggregator2.getId()).thenReturn(aggregator_2_id);
 
-        aggregatorExecutors.add(aggregator1);
-        aggregatorExecutors.add(aggregator2);
+        aggregatorFacades.add(aggregator1);
+        aggregatorFacades.add(aggregator2);
     }
 
     @Test
     public void testSetBestMatcherAggregator() throws Exception {
-        AggregatorExecutor aggregatorExecutor = requestMatcher.setMatchedAggregator(aggregatorExecutors, request);
+        AggregatorFacade aggregatorFacade = requestMatcher.setMatchedAggregator(aggregatorFacades, request);
 
-        assertThat(aggregatorExecutor.getId()).isEqualTo(aggregator_1_id);
+        assertThat(aggregatorFacade.getId()).isEqualTo(aggregator_1_id);
 
     }
 
     @Test
     public void testAllFieldsToRequestAreAssigned() throws Exception {
-        requestMatcher.setMatchedAggregator(aggregatorExecutors, request);
+        requestMatcher.setMatchedAggregator(aggregatorFacades, request);
 
         assertThat(request.getAggregator_id()).isEqualTo(aggregator_1_id);
         assertThat(request.getRequestStatus()).isEqualTo(RequestStatus.EXECUTING);
@@ -91,7 +91,7 @@ public class RequestMatcherTest {
         requestMatch1.setCanBeExecuted(false);
         requestMatch2.setCanBeExecuted(false);
 
-        requestMatcher.setMatchedAggregator(aggregatorExecutors, request);
+        requestMatcher.setMatchedAggregator(aggregatorFacades, request);
 
         assertThat(request.getRequestStatus()).isEqualTo(RequestStatus.AVAILABLE);
         assertThat(request.getAggregator_id()).isNull();

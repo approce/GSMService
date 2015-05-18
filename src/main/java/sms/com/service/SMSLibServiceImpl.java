@@ -6,7 +6,7 @@ import org.smslib.AGateway;
 import org.smslib.GatewayException;
 import org.smslib.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import sms.com.aggregators.AggregatorExecutor;
+import sms.com.aggregators.AggregatorFacade;
 import sms.com.model.Modem;
 import sms.com.smslib.SMSLibInboundMessageNotification;
 import sms.com.smslib.SMSLibStatusNotification;
@@ -86,7 +86,7 @@ public class SMSLibServiceImpl implements SMSLibService {
     private void addGateways() {
         aggregatorPoolService.getAggregators()
                              .stream()
-                             .filter(AggregatorExecutor::getStartOnSetup)
+                             .filter(AggregatorFacade::getStartOnSetup)
                              .forEach(aggregator -> {
                                  Modem modem = aggregator.getModem();
                                  addGateway(modem);

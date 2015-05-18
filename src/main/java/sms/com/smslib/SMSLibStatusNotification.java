@@ -6,7 +6,7 @@ import org.smslib.AGateway;
 import org.smslib.IGatewayStatusNotification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sms.com.aggregators.AggregatorExecutor;
+import sms.com.aggregators.AggregatorFacade;
 import sms.com.service.AggregatorPoolService;
 
 import static org.smslib.AGateway.GatewayStatuses;
@@ -25,7 +25,7 @@ public class SMSLibStatusNotification implements IGatewayStatusNotification {
         LOG.debug("Gateway ID: {} changed status from {} to {}\n", aGateway.getGatewayId(),
                   oldStatus, newStatus);
 
-        AggregatorExecutor aggregator = aggregatorPoolService.getAggregatorByGateway(aGateway.getGatewayId());
+        AggregatorFacade aggregator = aggregatorPoolService.getAggregatorByGateway(aGateway.getGatewayId());
         aggregator.processStatus(oldStatus, newStatus);
     }
 }

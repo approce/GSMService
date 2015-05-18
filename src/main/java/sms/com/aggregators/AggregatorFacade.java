@@ -15,9 +15,9 @@ import static sms.com.aggregators.AggregatorStatus.SIM_DEFINED;
 
 
 @Component
-public abstract class AggregatorExecutor {
+public abstract class AggregatorFacade {
 
-    protected static final Logger LOG = LoggerFactory.getLogger(AggregatorExecutor.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(AggregatorFacade.class);
 
     private final String ID;
 
@@ -31,8 +31,8 @@ public abstract class AggregatorExecutor {
 
     private AggregatorStatus status;
 
-    public AggregatorExecutor(String id, Boolean startOnSetup, ModemExecutor modemExecutor, SIMExecutor simExecutor,
-                              AggregatorRequestExecutor aggregatorRequestExecutor) {
+    public AggregatorFacade(String id, Boolean startOnSetup, ModemExecutor modemExecutor, SIMExecutor simExecutor,
+                            AggregatorRequestExecutor aggregatorRequestExecutor) {
         this.ID = id;
         this.startOnSetup = startOnSetup;
         this.modemExecutor = modemExecutor;

@@ -36,7 +36,7 @@ public class AggregatorRequestExecutor {
         LOG.trace("Gateway ID: {}. Request set: ", requests);
     }
 
-    public RequestMatch matchRequest(Request request, SIM currentSim, AggregatorExecutor aggregatorExecutor) {
+    public RequestMatch matchRequest(Request request, SIM currentSim, AggregatorFacade aggregatorFacade) {
         RequestMatch result = new RequestMatch();
 
         boolean present =
@@ -44,7 +44,7 @@ public class AggregatorRequestExecutor {
                           .isPresent();
         if(!present) {
             result.setCanBeExecuted(true);
-            result.setAggregatorExecutor(aggregatorExecutor);
+            result.setAggregatorFacade(aggregatorFacade);
         }
         return result;
     }

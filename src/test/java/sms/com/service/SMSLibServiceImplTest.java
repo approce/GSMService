@@ -9,8 +9,8 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.smslib.Service;
 import org.smslib.Settings;
-import sms.com.aggregators.AggregatorExecutor;
-import sms.com.aggregators.VerticalAggregatorExecutorImpl;
+import sms.com.aggregators.AggregatorFacade;
+import sms.com.aggregators.VerticalAggregatorFacadeImpl;
 import sms.com.model.Modem;
 import sms.com.smslib.SMSLibInboundMessageNotification;
 import sms.com.smslib.SMSLibStatusNotification;
@@ -63,25 +63,25 @@ public class SMSLibServiceImplTest {
     }
 
     private void prepareAggregatorPool() {
-        VerticalAggregatorExecutorImpl aggregator1 =
-                mock(VerticalAggregatorExecutorImpl.class);
+        VerticalAggregatorFacadeImpl aggregator1 =
+                mock(VerticalAggregatorFacadeImpl.class);
         when(aggregator1.getStartOnSetup()).thenReturn(true);
 
         Modem modem1 = mock(Modem.class);
         when(aggregator1.getModem()).thenReturn(modem1);
 
-        VerticalAggregatorExecutorImpl aggregator2 =
-                mock(VerticalAggregatorExecutorImpl.class);
+        VerticalAggregatorFacadeImpl aggregator2 =
+                mock(VerticalAggregatorFacadeImpl.class);
         when(aggregator2.getStartOnSetup()).thenReturn(false);
 
-        VerticalAggregatorExecutorImpl aggregator3 =
-                mock(VerticalAggregatorExecutorImpl.class);
+        VerticalAggregatorFacadeImpl aggregator3 =
+                mock(VerticalAggregatorFacadeImpl.class);
         when(aggregator3.getStartOnSetup()).thenReturn(true);
 
         Modem modem2 = mock(Modem.class);
         when(aggregator3.getModem()).thenReturn(modem2);
 
-        List<AggregatorExecutor> mockedAggregators =
+        List<AggregatorFacade> mockedAggregators =
                 Arrays.asList(aggregator1, aggregator2, aggregator3);
 
         when(aggregatorPoolService.getAggregators()).thenReturn(mockedAggregators);
