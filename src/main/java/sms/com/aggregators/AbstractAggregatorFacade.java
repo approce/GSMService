@@ -9,15 +9,13 @@ import sms.com.model.Message;
 import sms.com.model.Modem;
 import sms.com.model.Request;
 import sms.com.modem.ModemExecutor;
-import sms.com.utils.StringMethods;
 
 import static sms.com.aggregators.AggregatorStatus.SIM_DEFINED;
 
-
 @Component
-public abstract class AggregatorFacade {
+public abstract class AbstractAggregatorFacade {
 
-    protected static final Logger LOG = LoggerFactory.getLogger(AggregatorFacade.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(AbstractAggregatorFacade.class);
 
     private final String ID;
 
@@ -31,8 +29,8 @@ public abstract class AggregatorFacade {
 
     private AggregatorStatus status;
 
-    public AggregatorFacade(String id, Boolean startOnSetup, ModemExecutor modemExecutor, SIMExecutor simExecutor,
-                            AggregatorRequestExecutor aggregatorRequestExecutor) {
+    public AbstractAggregatorFacade(String id, Boolean startOnSetup, ModemExecutor modemExecutor,
+                                    SIMExecutor simExecutor, AggregatorRequestExecutor aggregatorRequestExecutor) {
         this.ID = id;
         this.startOnSetup = startOnSetup;
         this.modemExecutor = modemExecutor;
@@ -44,23 +42,22 @@ public abstract class AggregatorFacade {
         return aggregatorRequestExecutor.matchRequest(request, simExecutor.getCurrentSIM(), this);
     }
 
+    public void processMessage(Message message) {
+        message.setSim(simExecutor.getCurrentSIM());
+
+        aggregatorRequestExecutor.matchMessageWithRequest(message);
+    }
+
     public void processStatus(GatewayStatuses oldStatus, GatewayStatuses newStatus) {
         if(oldStatus.equals(GatewayStatuses.STARTING) && newStatus.equals(GatewayStatuses.STARTED)) {
             startInitialization();
         }
     }
 
-    public void processUSSDResponse(String body) {
-        long number = StringMethods.findLongNumber(body);
+    public void processUSSDResponse(long number) {
         simExecutor.create(number);
         status = SIM_DEFINED;
         LOG.trace("Gateway ID: {}. SIM successfully initialized. Status: {}.", ID, status);
-    }
-
-    public void processMessage(Message message) {
-        message.setSim(simExecutor.getCurrentSIM());
-
-        aggregatorRequestExecutor.matchMessageWithRequest(message);
     }
 
     public void addRequest(Request request) {
@@ -77,10 +74,6 @@ public abstract class AggregatorFacade {
 
     public String getId() {
         return ID;
-    }
-
-    public String getGatewayId() {
-        return modemExecutor.getModem().getGatewayId();
     }
 
     private void startInitialization() {

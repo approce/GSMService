@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import sms.com.aggregators.AggregatorFacade;
+import sms.com.aggregators.AbstractAggregatorFacade;
 import sms.com.matcher.RequestMatcher;
 import sms.com.model.Request;
 import sms.com.model.Offer;
@@ -49,7 +49,7 @@ public class RequestPoolServiceImplTest {
     public void init() throws Exception {
         MockitoAnnotations.initMocks(this);
         testRequest = getRequest();
-        when(requestMatcher.setMatchedAggregator(any(), any())).thenReturn(mock(AggregatorFacade.class));
+        when(requestMatcher.setMatchedAggregator(any(), any())).thenReturn(mock(AbstractAggregatorFacade.class));
     }
 
     @Test

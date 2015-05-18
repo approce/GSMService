@@ -1,12 +1,12 @@
 package sms.com.service;
 
-import sms.com.aggregators.AggregatorFacade;
+import sms.com.aggregators.AbstractAggregatorFacade;
 
 import java.util.List;
 
 public interface AggregatorPoolService {
 
-    List<AggregatorFacade> getAggregators();
+    List<AbstractAggregatorFacade> getAggregators();
 
-    AggregatorFacade getAggregatorByGateway(String id);
+    AbstractAggregatorFacade getAggregatorByGateway(String id);
 }

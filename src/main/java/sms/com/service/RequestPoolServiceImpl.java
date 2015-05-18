@@ -2,7 +2,7 @@ package sms.com.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sms.com.aggregators.AggregatorFacade;
+import sms.com.aggregators.AbstractAggregatorFacade;
 import sms.com.controller.RemoteController;
 import sms.com.matcher.RequestMatcher;
 import sms.com.model.Request;
@@ -47,13 +47,13 @@ public class RequestPoolServiceImpl implements RequestPoolService {
     }
 
     private void matchRequestToAggregators(Request request) {
-        List<AggregatorFacade> availableAggregators = aggregatorPoolService.getAggregators();
-        AggregatorFacade aggregatorFacade = requestMatcher.setMatchedAggregator(availableAggregators, request);
+        List<AbstractAggregatorFacade> availableAggregators = aggregatorPoolService.getAggregators();
+        AbstractAggregatorFacade abstractAggregatorFacade = requestMatcher.setMatchedAggregator(availableAggregators, request);
 
         boolean requestMatchedToAggregator = request.getRequestStatus().equals(EXECUTING);
 
         if(requestMatchedToAggregator) {
-            aggregatorFacade.addRequest(request);
+            abstractAggregatorFacade.addRequest(request);
             AVAILABLE_REQUEST_SET.remove(request);
             saveToDB(request);
         }

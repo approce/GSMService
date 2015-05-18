@@ -8,7 +8,7 @@ import org.smslib.IUSSDNotification;
 import org.smslib.USSDResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sms.com.aggregators.AggregatorFacade;
+import sms.com.aggregators.AbstractAggregatorFacade;
 import sms.com.service.AggregatorPoolService;
 import sms.com.utils.StringMethods;
 
@@ -22,10 +22,11 @@ public class SMSLibUSSDNotification implements IUSSDNotification {
 
     @Override
     public void process(AGateway aGateway, USSDResponse ussdResponse) {
-        AggregatorFacade aggregator = aggregatorPoolService.getAggregatorByGateway(aGateway.getGatewayId());
+        AbstractAggregatorFacade aggregator = aggregatorPoolService.getAggregatorByGateway(aGateway.getGatewayId());
         try {
             String body = getBody(ussdResponse);
-            aggregator.processUSSDResponse(body);
+            long number = StringMethods.findLongNumber(body);
+            aggregator.processUSSDResponse(number);
             LOG.debug("Gateway ID: {}. Received USSD response:\n{}", aGateway.getGatewayId(), body);
         } catch(Exception e) {
             LOG.error("Exception while process USSD response.\n{}", e);

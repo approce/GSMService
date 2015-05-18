@@ -1,6 +1,6 @@
 package sms.com.matcher;
 
-import sms.com.aggregators.AggregatorFacade;
+import sms.com.aggregators.AbstractAggregatorFacade;
 import sms.com.model.Request;
 
 import java.util.Calendar;
@@ -15,9 +15,9 @@ public class RequestMatcher {
 
     private Comparator<RequestMatch> comparator = new RequestMatchComparator();
 
-    public AggregatorFacade setMatchedAggregator(List<AggregatorFacade> aggregatorFacadeList, Request request) {
+    public AbstractAggregatorFacade setMatchedAggregator(List<AbstractAggregatorFacade> abstractAggregatorFacadeList, Request request) {
 
-        LinkedList<RequestMatch> requestMatchList = getMatcherAggregatorMatches(aggregatorFacadeList, request);
+        LinkedList<RequestMatch> requestMatchList = getMatcherAggregatorMatches(abstractAggregatorFacadeList, request);
 
         requestMatchList.sort(comparator);
 
@@ -26,20 +26,20 @@ public class RequestMatcher {
         boolean canBeExecuted = mostAppropriateResult.isExecutable();
 
         if(canBeExecuted) {
-            assignAggregatorToRequest(request, mostAppropriateResult.getAggregatorFacade());
+            assignAggregatorToRequest(request, mostAppropriateResult.getAbstractAggregatorFacade());
         }
-        return mostAppropriateResult.getAggregatorFacade();
+        return mostAppropriateResult.getAbstractAggregatorFacade();
     }
 
     private LinkedList<RequestMatch> getMatcherAggregatorMatches(
-            List<AggregatorFacade> aggregatorFacadeList, Request request) {
-        return aggregatorFacadeList.stream()
+            List<AbstractAggregatorFacade> abstractAggregatorFacadeList, Request request) {
+        return abstractAggregatorFacadeList.stream()
                                      .map(aggregatorExecutor -> aggregatorExecutor.match(request))
                                      .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    private void assignAggregatorToRequest(Request request, AggregatorFacade aggregatorFacade) {
-        request.setAggregator_id(aggregatorFacade.getId());
+    private void assignAggregatorToRequest(Request request, AbstractAggregatorFacade abstractAggregatorFacade) {
+        request.setAggregator_id(abstractAggregatorFacade.getId());
         request.setRequestStatus(EXECUTING);
         request.setStart_date(Calendar.getInstance());
     }

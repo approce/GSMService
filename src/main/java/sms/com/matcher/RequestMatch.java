@@ -1,21 +1,21 @@
 package sms.com.matcher;
 
-import sms.com.aggregators.AggregatorFacade;
+import sms.com.aggregators.AbstractAggregatorFacade;
 
 public class RequestMatch {
 
-    private AggregatorFacade aggregatorFacade;
+    private AbstractAggregatorFacade abstractAggregatorFacade;
 
     private boolean canBeExecuted;
 
     private Double match_index;
 
-    public AggregatorFacade getAggregatorFacade() {
-        return aggregatorFacade;
+    public AbstractAggregatorFacade getAbstractAggregatorFacade() {
+        return abstractAggregatorFacade;
     }
 
-    public void setAggregatorFacade(AggregatorFacade aggregatorFacade) {
-        this.aggregatorFacade = aggregatorFacade;
+    public void setAbstractAggregatorFacade(AbstractAggregatorFacade abstractAggregatorFacade) {
+        this.abstractAggregatorFacade = abstractAggregatorFacade;
     }
 
     public boolean isExecutable() {

@@ -2,7 +2,7 @@ package sms.com.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sms.com.aggregators.AggregatorFacade;
+import sms.com.aggregators.AbstractAggregatorFacade;
 import sms.com.model.Message;
 import sms.com.repository.MessageRepository;
 import sms.com.repository.OfferRepository;
@@ -30,7 +30,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void process(Message message) {
         matchOffer(message);
-        AggregatorFacade aggregator = aggregatorPoolService.getAggregatorByGateway(message.getAggregator_id());
+        AbstractAggregatorFacade aggregator = aggregatorPoolService.getAggregatorByGateway(message.getAggregator_id());
         aggregator.processMessage(message);
 
         messageRepository.save(message);

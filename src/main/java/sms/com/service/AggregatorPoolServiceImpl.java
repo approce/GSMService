@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sms.com.aggregators.AggregatorFacade;
+import sms.com.aggregators.AbstractAggregatorFacade;
 
 import java.util.List;
 
@@ -14,17 +14,17 @@ public class AggregatorPoolServiceImpl implements AggregatorPoolService {
     private static final Logger LOG = LoggerFactory.getLogger(AggregatorPoolServiceImpl.class);
 
     @Autowired
-    private List<AggregatorFacade> aggregatorFacadeList;
+    private List<AbstractAggregatorFacade> abstractAggregatorFacadeList;
 
     @Override
-    public List<AggregatorFacade> getAggregators() {
-        return aggregatorFacadeList;
+    public List<AbstractAggregatorFacade> getAggregators() {
+        return abstractAggregatorFacadeList;
     }
 
     @Override
-    public AggregatorFacade getAggregatorByGateway(String id) {
-        return aggregatorFacadeList.stream()
-                                     .filter(ag -> ag.getGatewayId().equals(id))
+    public AbstractAggregatorFacade getAggregatorByGateway(String id) {
+        return abstractAggregatorFacadeList.stream()
+                                     .filter(ag -> ag.getId().equals(id))
                                      .findFirst().get();
     }
 }
