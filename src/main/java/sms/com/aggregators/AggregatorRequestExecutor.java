@@ -30,13 +30,12 @@ public class AggregatorRequestExecutor {
 
     public void addRequest(Request request) {
         LOG.trace("Gateway ID: {}. Adding request: {}. ", ID, request);
-
         requests.add(request);
-
         LOG.trace("Gateway ID: {}. Request set: ", requests);
     }
 
-    public RequestMatch matchRequest(Request request, SIM currentSim, AbstractAggregatorFacade abstractAggregatorFacade) {
+    public RequestMatch matchRequest(Request request, SIM currentSim,
+                                     AbstractAggregatorFacade abstractAggregatorFacade) {
         RequestMatch result = new RequestMatch();
 
         boolean present =
