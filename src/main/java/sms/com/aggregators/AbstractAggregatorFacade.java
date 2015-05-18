@@ -17,25 +17,21 @@ public abstract class AbstractAggregatorFacade {
 
     protected static final Logger LOG = LoggerFactory.getLogger(AbstractAggregatorFacade.class);
 
-    private final String ID;
+    private final String id;
 
     private final Boolean startOnSetup;
 
-    private final ModemExecutor modemExecutor;
+    private ModemExecutor modemExecutor;
 
-    private final SIMExecutor simExecutor;
+    private SIMExecutor simExecutor;
 
-    private final AggregatorRequestExecutor aggregatorRequestExecutor;
+    private AggregatorRequestExecutor aggregatorRequestExecutor;
 
     private AggregatorStatus status;
 
-    public AbstractAggregatorFacade(String id, Boolean startOnSetup, ModemExecutor modemExecutor,
-                                    SIMExecutor simExecutor, AggregatorRequestExecutor aggregatorRequestExecutor) {
-        this.ID = id;
+    public AbstractAggregatorFacade(String id, Boolean startOnSetup) {
+        this.id = id;
         this.startOnSetup = startOnSetup;
-        this.modemExecutor = modemExecutor;
-        this.simExecutor = simExecutor;
-        this.aggregatorRequestExecutor = aggregatorRequestExecutor;
     }
 
     public RequestMatch match(Request request) {
@@ -57,7 +53,19 @@ public abstract class AbstractAggregatorFacade {
     public void processUSSDResponse(long number) {
         simExecutor.create(number);
         status = SIM_DEFINED;
-        LOG.trace("Gateway ID: {}. SIM successfully initialized. Status: {}.", ID, status);
+        LOG.trace("Gateway ID: {}. SIM successfully initialized. Status: {}.", id, status);
+    }
+
+    public void setModemExecutor(ModemExecutor modemExecutor) {
+        this.modemExecutor = modemExecutor;
+    }
+
+    public void setSimExecutor(SIMExecutor simExecutor) {
+        this.simExecutor = simExecutor;
+    }
+
+    public void setAggregatorRequestExecutor(AggregatorRequestExecutor aggregatorRequestExecutor) {
+        this.aggregatorRequestExecutor = aggregatorRequestExecutor;
     }
 
     public void addRequest(Request request) {
@@ -73,7 +81,7 @@ public abstract class AbstractAggregatorFacade {
     }
 
     public String getId() {
-        return ID;
+        return id;
     }
 
     private void startInitialization() {

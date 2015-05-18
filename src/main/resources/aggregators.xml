@@ -6,10 +6,10 @@
        ">
 
     <bean name="modem" class="sms.com.model.Modem">
-        <constructor-arg name="id" value="${aggregator_1_id}_gateway"/>
+        <constructor-arg name="id" value="${aggregator_1_id}"/>
         <constructor-arg name="IMEI" value="051251251255"/>
-        <constructor-arg name="comPort" value="COM4"/>
-        <constructor-arg name="baudRate" value="56700"/>
+        <constructor-arg name="comPort" value="/dev/ttyUSB2"/>
+        <constructor-arg name="baudRate" value="9600"/>
         <constructor-arg name="initCommand" value="AT+CFUN=1\r"/>
         <constructor-arg name="manufacturer" value="HUAWEI"/>
         <constructor-arg name="model" value="E1550"/>
@@ -25,15 +25,19 @@
         <constructor-arg name="simCellId" value="A0"/>
     </bean>
 
-    <bean name="request_matcher" class="sms.com.aggregators.AggregatorRequestMatcher"/>
+    <bean name="request_matcher" class="sms.com.aggregators.AggregatorRequestExecutor">
+        <constructor-arg name="id" value="${aggregator_1_id}"/>
 
-    <bean id="${aggregator_1_id}" class="sms.com.aggregators.VerticalAggregatorExecutorImpl">
+    </bean>
+
+    <bean id="${aggregator_1_id}" class="sms.com.aggregators.VerticalAggregatorImpl">
         <constructor-arg name="id" value="${aggregator_1_id}"/>
         <constructor-arg name="startOnSetup" value="true"/>
-        <constructor-arg name="modemExecutor" ref="modemExecutor"/>
-        <constructor-arg name="simExecutor" ref="simExecutor"/>
-        <constructor-arg name="aggregatorRequestMatcher" ref="request_matcher"/>
         <constructor-arg name="availableCount" value="100"/>
+
+        <property name="simExecutor" ref="simExecutor"/>
+        <property name="modemExecutor" ref="modemExecutor"/>
+        <property name="aggregatorRequestExecutor" ref="request_matcher"/>
     </bean>
 
 </beans>
