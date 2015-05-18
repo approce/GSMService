@@ -28,4 +28,10 @@ public class Controller {
 
         return "OK";
     }
+
+    @RequestMapping(name = "/remote")
+    String remoteServerImitation(@RequestParam long request_id, @RequestParam String code) {
+        System.out.println("Remote server: request_id: " + request_id + ". Code: " + code + ".");
+        return "OK";
+    }
 }

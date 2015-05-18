@@ -3,6 +3,7 @@ package sms.com.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sms.com.aggregators.AggregatorFacade;
+import sms.com.controller.RemoteController;
 import sms.com.matcher.RequestMatcher;
 import sms.com.model.Request;
 import sms.com.repository.RequestRepository;
@@ -26,6 +27,9 @@ public class RequestPoolServiceImpl implements RequestPoolService {
     @Autowired
     private AggregatorPoolService aggregatorPoolService;
 
+    @Autowired
+    private RemoteController remoteController;
+
     public static Set<Request> getAvailableRequestSet() {
         return AVAILABLE_REQUEST_SET;
     }
@@ -39,8 +43,7 @@ public class RequestPoolServiceImpl implements RequestPoolService {
 
     @Override
     public void finish(Request request) {
-        // TODO: add implementation
-
+        remoteController.sendRequestToRemote(request);
     }
 
     private void matchRequestToAggregators(Request request) {
