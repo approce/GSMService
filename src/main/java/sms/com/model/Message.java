@@ -29,7 +29,7 @@ public class Message {
     @Column(name = "body")
     private String body;
 
-    @Column(name = "bode")
+    @Column(name = "code")
     private String code;
 
     @Column(name = "receipt_date")
