@@ -20,12 +20,5 @@ public class Context {
         System.out.println(ctx.getBeanDefinitionCount());
     }
 
-    @Bean(name = "jpaVendorAdapter")
-    public JpaVendorAdapter jpaVendorAdapter() {
-        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setShowSql(true);
-        jpaVendorAdapter.setGenerateDdl(true);
-        jpaVendorAdapter.setDatabase(Database.MYSQL);
-        return jpaVendorAdapter;
-    }
+
 }
