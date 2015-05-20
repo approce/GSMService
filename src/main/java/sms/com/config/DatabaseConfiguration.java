@@ -17,8 +17,11 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories
-public abstract class DatabaseConfiguration {
+@EnableJpaRepositories(
+        entityManagerFactoryRef = "entityManagerFactory",
+        transactionManagerRef = "transactionManager",
+        basePackages = {"sms.com.repository"})
+public class DatabaseConfiguration {
 
     private static final String MODEL_PACKAGE = "sms.com.model";
 
@@ -37,7 +40,7 @@ public abstract class DatabaseConfiguration {
     @Bean(name = "jpaVendorAdapter")
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setShowSql(true);
+        jpaVendorAdapter.setShowSql(false);
         jpaVendorAdapter.setGenerateDdl(true);
         jpaVendorAdapter.setDatabase(Database.MYSQL);
         return jpaVendorAdapter;
