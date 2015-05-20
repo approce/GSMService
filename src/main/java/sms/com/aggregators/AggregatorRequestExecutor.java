@@ -10,8 +10,8 @@ import sms.com.model.Request;
 import sms.com.model.SIM;
 import sms.com.service.RequestPoolService;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 public class AggregatorRequestExecutor {
 
@@ -22,7 +22,7 @@ public class AggregatorRequestExecutor {
     @Autowired
     private RequestPoolService requestPoolService;
 
-    private Set<Request> requests = new HashSet<>();
+    private Set<Request> requests = new ConcurrentSkipListSet<>();
 
     public AggregatorRequestExecutor(String id) {
         this.ID = id;

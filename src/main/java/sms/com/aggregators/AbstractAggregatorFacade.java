@@ -40,6 +40,7 @@ public abstract class AbstractAggregatorFacade {
 
     public void processMessage(Message message) {
         message.setSim(simExecutor.getCurrentSIM());
+        simExecutor.getCurrentSIM().getMessageList().add(message);
 
         aggregatorRequestExecutor.matchMessageWithRequest(message);
     }

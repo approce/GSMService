@@ -41,8 +41,8 @@ CREATE TABLE requests (
   status        ENUM('AVAILABLE', 'EXECUTING'),
   offer_id      VARCHAR(10) NOT NULL,
   create_date   TIMESTAMP   NOT NULL    DEFAULT CURRENT_TIMESTAMP,
-  start_date    TIMESTAMP,
-  finish_date   TIMESTAMP,
+  start_date    TIMESTAMP   NULL        DEFAULT NULL,
+  finish_date   TIMESTAMP   NULL        DEFAULT NULL,
   PRIMARY KEY (request_id),
   FOREIGN KEY (offer_id) REFERENCES offers (offer_id)
 );

@@ -21,6 +21,7 @@ public class Controller {
     @RequestMapping("/")
     String createRequest(@RequestParam String offer) {
         Request request = new Request();
+        request.setRequestStatus(Request.RequestStatus.AVAILABLE);
         Offer requestOffer = offerRepository.findOne(offer);
         request.setOffer(requestOffer);
 

@@ -15,7 +15,8 @@ public class RequestMatcher {
 
     private Comparator<RequestMatch> comparator = new RequestMatchComparator();
 
-    public AbstractAggregatorFacade setMatchedAggregator(List<AbstractAggregatorFacade> abstractAggregatorFacadeList, Request request) {
+    public AbstractAggregatorFacade setMatchedAggregator(List<AbstractAggregatorFacade> abstractAggregatorFacadeList,
+                                                         Request request) {
 
         LinkedList<RequestMatch> requestMatchList = getMatcherAggregatorMatches(abstractAggregatorFacadeList, request);
 
@@ -23,19 +24,18 @@ public class RequestMatcher {
 
         RequestMatch mostAppropriateResult = requestMatchList.getFirst();
 
-        boolean canBeExecuted = mostAppropriateResult.isExecutable();
-
-        if(canBeExecuted) {
+        if(mostAppropriateResult.isExecutable()) {
             assignAggregatorToRequest(request, mostAppropriateResult.getAbstractAggregatorFacade());
+            return mostAppropriateResult.getAbstractAggregatorFacade();
+        } else {
+            return null;
         }
-        return mostAppropriateResult.getAbstractAggregatorFacade();
     }
 
-    private LinkedList<RequestMatch> getMatcherAggregatorMatches(
-            List<AbstractAggregatorFacade> abstractAggregatorFacadeList, Request request) {
-        return abstractAggregatorFacadeList.stream()
-                                     .map(aggregatorExecutor -> aggregatorExecutor.match(request))
-                                     .collect(Collectors.toCollection(LinkedList::new));
+    private LinkedList<RequestMatch> getMatcherAggregatorMatches(List<AbstractAggregatorFacade> aggregatorList,
+                                                                 Request request) {
+        return aggregatorList.stream().map(aggregatorExecutor -> aggregatorExecutor.match(request))
+                             .collect(Collectors.toCollection(LinkedList::new));
     }
 
     private void assignAggregatorToRequest(Request request, AbstractAggregatorFacade abstractAggregatorFacade) {

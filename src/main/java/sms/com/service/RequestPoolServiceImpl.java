@@ -1,5 +1,7 @@
 package sms.com.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sms.com.aggregators.AbstractAggregatorFacade;
@@ -8,16 +10,15 @@ import sms.com.matcher.RequestMatcher;
 import sms.com.model.Request;
 import sms.com.repository.RequestRepository;
 
-import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-
-import static sms.com.model.Request.RequestStatus.EXECUTING;
 
 @Service
 public class RequestPoolServiceImpl implements RequestPoolService {
 
-    private static final Set<Request> AVAILABLE_REQUEST_SET = new HashSet<>();
+    private static final Logger LOG = LoggerFactory.getLogger(RequestPoolServiceImpl.class);
+
+    private static final List<Request> AVAILABLE_REQUEST_LIST = new LinkedList<>();
 
     private RequestMatcher requestMatcher = new RequestMatcher();
 
@@ -30,14 +31,16 @@ public class RequestPoolServiceImpl implements RequestPoolService {
     @Autowired
     private RemoteController remoteController;
 
-    public static Set<Request> getAvailableRequestSet() {
-        return AVAILABLE_REQUEST_SET;
+    public static List<Request> getAvailableRequestSet() {
+        return AVAILABLE_REQUEST_LIST;
     }
 
     @Override
     public void add(Request request) {
+        LOG.trace("Request received: {}", request);
         saveToDB(request);
-        AVAILABLE_REQUEST_SET.add(request);
+        AVAILABLE_REQUEST_LIST.add(request);
+        LOG.trace("Available request list[{}]: {}", AVAILABLE_REQUEST_LIST.size(), AVAILABLE_REQUEST_LIST);
         matchRequestToAggregators(request);
     }
 
@@ -48,14 +51,14 @@ public class RequestPoolServiceImpl implements RequestPoolService {
 
     private void matchRequestToAggregators(Request request) {
         List<AbstractAggregatorFacade> availableAggregators = aggregatorPoolService.getAggregators();
-        AbstractAggregatorFacade abstractAggregatorFacade = requestMatcher.setMatchedAggregator(availableAggregators, request);
+        AbstractAggregatorFacade matchedAggregator = requestMatcher.setMatchedAggregator(availableAggregators, request);
 
-        boolean requestMatchedToAggregator = request.getRequestStatus().equals(EXECUTING);
-
-        if(requestMatchedToAggregator) {
-            abstractAggregatorFacade.addRequest(request);
-            AVAILABLE_REQUEST_SET.remove(request);
+        if(matchedAggregator != null) {
+            matchedAggregator.addRequest(request);
+            AVAILABLE_REQUEST_LIST.remove(request);
             saveToDB(request);
+            LOG.trace("Request {} have been matched to aggregator", request);
+            LOG.trace("Available request list[{}]: {}", AVAILABLE_REQUEST_LIST.size(), AVAILABLE_REQUEST_LIST);
         }
     }
 
