@@ -3,14 +3,17 @@ package sms.com.smslib;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smslib.AGateway;
+import org.smslib.GatewayException;
 import org.smslib.IInboundMessageNotification;
 import org.smslib.InboundMessage;
 import org.smslib.Message.MessageTypes;
+import org.smslib.TimeoutException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import sms.com.model.Message;
 import sms.com.service.MessageService;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 @Component
@@ -34,7 +37,7 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
 
         //        deleteMessage(aGateway, inboundMessage);
 
-        LOG.debug("Message ID:{} have been successfully processed.", message.getId());
+        LOG.trace("Message ID:{} have been successfully processed.", message.getId());
     }
 
     private Message convertMessage(AGateway aGateway, InboundMessage inboundMessage) {
@@ -51,7 +54,7 @@ public class SMSLibInboundMessageNotification implements IInboundMessageNotifica
     private void deleteMessage(AGateway aGateway, InboundMessage inboundMessage) {
         try {
             aGateway.deleteMessage(inboundMessage);
-        } catch(Exception e) {
+        } catch(TimeoutException | GatewayException | InterruptedException | IOException e) {
             LOG.error("Exception while deleting inbound message.\n{}", e);
         }
     }

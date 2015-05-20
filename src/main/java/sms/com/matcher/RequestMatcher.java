@@ -1,5 +1,6 @@
 package sms.com.matcher;
 
+import org.springframework.stereotype.Component;
 import sms.com.aggregators.AbstractAggregatorFacade;
 import sms.com.model.Request;
 
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 
 import static sms.com.model.Request.RequestStatus.EXECUTING;
 
+@Component
 public class RequestMatcher {
 
     private Comparator<RequestMatch> comparator = new RequestMatchComparator();

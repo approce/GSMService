@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smslib.AGateway;
 import org.smslib.GatewayException;
+import org.smslib.SMSLibException;
 import org.smslib.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import sms.com.aggregators.AbstractAggregatorFacade;
@@ -13,6 +14,7 @@ import sms.com.smslib.SMSLibStatusNotification;
 import sms.com.smslib.SMSLibUSSDNotification;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 
 @org.springframework.stereotype.Service(value = "SIMLibService")
 public class SMSLibServiceImpl implements SMSLibService {
@@ -40,14 +42,13 @@ public class SMSLibServiceImpl implements SMSLibService {
         setListeners();
         addGateways();
         LOG.debug("SMSLibService have been successfully initialized.");
-        startService();
     }
 
     @Override
     public void startService() {
         try {
             SERVICE.startService();
-        } catch(Exception e) {
+        } catch(SMSLibException | IOException | InterruptedException e) {
             LOG.error("Exception while SMSLib service start.\n{}", e);
         }
     }
@@ -56,7 +57,7 @@ public class SMSLibServiceImpl implements SMSLibService {
     public void stopService() {
         try {
             SERVICE.stopService();
-        } catch(Exception e) {
+        } catch(SMSLibException | IOException | InterruptedException e) {
             LOG.error("Exception while SMSLib service stop.\n{}", e);
         }
     }

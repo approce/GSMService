@@ -20,7 +20,8 @@ public class RequestPoolServiceImpl implements RequestPoolService {
 
     private static final List<Request> AVAILABLE_REQUEST_LIST = new LinkedList<>();
 
-    private RequestMatcher requestMatcher = new RequestMatcher();
+    @Autowired
+    private RequestMatcher requestMatcher;
 
     @Autowired
     private RequestRepository requestRepository;

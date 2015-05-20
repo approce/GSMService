@@ -9,11 +9,12 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import sms.com.aggregators.AbstractAggregatorFacade;
 import sms.com.matcher.RequestMatcher;
-import sms.com.model.Request;
 import sms.com.model.Offer;
+import sms.com.model.Request;
 import sms.com.repository.RequestRepository;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -67,7 +68,7 @@ public class RequestPoolServiceImplTest {
 
         requestPoolService.add(testRequest);
 
-        Set<Request> availableRequestSet = RequestPoolServiceImpl.getAvailableRequestSet();
+        List<Request> availableRequestSet = RequestPoolServiceImpl.getAvailableRequestSet();
         assertThat(availableRequestSet).doesNotContain(testRequest);
     }
 
@@ -86,7 +87,7 @@ public class RequestPoolServiceImplTest {
 
         requestPoolService.add(testRequest);
 
-        Set<Request> availableRequestSet = RequestPoolServiceImpl.getAvailableRequestSet();
+        List<Request> availableRequestSet = RequestPoolServiceImpl.getAvailableRequestSet();
         assertThat(availableRequestSet).contains(testRequest);
     }
 
